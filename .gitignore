@@ -1,0 +1,18 @@
+# Generated and Temporary Files
+*.pyc
+*.pyo
+*.swp
+.DS_Store
+.coverage
+
+# IDE-Generated Files
+.project
+.pydevproject
+
+# Project Dev-specific Files
+*.db
+*.sqlite3
+local_settings.py
+settings_local.py
+var/log/
+

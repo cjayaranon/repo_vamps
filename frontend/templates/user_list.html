@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}Welcome to Django{% endblock %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css '%}"
+{% endblock %}
+{% block content %}
+<h1>Users</h1>
+
+
+	{% if user.is_authenticated %} 	
+  		{% for user in object_list %}
+    		{{ user.first_name }} {{ user.position }}<br>
+  		{% endfor %}
+
+		<button type="button" onclick="window.location.href='/logout/' ">Logout</button>
+		<a href="/web-admin/">Go back to admin page</a>
+	{% else %}
+		<p>CANNOT DISPLAY LIST OF USERS. YOU MUST LOGIN FIRST! </p>
+			<button type="button" onclick="window.location.href='/' ">Login</button>
+	{% endif %}
+{% endblock %}

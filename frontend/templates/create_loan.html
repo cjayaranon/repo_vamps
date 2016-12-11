@@ -1,0 +1,59 @@
+{% extends "base2.html" %}
+
+{% load static from staticfiles %}
+{% block title %} VAMPS|Log In {% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+{% endblock%}
+
+{% block content %}
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/js_files/create_loan.js' %}"></script>
+<title>VAMPS|Loan Application Form</title>
+
+<div class="login-page">
+    <div class="form">
+        CREATE LOAN<hr>
+        <div>
+            <div style="text-align:left">Please select the type of loan:</div><br>
+            <input type="button" id="btn-prov" value="Providential Loan"/>
+            <input type="button" id="btn-em" value="Emergency Loan"/>
+        </div><hr>
+        <div id="prov-1" hidden>
+            <div style="text-align:left">Please select the type of Providential Loan:</div><br>
+            <input type="button" id="btn-oper" value="Operators' Loan"/>
+            <input type="button" id="btn-driv" value="Drivers' Loan"/>
+        </div><hr>
+        <div id="prov-2" hidden>
+            <div style="text-align:left">Please select Operator Line:</div><br>
+            <input type="button" id="btn-inline" value="Inside Line"/>
+            <input type="button" id="btn-outline" value="Outside Line"/>
+        </div><hr>
+        <div id="prov-3" hidden>
+            <div style="text-align:left">Does the client have collateral?</div><br>
+            <input type="button" value="YES" id="btn-yescoll"/>
+            <input type="button" value="NO" id="btn-nocoll"/><hr>
+            <div id="prov-4" hidden>Please enter the collateral's information<br>
+                <div>Collateral:<input type="text"></div>
+                <div>Eq. Value:<input type="text"></div>
+            <input type="button" id="btn-collsubmit" value="Submit"/>
+            </div>
+        </div><hr>
+        <div id="amount" hidden>
+            <div style="text-align:left">Please enter the amount of loan: <input type="text" id="loan-amount"></div><br>
+        </div><hr>
+        <div id="error-message" style="color:red;" hidden></div> 
+        <input id="final-submit" type="button" hidden value="SUBMIT"/>
+        <input id="val-capital" type="button" hidden value="{{ capital }}"/>
+        <input id="val-comaker" type="button" hidden value="{{comaker}}"/>
+        <input id="val-pending" type="button" hidden value="None"/>
+    </div>
+
+</div>
+
+
+
+
+{% endblock %}

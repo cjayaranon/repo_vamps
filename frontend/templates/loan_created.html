@@ -1,0 +1,32 @@
+{% extends "base2.html" %}
+
+{% load static from staticfiles %}
+{% block title %} VAMPS|Log In {% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+{% endblock%}
+
+{% block content %}
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/js_files/create_loan.js' %}"></script>
+<title>VAMPS|Loan Application Form</title>
+
+<div class="login-page">
+    <div class="form">
+        CURRENT LOAN<hr>
+        <div>Name: {{name}}</div><hr>
+        <div>Balance: Php {{amount}}</div><hr>
+        <div>Type: {{type_of_loan}}</div><hr>
+        <div>Payment Duration: {{duration}} months</div><hr>
+        <div>Loan Expiration: {{expiration}} </div><hr>
+        <div>Monthly Interest: {{interest_rate}}% </div><hr>
+    </div>
+
+</div>
+
+
+
+
+{% endblock %}

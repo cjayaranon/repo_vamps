@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}Welcome to Django{% endblock %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css '%}"
+{% endblock %}
+{% block content %}
+    <h1> YOU ARE NOT ALLOWED TO VISIT THE WEBPAGE </h1>
+    <p>Try another account. Thank you</p>
+    <button type="button" onclick="window.location.href='/logout/' ">Logout</button>
+{% endblock %}

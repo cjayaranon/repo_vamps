@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}Welcome to Django{% endblock %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css '%}"/>
+{% endblock %}
+{% block content %}
+<form class="form">
+
+</form>
+    <h1> THANK YOU FOR USING VAMPS!!! </h1>
+    {{ user.first_name }}
+    <a class="btn btn-primary" href="/">
+        <i class="fa fa-sign-in fa-lg"></i>
+        Login
+    </a>
+    <!-- <button type="button" onclick="window.location.href='/' ">Login</button> -->
+{% endblock %}

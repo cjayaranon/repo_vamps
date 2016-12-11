@@ -1,0 +1,60 @@
+{% extends "base2.html" %}
+
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+{% endblock%}
+
+{% block content %}
+<title>VAMPS|Loan Payment Form</title>
+
+<div class="login-page">
+    <div class="form" >
+    <div>
+        <h3>Loan Payment Form</h3>
+    </div>
+        {% if error %}
+          <p class="alert alert-danger">
+          <i class="fa fa-exclamation triangle fa-lg"></i>{{ error }}</p>
+        {% else %}
+          <p class="alert alert-success">
+          <i class="fa fa-check-circle fa-lg"></i>{{ success }}</p>
+        {% endif %}
+        <form method="POST" action="" onkeypress="return alpha(event)" class="no-spinners">
+         {% csrf_token %}
+         {{ form|crispy }}
+         <!-- <table>
+         {{ form.as_table }}
+         </table> -->
+
+         <!-- <input type="submit" value="Add Loan" class="no-spinners" /> -->
+         <br>
+            <button type="submit" href="#" class="btn btn-info">
+                <i class="fa fa-check-square fa-lg"></i>
+                Pay Loan
+            </button>
+        </form>
+      </div>
+
+
+</div>
+<script>
+
+var text = document.getElementById('id_app_amount');
+text.onkeypress = text.onpaste = checkInput;
+
+function checkInput(e) {
+    var e = e || event;
+    var char = e.type == 'keypress' 
+        ? String.fromCharCode(e.keyCode || e.which) 
+        : (e.clipboardData || window.clipboardData).getData('Text');
+    if (/[^\d.$]/gi.test(char)) {
+        return false;
+    }
+}
+
+</script>
+{% endblock %}
