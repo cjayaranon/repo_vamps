@@ -169,7 +169,6 @@ class cashier(View):
         
         
 class bookkeeper(View):
-<<<<<<< HEAD
     """Bookkeeper Home"""
 
     @method_decorator(login_required)
@@ -240,25 +239,6 @@ class admin_page(View):
                 pass
 
         context = {'upList':upList, 'overList':overList, 'structList':structList}
-=======
-class add_new_client(View):
-    """para sa pag add new client/member"""
-
-    def get(self, request, *arg, **kwargs):
-        request = kwargs.pop('request')
-        self.user = request.user
-        form = ClientForm(request.POST, request=request)
-        context={}
-        context['form']=ClientForm(request=request)
-        return render(request, "bookkeeper_new_client.html", context)
-
-class admin_page(View):
-    """para sa page sa admin"""
-
-    @method_decorator(login_required)
-    def get(self, request, *arg, **kwargs):
-        context={}
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
         if request.user.position == 'Admin':
             return render(request, "admin_menu.html", context)
         else:
@@ -266,7 +246,6 @@ class admin_page(View):
         
 
 
-<<<<<<< HEAD
 class UserViewFilter(TemplateView):
     """Opens user search box"""
     template_name = 'user_list.html'
@@ -301,44 +280,12 @@ class Modify(View):
                 success = 'Email Change Successfull'
                 return render(request, 'editprofile.html', {'success':success})
         
-=======
-class UsersView(TemplateView):
-    template_name = 'user_list.html'
-    
-    def get_context_data(self,**kwargs):
-        context = super(UsersView,self).get_context_data(**kwargs)
-        context['object_list'] = Client.objects.all()
-        return context
-
-
-class ClientView(TemplateView):
-    template_name = 'client_list.html'
-    
-    def get_context_data(self,**kwargs):
-        context = super(ClientView,self).get_context_data(**kwargs)
-        context['object_list'] = Client.objects.all()
-        return context
-
-
-class Modify(View):
-
-    def post(self, request, *args, **kwargs):
-        logged_user = request.user
-        if request.POST['submit'] == 'changeuser':
-            logged_user = request.user
-            logged_user.first_name = request.POST.get('first_name')
-            logged_user.last_name = request.POST.get('last_name')
-            logged_user.save()
-            alert = {'message': 'Successfuly Registered'}
-            return render(request, 'editprofile.html', alert,)
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
         elif request.POST['submit'] == 'changepass':
             curr_pass = request.POST.get('curr_pass')
             conf_pass = request.POST.get('conf_pass')
             new_pass = request.POST.get('new_pass')
             auth_user = authenticate(username=logged_user, password=curr_pass)
             if new_pass != conf_pass:
-<<<<<<< HEAD
                 error = 'Password Does Not Match'
                 return render(request, 'editprofile.html', {'error':error})
             if auth_user is not None:
@@ -362,18 +309,6 @@ class Modify(View):
                 logged_user.save()
                 success = 'Username Change Successfull'
                 return render(request, 'editprofile.html', {'success':success})
-=======
-                password_error = {'password_error': 'Password Does Not Match'}
-                return render(request, 'editprofile.html', password_error,)
-            if auth_user is not None:
-                logged_user.set_password(conf_pass)
-                logged_user.save()
-                updated = {'success_pass': 'Password Changed'}
-                return render(request, 'editprofile.html', updated,)
-            else:
-                password_error = {'password_error': 'Invalid Password'}
-                return render(request, 'editprofile.html', password_error,)
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
@@ -382,7 +317,6 @@ class Modify(View):
 
 
 class add_client(View):
-<<<<<<< HEAD
     """Bookkeeper adds new client here"""
     
     @method_decorator(login_required)
@@ -519,57 +453,6 @@ class loan_application(View):
             'cap':cap,
             'client':client
         })
-=======
-    
-    def post(self, request, *args, **kwargs):
-        forms = ClientForm(request.POST)
-        form = ClientForm()
-        if forms.is_valid():
-            success = 'Client created successfuly'
-            forms.save()
-            return render(request, 'bookkeeper_new_client.html', {'success':success, 'form': form})
-        else:
-            error = 'Please fill the form properly'
-            print forms.errors
-            return render(request, 'bookkeeper_new_client.html', {'error':error, 'form': form})
-
-
-    def get(self, request, *args, **kwargs):
-        
-        # self.user = request.user
-        form = ClientForm()
-        # form = ClientForm(request.POST, request=request)
-        context={}
-        # context['form']=ClientForm(request=request)
-        
-        return render(request, 'bookkeeper_new_client.html', {'form': form})
-
-
-
-class loan_application(View):
-
-    def post(self, request, *args, **kwargs):
-        forms = LoanApplicationForm(request.POST)
-        form = LoanApplicationForm()
-        if forms.is_valid():
-            success = 'Loan Application created successfuly'
-            forms.save()
-            return render(request, 'bookkeeper_loan_application.html', {'success':success, 'form': form})
-        else:
-            error = 'Please fill the form properly'
-            print forms.errors
-            return render(request, 'bookkeeper_loan_application.html', {'error':error, 'form': form})
-
-    def get(self, request, *args, **kwargs):
-        form = LoanApplicationForm()
-        return render(request, 'bookkeeper_loan_application.html', {'form': form})  
- 
-class LoanApproval(View):
-
-    def get(self, request, *args, **kwargs):
-        list_of_pending_applications = loanApplication.objects.filter(app_status='Pending')
-        return render(request, 'bookkeeper_loan_approval.html', {'applications': list_of_pending_applications})
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 
 
 def approve_loan_application(request, id):
@@ -577,7 +460,6 @@ def approve_loan_application(request, id):
     application.app_status = 'Approved'
     application.approval_date = datetime.date.today()
     application.save()
-<<<<<<< HEAD
     # enable
     list_of_pending_applications = loanApplication.objects.filter(app_status='Pending')
     return HttpResponseRedirect(reverse('create_loan', kwargs={'id':application.app_id}))
@@ -2245,219 +2127,3 @@ def restruct(request,id):
         return render(request, 'success.html', {'error': error})
 
     return HttpResponseRedirect(reverse('profile', kwargs={'id':loan_id.client.cust_number}))
-=======
-    recent_message = "Loan for {} has been APPROVED.".format(application.client)
-    list_of_pending_applications = loanApplication.objects.filter(app_status='Pending')
-    return HttpResponseRedirect(reverse('create_loan', kwargs={'id':application.app_id}))
-
-def reject_loan_application(request, id):
-    application = loanApplication.objects.get(app_id=int(id))
-    application.app_status = 'Denied'
-    application.approval_date = datetime.date.today()
-    application.save()
-    recent_message = "Loan for {} has been DENIED.".format(application.client)
-    list_of_pending_applications = loanApplication.objects.filter(app_status='Pending')
-    return render(request, 'bookkeeper_loan_approval.html', {'applications': list_of_pending_applications,
-        'recent_message': recent_message})
-
-
-class ClientViewFilter(TemplateView):
-    template_name = 'client_list.html'
-    
-    def get_context_data(self,**kwargs):
-        context = super(ClientViewFilter,self).get_context_data(**kwargs)
-        name = self.request.GET.get('search', '')
-        products = Client.objects.filter(firstname__contains=name)
-        context['object_list'] = products
-        return context
-
-
-
-class ClientViewFilterOne(TemplateView):
-    template_name = 'results.html'
-    
-    def get_context_data(self,**kwargs):
-        context = super(ClientViewFilterOne,self).get_context_data(**kwargs)
-        name = self.request.GET.get('search', '')
-        products = Client.objects.filter(firstname__contains=name)
-        context['object_list'] = products
-        return context
-
-class CreateLoan(View):
-    def get(self, request, *args, **kwargs):
-        application = loanApplication.objects.get(app_id=int(self.kwargs.get('id')))
-        client = application.client
-        print Loan.objects.filter(client=client) # Modify this to only return Boolean (if it has pending loans)
-        return render(request, 'create_loan.html', {
-            'capital': client.capital,
-            'comaker': application.app_comaker
-            })
-
-    def post(self, request, *args, **kwargs):
-
-        self.create_loan_info()
-        application_id = int(request.get_full_path().split("/")[-1])
-
-        providential = request.POST.get('providential') == 'true'
-        emergency =  request.POST.get('emergency') == 'true'
-        operator =  request.POST.get('operator') == 'true'
-        driver =  request.POST.get('driver') == 'true'
-        inline =  request.POST.get('inline') == 'true'
-        outline =  request.POST.get('outline') == 'true'
-        yescoll =  request.POST.get('yescoll') == 'true'
-        nocoll =  request.POST.get('nocoll') == 'true'
-        capital =  int(request.POST.get('capital'))
-        loan_amount =  int(request.POST.get('loan_amount'))
-
-        interest = 3
-        duration = 18
-
-        if providential:
-            if operator:
-                if inline:
-                    if capital >= 20000:
-                        if yescoll:
-                            if loan_amount <= capital:
-                                interest = 1.5
-                            else:
-                                interest = 3
-                            if loan_amount >= 150000:
-                                duration = 18
-                            else:
-                                duration = 12
-                        elif nocoll:
-                            duration = 12
-                            if loan_amount <= capital:
-                                interest = 1.5
-                            else:
-                                interest = 3
-                    elif capital < 20000:
-                        interest = 3
-                        if loan_amount >= 150000:
-                            duration = 18
-                        else:
-                            duration = 12
-                elif outline:
-                    duration = 12
-                    interest = 3
-            elif driver:
-                duration = 12
-                if loan_amount == capital:
-                    interest = 1.5
-                else:
-                    interest = 3
-        elif emergency:
-            duration = 6
-            if capital >= 20000:
-                interest = 1.5
-            elif capital < 20000:
-                interest = 3
-
-        application = loanApplication.objects.get(app_id=application_id)
-        type_of_loan = "Providential" if providential else "Emergency"
-        loan = Loan(
-            client = application.client,
-            loan_application = application,
-            loan_amount = loan_amount,
-            interest_rate = interest,
-            loan_duration = duration,
-            type_of_loan = type_of_loan,
-        )
-        loan.save()
-
-        if operator:
-            loan.loan_information.add(LoanInformation.objects.get(name="Operator"))
-        if driver:
-            loan.loan_information.add(LoanInformation.objects.get(name="Driver"))
-        if inline:
-            loan.loan_information.add(LoanInformation.objects.get(name="Inside Line"))
-        if outline:
-            loan.loan_information.add(LoanInformation.objects.get(name="Outside Line"))
-        
-
-        # print capital
-        # print interest
-        # print application_id
-
-        return HttpResponse(loan.id)
-
-    def create_loan_info(self):
-        LoanInformation.objects.get_or_create(name="Operator")
-        LoanInformation.objects.get_or_create(name="Driver")
-        LoanInformation.objects.get_or_create(name="Inside Line")
-        LoanInformation.objects.get_or_create(name="Outside Line")
-
-class ViewLoanInformation(View):
-    def get(self, request, *args, **kwargs):
-        loan = Loan.objects.get(id=int(self.kwargs.get('id')))
-        name = loan.client
-        type_of_loan = loan.type_of_loan
-        amount = loan.loan_amount #INCLUDE SUBTRACTION OF INVOICE
-        # invoices = Invoice.objects.filter(loan=loan)
-        # for invoice in invoices:
-        #   amount = amount - invoice.amount
-        payment_duration = loan.loan_duration
-        interest_rate = loan.interest_rate
-        expiration = "{}-{}-{}".format(
-            (loan.loan_application.approval_date.month + payment_duration)%12,
-            loan.loan_application.approval_date.day,
-            loan.loan_application.approval_date.year + (loan.loan_application.approval_date.month + payment_duration)/12
-            )
-        return render(request, 'loan_created.html', {
-            'name': name,
-            'type_of_loan': type_of_loan,
-            'amount': amount,
-            'duration': payment_duration,
-            'interest_rate': interest_rate,
-            'expiration': expiration
-            })
-
-class pay_loan(View):
-    def post(self, request, *args, **kwargs):
-        forms = PayLoanForm(request.POST)
-        form = PayLoanForm()
-        if forms.is_valid():
-            success = 'Loan Payment Successful'
-            forms.save()
-            return render(request, 'cashier_loan_pay.html', {'success':success, 'form':form})
-        else:
-            error = 'Please fill form properly'
-            print forms.errors
-            return render(request, 'cashier_loan_pay.html', {'error':error, 'form':form})
-
-    def get(self, request, *args, ** kwargs):
-        form = PayLoanForm()
-        return render(request, 'cashier_loan_pay.html', {'form':form})
-
-
-def render_receipt(request):
-    options = {
-    'page-size': 'A5',
-    'margin-top': '1in',
-    'margin-right': '1in',
-    'margin-bottom': '1in',
-    'margin-left': '1in',
-    'encoding': "UTF-8",
-    }
-
-    # content = render_to_string(
-    #     'receipt_template.html'
-    # )
-
-    # pdf = pdfkit.PDFKit(content, "string", options=options).to_pdf()
-    aydi = payLoan.objects.get(pay_id=1)
-    projectURL = request.get_host() + '/write_receipt'
-    pdf = pdfkit.from_string('receipt_template.html', False, options=options)
-
-    response = HttpResponse(pdf, content_type='application/pdf')
-    # response['Content-Type'] = 'application/pdf'
-    # change attachment to inline if you want open file in browser tab instead downloading
-    response['Content-Disposition'] = 'inline;filename={}.pdf'.format(aydi.pay_id)
-
-    return response
-
-class write_receipt(View):
-    def get(self, request, *args, **kwargs):
-        # context = {}
-        return render(request, 'receipt_template.html')
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
