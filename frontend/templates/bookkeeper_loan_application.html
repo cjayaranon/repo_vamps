@@ -1,10 +1,6 @@
 {% extends "base2.html" %}
 
-<<<<<<< HEAD
 {% load staticfiles bootstrap %}
-=======
-{% load staticfiles %}
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 {% load crispy_forms_tags %}
 
 {% block css %}
@@ -14,7 +10,6 @@
 
 {% block content %}
 <title>VAMPS|Loan Application Form</title>
-<<<<<<< HEAD
     <div id="breads">
         <ol class="breadcrumb">
             <li>
@@ -95,29 +90,6 @@
                 </tbody>
             </div>
          </table>
-=======
-
-<div class="login-page">
-    <div class="form" >
-    <div>
-        <h3>Loan Application Form</h3>
-    </div>
-        {% if error %}
-          <p class="alert alert-danger">
-          <i class="fa fa-exclamation triangle fa-lg"></i>{{ error }}</p>
-        {% else %}
-          <p class="alert alert-success">
-          <i class="fa fa-check-circle fa-lg"></i>{{ success }}</p>
-        {% endif %}
-        <form method="POST" action="" onkeypress="return alpha(event)" class="no-spinners">
-         {% csrf_token %}
-         {{ form|crispy }}
-         <!-- <table>
-         {{ form.as_table }}
-         </table> -->
-
-         <!-- <input type="submit" value="Add Loan" class="no-spinners" /> -->
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
          <br>
             <button type="submit" class="btn btn-info">
                 <i class="fa fa-check-square fa-lg"></i>
@@ -126,11 +98,6 @@
         </form>
       </div>
 
-<<<<<<< HEAD
-=======
-
-</div>
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 <script>
 
 var text = document.getElementById('id_app_amount');
@@ -147,13 +114,11 @@ function checkInput(e) {
 }
 
 </script>
-<<<<<<< HEAD
 
 <script type="text/javascript">
     function goBack(){
         window.history.back();
     }
 </script>
-=======
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
+
 {% endblock %}
