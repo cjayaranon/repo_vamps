@@ -9,11 +9,7 @@
 {% endblock%}
 
 {% block content %}
-<<<<<<< HEAD
 <!-- <title>VAMPS|Loan Application Form</title>
-=======
-<title>VAMPS|Loan Application Form</title>
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 
 <div class="login-page">
 
@@ -36,16 +32,11 @@
     <td><input type="submit" value="Approve" class="no-spinners" onclick="window.location='{{request.get_full_path|slice:"26"}}approve/{{application.app_id}}';" /></td>
     <td><input type="submit" value="Reject" class="no-spinners" onclick="window.location='{{request.get_full_path|slice:"26"}}reject/{{application.app_id}}';" /></td>
     </tr>
-<<<<<<< HEAD
     {% empty %}
     <li>SORRY THIS CLIENT HAS NO PENDING LOAN APPLICATION.</li>
     {% endfor %}
 
 
-=======
-    {% endfor %}
-
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
     </table>
     </div>
 
@@ -55,7 +46,6 @@
 
 
 
-<<<<<<< HEAD
  -->
 
 
@@ -88,7 +78,4 @@
       </div>
 
     
-=======
-
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 {% endblock %}
