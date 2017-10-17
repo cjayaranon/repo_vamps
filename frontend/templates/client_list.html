@@ -1,5 +1,4 @@
 {% extends "base2.html" %}
-<<<<<<< HEAD
 
 {% load static from staticfiles %}
 {% block title %} VAMPS|Log In {% endblock %}
@@ -33,26 +32,11 @@
             {% csrf_token %}
           <div class="input-group col-md-12">
           <input type="text" class="search-query form-control" placeholder="Search via Last Name" name="search" />
-=======
-{% load staticfiles %}
-{% block title %}Welcome to Django{% endblock %}
-{% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/home.css '%}"/>
-{% endblock %}
-{% block content %}
-<div class="container">
-  <div class="row" style="padding-top: 10vw">
-    <form action="/client-lists/" method="GET">
-      <div id="custom-search-input">
-        <div class="input-group col-md-12">
-          <input type="text" class="search-query form-control" placeholder="Search" name="search" />
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
             <span class="input-group-btn">
               <button class="btn btn-danger" type="submit" value="Search" id="search-button">
                 <span class=" glyphicon glyphicon-search"></span>
               </button>
             </span>
-<<<<<<< HEAD
           </div>
           {% if object_list == None %}
           {% else %}
@@ -87,63 +71,10 @@
     
   {% else %}
     <p>CANNOT DISPLAY LIST OF USERS. YOU MUST LOGIN FIRST! </p>
-=======
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-
-	{% if user.is_authenticated %} 	
-  		<!-- {% for Client in object_list %}
-    		{{ Client.cust_number }} {{ Client.firstname }} {{ Client.lastname }}<br>
-    	{% empty %}
-    	<p>NO SUCH CLIENT</p>
-  		{% endfor %} -->
-      <div class="container">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Membership Type</th>
-            </tr>
-          </thead>
-          <tbody>
-          {% for Client in object_list %}
-            <tr>
-              <td>{{Client.cust_number}}</td>
-              <td>{{Client.firstname}}</td>
-              <td>{{Client.lastname}}</td>
-              <td>{{Client.membership_type}}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-        
-        <!-- <p>No Clients</p> -->
-
-  		<!-- <a href="/bookkeeper/">Go back to bookkeeper page</a> -->
-      <!-- <a href="{% url 'logout' %}" class="btn btn-danger">
-        <i class="fa fa-sign-out fa-lg"></i>
-        Logout
-      </a> -->
-		<!-- <button type="button" onclick="window.location.href='/logout/' ">Logout</button> -->
-		
-	{% else %}
-		<p>CANNOT DISPLAY LIST OF USERS. YOU MUST LOGIN FIRST! </p>
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
     <a href="{% url '/' %}" class="btn btn-primary">
       <i class="fa fa-sign-in fa-lg">
         Login
       </i>
     </a>
-<<<<<<< HEAD
   {% endif %}
-=======
-			<!-- <button type="button" onclick="window.location.href='/' ">Login</button> -->
-	{% endif %}
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 {% endblock %}
