@@ -17,7 +17,11 @@
             {% if form.errors %}
               <p>Your username and password didn't match. Please try again.</p>
             {% endif %}
+<<<<<<< HEAD
         <form class="login-form" action="">{% csrf_token %}
+=======
+        <form class="login-form" method="POST" action="">{% csrf_token %}
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
           <input class="form-control" type="text" placeholder="Enter Username" name="username" required>  
           <input class="form-control" type="password" placeholder="Enter Password" name="password" required>
           <div class="buttoncolor"><input type=submit value="Login" id="login-button"></div>

@@ -1,5 +1,6 @@
 <!-- register.html -->
 {% extends "base2.html" %}
+<<<<<<< HEAD
 {% load staticfiles bootstrap %}
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/client_profile_overlay.css' %}">
@@ -161,4 +162,56 @@
         }
     </script>
 
+=======
+{% block content %}
+<div class="login-page" style="
+    margin-top: 100px;">
+    <!-- <h1 class="page-header" style="margin-top:10px; ">Edit Your Profile</h1> -->
+    <div style="width: 500px" class="form">
+        <h2>Welcome, {{ request.user.first_name }}</h2>
+        {% if error %}
+        <p style="color:red">{{ error }} </p>
+        {% else %}
+        <p style="color:green">{{ success }} </p>
+        {% endif %}
+        <form class="login-form" role="form" method="post" action=""> {% csrf_token %}
+            <h3>Update Information</h3>
+            <div class="form-group">
+                <!-- <label for="Username">First Name:</label> -->
+                <input type="text" class="form-control" name="first_name" value="{{ first_name }}" placeholder="First Name" />
+            </div>
+            <div class="form-group">
+                <!-- <label for="Username">Last Name:</label> -->
+                <input type="text" class="form-control" name="last_name" value="{{ last_name }}" placeholder="Last Name" />
+            </div>
+            <button type="submit" name="submit" value="changeuser" class="btn btn-info">
+            <i class="fa fa-check-square fa-lg"></i>
+            Update Information</button>
+        </form>
+        <form class="login-form" role="form" method="post" action=""> {% csrf_token %}
+            <h3>Change Password</h3>
+            {% if error %}
+            <p style="color:red">{{ password_error }}</p>
+            {% else %}
+            <p style="color:green">{{ success_pass }}</p>
+            {% endif %}
+            <div class="form-group">
+                <!-- <label for="Password">Current Password:</label> -->
+                <input type="password" class="form-control" name="curr_pass" placeholder="Current Password" required />
+            </div>
+            <div class="form-group">
+                <!-- <label for="Password">New Password:</label> -->
+                <input type="password" class="form-control" name="new_pass" placeholder="New Password" required />
+            </div>
+            <div class="form-group">
+                <!-- <label for="contact">Confirm Password:</label> -->
+                <input type="password" class="form-control" name="conf_pass" placeholder="Confirm Password" required/>
+            </div>
+            <button type="submit" name="submit" value="changepass" class="btn btn-info">
+            <i class="fa fa-check-square fa-lg"></i>
+            Change Password</button>
+        </form>
+    </div>
+</div>
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 {% endblock %}

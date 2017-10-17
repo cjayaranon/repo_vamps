@@ -9,7 +9,11 @@ fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td {outline: none !important;
 }
 html{
+<<<<<<< HEAD
     background:#EFF1F3;
+=======
+    background:#666666;
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 }
 @font-face {
     font-family: SegoeUI;
@@ -20,10 +24,17 @@ body{
 }
 
 .header {
+<<<<<<< HEAD
     width: 100%;
     overflow: hidden;
     height: 100%;
     
+=======
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    height: 100%;
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 }
 
 .logo-group {
@@ -34,8 +45,13 @@ body{
 }
 
 .logo {
+<<<<<<< HEAD
     height: 6vw;
     width: 6vw;
+=======
+    height: 10vw;
+    width: 10vw;
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
     align-content: center;
 }
 
@@ -47,7 +63,11 @@ body{
 
 .abbrev {
     margin-top: 0vw;
+<<<<<<< HEAD
     margin-bottom: 0vw;
+=======
+    margin-bottom: 1vw;
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 }
 
 .full {
@@ -57,7 +77,11 @@ body{
 
 .ver {
     margin-top: 0vw;
+<<<<<<< HEAD
     margin-left: 0.4vw;
+=======
+    margin-left: 0.5vw;
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 }
 
 .user-group {
@@ -71,6 +95,7 @@ body{
 }
 
 .user-name {
+<<<<<<< HEAD
     /*margin-top: 10px;*/
 }
 
@@ -80,11 +105,23 @@ body{
 
 .body {
     background-color: #EFF1F3;
+=======
+    margin-top: 10px;
+}
+
+.user-position {
+    margin-top: 0px;
+}
+
+.body {
+    background-color: #666666;
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 }
 
 .footersize {
     height: auto;
     margin: auto auto -2vw;
+<<<<<<< HEAD
 }
 
 .left{
@@ -103,3 +140,6 @@ body{
 .right{
      padding-left: 0px;   
 }
+=======
+}
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760

@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 from django.forms import ModelForm, Textarea
 from clients.models import Client, Collateral, client_capital, MAF, ODF, loanApplication, Restruct, payLoanLedger_in, payLoanLedger_over, Loan
+=======
+from django.forms import ModelForm
+from clients.models import Client
+from clients.models import loanApplication, payLoan
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit, Field
 from crispy_forms.bootstrap import FormActions, PrependedText, AppendedText
@@ -45,17 +51,15 @@ class ClientForm(ModelForm):
             'membership_type':('Membership Type'),
             'client_id_type':('ID Type'),
             'client_id_number':('ID Number'),
-            'client_odf':('ODF'),
-            'client_maf':('MAF'),
         }
 
 
     def __init__(self, *args, **kwargs):
         super(ClientForm, self).__init__(*args, **kwargs)
         helper = self.helper = FormHelper()
-        # self.helper.form_method = 'POST'
         self.helper.form_onkeypress = 'return alpha(event)'
-        # self.helper.form_class = 'no-spinners','form-horizontal'
+        self.helper.form_class = 'no-spinners','form-horizontal'
+        self.helper.show_form_labels = False
         self.helper.add_input(Submit('submit','Add Client'))
         self.helper.layout = Layout(
             Fieldset(
@@ -76,6 +80,8 @@ class ClientForm(ModelForm):
                 layout.append(Field(field_name, placeholder=field.label))
                 helper.form_show_labels = False
 
+
+
 class CapitalForm(ModelForm):
     class Meta:
         model = client_capital
@@ -93,19 +99,23 @@ class CapitalForm(ModelForm):
         'capital': ('Total')
         }
 
+
+
 class LoanApplicationForm(ModelForm):
     class Meta:
         model = loanApplication
         fields = [
             'client',
+            'app_id',
             'app_date',
             'app_kind',
             'app_amount',
+            'app_comaker',
             
         ]
+
         widgets = {
-            'app_amount': forms.TextInput,
-            
+            'app_amount': forms.TextInput,          
         }
 
 

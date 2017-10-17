@@ -9,12 +9,20 @@
  }
 
  p {
+<<<<<<< HEAD
     color: #000000;
+=======
+    color: #ffffff;
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
  }
 
  .header {
     position: fixed;
+<<<<<<< HEAD
     height: 9vw;
+=======
+    height: 13vw;
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
     background-color: #ffffff;
  }
 
@@ -37,10 +45,17 @@
     position: fixed;
     left: 250px;
     width: 0;
+<<<<<<< HEAD
     height: 300%;
     margin-left: -250px;
     overflow-y: auto;
     background: #545556;
+=======
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #000;
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -55,7 +70,11 @@
     width: 100%;
     position: absolute;
     padding: 15px;
+<<<<<<< HEAD
     margin-top: 9vw;
+=======
+    margin-top: 13vw;
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 }
 
 #wrapper.toggled #page-content-wrapper {
@@ -68,7 +87,11 @@
 .sidebar-nav {
     position: absolute;
     top: 0;
+<<<<<<< HEAD
     width: 280px;
+=======
+    width: 260px;
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
     margin: 0;
     padding: 0;
     list-style: none;
@@ -82,12 +105,20 @@
 .sidebar-nav li a {
     display: block;
     text-decoration: none;
+<<<<<<< HEAD
     color: #FFFFFF;
+=======
+    color: #999999;
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 }
 
 .sidebar-nav li a:hover {
     text-decoration: none;
+<<<<<<< HEAD
     color: #FED766;
+=======
+    color: #f9dc5c;
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
     background: rgba(255,255,255,0.2);
 }
 
@@ -103,7 +134,11 @@
 }
 
 .sidebar-nav > .sidebar-brand a {
+<<<<<<< HEAD
     color: #FE4A49;
+=======
+    color: #bc0900;
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 }
 
 .sidebar-nav > .sidebar-brand a:hover {
@@ -121,8 +156,12 @@
     }
 
     #sidebar-wrapper {
+<<<<<<< HEAD
         width: 280px;
         height: 100%;
+=======
+        width: 260px;
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
     }
 
     #wrapper.toggled #sidebar-wrapper {
@@ -140,6 +179,7 @@
     }
 }
 
+<<<<<<< HEAD
 .help .btn:hover {
     background: #FE4A49;
     border-color: #FE4A49;
@@ -149,6 +189,48 @@
 .btn-danger:hover {
     background-color: #FE4A49;
     border-color: #FE4A49;
+=======
+/*.btn {
+  background-color: #740001;
+  font-family: 'SegoeUI', 'sans-serif';
+  text-transform: uppercase;
+  outline: 0;
+  width: 100%;
+  border: 0;
+  border-radius: 0 !important;
+  padding: 15px;
+  color: #fff;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}*/
+
+.btn2 {
+    background-color: #49306b;
+    font-family: 'SegoeUI', 'sans-serif';
+    text-transform: uppercase;
+    outline: 0;
+    width: 100%;
+    border: 0;
+    border-radius: 0 !important;
+    padding: 15px;
+    color: #fff;
+    font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+
+.btn:hover {
+    background: #ed254e;
+    color: #ffffff;
+}
+
+.btn2:hover {
+    background: #6b479b;
+    color: #ffffff;
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 }
 
 /*help button*/

@@ -12,6 +12,10 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/base_overlay.css' %}">
     {% block css %}
     {% endblock %}
+<<<<<<< HEAD
+=======
+    <a href="{% url 'home' %}">
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
     <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16"></a>
 </head>
 <body>
@@ -19,15 +23,28 @@
         <div class="header">
             <div class="container">
                 <div class="row">
+<<<<<<< HEAD
                     <div class="logo-group col-lg-3 col-md-3 col-sm-3 col-xs-3">
                         <img src="{% static 'site_images/logo_bw.jpg' %}" class="logo pull-right"/>
+=======
+                    <div class="logo-group col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <a href="{% url 'home' %}">
+                        <img src="{% static 'site_images/logo_bw.jpg' %}" class="logo pull-right"/>
+                        </a>
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
                     </div>
                     <div class="name-group col-lg-8 col-md-8 col-sm-8 col-xs-8">
                         <h1 class="abbrev">VAMPS</h1>
                         <h3 class="full">VODTRANSCO Accounts Management and Processing System</h3>
+<<<<<<< HEAD
                         <h5 class="ver">Version 1.1 2016.09</h5>
                     </div>
                     <div class="user-group col-lg-1 col-md-1 col-sm-1 col-xs-1">
+=======
+                        <h5 class="ver">Version 1.1</h5>
+                    </div>
+                    <div class="user-group col-lg-2 col-md-1 col-sm-2 col-xs-2">
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
                     
                     </div>
                 </div>
@@ -38,6 +55,7 @@
         <div class="body">
             <div class="container">
                 <div class="row">
+<<<<<<< HEAD
                     <div class="hidden-print">
                         {% for items in messages %}
                         <div class="mess text-center" >
@@ -58,11 +76,19 @@
                     {% block content%}
                     {% endblock %}
 
+=======
+                    {% block content%}
+                    {% endblock %}
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
                 </div>
             </div>
         </div>
     </div>
+<<<<<<< HEAD
     <div class="footersize navbar-fixed-bottom hidden-print" id="footer">
+=======
+    <div class="footersize navbar-fixed-bottom" id="footer">
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
         <div class="panel-group">
             <div class="panel panel-default">
                 <div class="panel-heading">All Rights Reserved 2016</div>

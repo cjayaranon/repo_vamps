@@ -1,6 +1,11 @@
 {% extends "base2.html" %}
 
+<<<<<<< HEAD
 {% load staticfiles bootstrap %}
+=======
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
@@ -9,6 +14,7 @@
 
 {% block content %}
 <title>VAMPS|Loan Payment Form</title>
+<<<<<<< HEAD
   <div id="breads">
     <ol class="breadcrumb">
         <li>
@@ -21,10 +27,19 @@
     </ol>
   </div>
     <div class="small-form" >
+=======
+
+<div class="login-page">
+    <div class="form" >
+    <div>
+        <h3>Loan Payment Form</h3>
+    </div>
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
         {% if error %}
           <p class="alert alert-danger">
           <i class="fa fa-exclamation triangle fa-lg"></i>{{ error }}</p>
         {% else %}
+<<<<<<< HEAD
           <p style="color:green">{{ success }} </p>
         {% endif %}
         <form method="POST" onkeypress="return funcs(event)" class="no-spinners">
@@ -98,12 +113,28 @@
             </div>
           </table>
             <button type="submit" class="btn btn-info">
+=======
+          <p class="alert alert-success">
+          <i class="fa fa-check-circle fa-lg"></i>{{ success }}</p>
+        {% endif %}
+        <form method="POST" action="" onkeypress="return alpha(event)" class="no-spinners">
+         {% csrf_token %}
+         {{ form|crispy }}
+         <!-- <table>
+         {{ form.as_table }}
+         </table> -->
+
+         <!-- <input type="submit" value="Add Loan" class="no-spinners" /> -->
+         <br>
+            <button type="submit" href="#" class="btn btn-info">
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
                 <i class="fa fa-check-square fa-lg"></i>
                 Pay Loan
             </button>
         </form>
       </div>
 
+<<<<<<< HEAD
 <script src="{% static 'js/jquery.js' %}"></script>
 
     <!-- Bootstrap Core JavaScript -->
@@ -147,4 +178,24 @@
   }
 </script>
 
+=======
+
+</div>
+<script>
+
+var text = document.getElementById('id_app_amount');
+text.onkeypress = text.onpaste = checkInput;
+
+function checkInput(e) {
+    var e = e || event;
+    var char = e.type == 'keypress' 
+        ? String.fromCharCode(e.keyCode || e.which) 
+        : (e.clipboardData || window.clipboardData).getData('Text');
+    if (/[^\d.$]/gi.test(char)) {
+        return false;
+    }
+}
+
+</script>
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 {% endblock %}

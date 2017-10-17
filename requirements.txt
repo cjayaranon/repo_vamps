@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 amqp==1.4.9
 anyjson==0.3.3
 bbcode==1.0.24
@@ -30,3 +31,10 @@ vine==1.1.3
 webencodings==0.5.1
 wkhtmltopdf==0.2
 xhtml2pdf==0.0.6
+=======
+Django==1.9.5
+django-bootstrap-form==3.2.1
+django-crispy-forms==1.6.1
+Pillow==3.4.2
+
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760

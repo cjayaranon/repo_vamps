@@ -10,6 +10,9 @@ optional = {
     'blank': True
 }
 
+
+#NO CUSTOMER PHONE NUMBER, CAPITAL, ODF, MAF
+# Create your models here.
 class Client(models.Model):
 
     SINGLE='Single'
@@ -31,14 +34,11 @@ class Client(models.Model):
     SSS='SSS'
     TIN='TIN'
     OTHERS='Others'
-
-    # unused
     WAITING='Waiting'
     DENIED='Denied'
     APPROVED='Approved'
 
 
-    # unused
     APP_STATUS = (
         (WAITING, 'Waiting'),
         (DENIED, 'Denied'),

@@ -4,7 +4,11 @@
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/menu_overlay.css' %}">
+<<<<<<< HEAD
     <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}"> -->
+=======
+    <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
     <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
 {% endblock%}
 
@@ -15,6 +19,7 @@
 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
+<<<<<<< HEAD
             <ul class="sidebar-nav nav-list hidden-print" id="menu">
                 <li class="sidebar-brand">
                     <a>
@@ -23,14 +28,31 @@
                 </li>
                 <li>
                     <a href="#" class="accordion-heading" data-toggle="collapse" data-target="#submenu1"><span class="nav-header-primary">Client Services
+=======
+            <ul class="sidebar-nav nav-list" id="menu">
+                <li class="sidebar-brand">
+                    <a>
+                        Bookkeeper's Menu
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="accordion-heading" data-toggle="collapse" data-target="#submenu1"><span class="nav-header-primary">Clients
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
                     <span class="pull-right"><b class="caret"></b></span></span></a>
 
                     <ul class="nav nav-list collapse" id="submenu1">
                         <li>
+<<<<<<< HEAD
                             <a href="/home/bookkeeper/add-new-client/">Add New Client</a>
                         </li>
                         <li>
                             <a href="/client-lists/">View Client Account</a>
+=======
+                            <a href="/add-new-client/">Add New Client</a>
+                        </li>
+                        <li>
+                            <a href="/client-lists/">View Members</a>
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
                         </li>
                     </ul>
                 </li>
@@ -39,9 +61,23 @@
                     <span class="pull-right"><b class="caret"></b></span></span></a>
 
                     <ul class="nav nav-list collapse" id="submenu2">
+<<<<<<< HEAD
 
                         <li>
                             <a href="{% url 'old_loan_search' %}" >View Past Loans</a>
+=======
+                        <li>
+                            <a href="/add-new-loan-application">Add New Loan Application</a>
+                        </li>
+                        <li>
+                            <a href="#viewBal" data-toggle="tab">View Balances</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'approve_loan_app' %}">Approve Loan Applications</a>
+                        </li>
+                        <li>
+                            <a href="#viewLoan" data-toggle="tab">View All Loans</a>
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
                         </li>
                     </ul>
                 </li>
@@ -52,17 +88,29 @@
 
                     <ul class="nav nav-list collapse" id="submenu3">
                         <li>
+<<<<<<< HEAD
                             <a href="/edit-profile/">Edit Profile</a>
+=======
+                            <a href="/edit_profile/">Edit Profile</a>
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
                         </li>
 
                     </ul>
                 </li>
+<<<<<<< HEAD
+=======
+
+                 <!-- <li>
+                    <a href="{% url 'logout' %}" class="accordion-heading"><span class="nav-header-primary">Logout
+                </li> -->
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
+<<<<<<< HEAD
             <div class="container-fluid hidden-print">
                 <div class="row">
                     <div class="col-lg-12">
@@ -73,11 +121,18 @@
                         {% else %}
                             <p style="color:green">{{ success }} </p>
                         {% endif %}
+=======
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="tab-content">
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
                             <div class="tab-pane active" id="home">
                                 <h1>Welcome Bookkeeper!</h1>
                                 <p>This is your main menu. You can choose what you want to do from the left side panel of the screen</p>
                                 <p>For some help, click <code>HELP TOPICS</code></p>
                                 <div class="help">
+<<<<<<< HEAD
                                     <a href="#" class="btn btn-info">
                                         <i class="fa fa-question-circle fa-lg fa-fw"></i>
                                     Help Topics</a>
@@ -112,6 +167,55 @@
                                 {% endfor %}
                             </tbody>
                         </table>
+=======
+                                    <div class="buttoncolor">
+                                        <a href="#" class="btn btn-info">
+                                        <i class="fa fa-question-circle fa-lg"></i>
+                                        Help Topics</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="newClient">
+                                
+                            <div class="tab-pane fade" id="viewMem">
+                                
+                            </div>
+                            <div class="tab-pane fade" id="newLoan">
+                               
+                            </div>
+                            <div class="tab-pane fade" id="viewBal">
+                                <div class="login-page">
+                                    <div class="form">
+                                        <form class="login-form" method="POST" action="">
+                                            <div class="drp">
+                                                <a href="#" class="drps">Loan Balance</a>
+                                            </div>
+                                            <div class="drp">
+                                                <a href="#" class="drps">ODF</a>
+                                            </div>
+                                            <div class="drp">
+                                                <a href="#" class="drps">MAF</a>
+                                            </div>
+                                            <div class="drp">
+                                                <a href="#" class="drps">Savings</a>
+                                            </div>
+                                        </form>
+                                        <div>
+                                            <a href="{% url 'book_menu' %}">Cancel</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="viewLoans">
+                                
+                            </div>
+                        </div>
+                    <div>
+                        
+                        <div class="buttoncolor">
+                            <!-- <a href="#menu-toggle" class="btn" id="menu-toggle">Main Menu</a> -->
+                        </div>
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
                     </div>
                 </div>
             </div>
@@ -141,5 +245,50 @@
         $(".tabs").tabs();
         });
     </script>
+<<<<<<< HEAD
+=======
+
+    <!-- Dropdown button scripts -->
+    <script>
+        $('#id_menu').bind('show',function(e){
+            panelID = $(e.target).attr('href');
+            src = $(panelID).attr('data-src');
+            if($(panelID+"iframe").attr("src")=="")
+            {
+                $(panelID+"iframe").attr("src", src);
+            }
+        });
+    </script>
+    <script>
+        $('#mem_type').bind('show',function(e){
+            panelID = $(e.target).attr('href');
+            src = $(panelID).attr('data-src');
+            if($(panelID+"iframe").attr("src")=="")
+            {
+                $(panelID+"iframe").attr("src", src);
+            }
+        });
+    </script>
+    <script>
+        $('#civ_stat').bind('show',function(e){
+            panelID = $(e.target).attr('href');
+            src = $(panelID).attr('data-src');
+            if($(panelID+"iframe").attr("src")=="")
+            {
+                $(panelID+"iframe").attr("src", src);
+            }
+        });
+    </script>
+    <script>
+        $('#educ').bind('show',function(e){
+            panelID = $(e.target).attr('href');
+            src = $(panelID).attr('data-src');
+            if($(panelID+"iframe").attr("src")=="")
+            {
+                $(panelID+"iframe").attr("src", src);
+            }
+        });
+    </script>
+>>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
    
 {% endblock %}
