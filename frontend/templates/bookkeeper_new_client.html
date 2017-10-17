@@ -1,13 +1,6 @@
 {% extends "base2.html" %}
-<<<<<<< HEAD
 <!-- {% load crispy_forms_tags %} -->
 {% load staticfiles bootstrap %}
-=======
-
-{% load staticfiles %}
-{% load crispy_forms_tags %}
-{% block title %} VAMPS|Log In {% endblock %}
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
@@ -15,7 +8,6 @@
 {% endblock%}
 
 {% block content %}
-<<<<<<< HEAD
 {% if user.is_authenticated %}
 <title>VAMPS|Add New Client</title>
 <div id="breads">
@@ -152,69 +144,13 @@
       </i>
     </a>
   {% endif %}
-=======
-<title>VAMPS|Add New Client</title>
-
-<div class="login-page">
-    <div class="form" >
-    <div>
-        <h3>Add New Client Form</h3>
-    </div>
-        {% if error %}
-          <p class="alert alert-danger">
-          <i class="fa fa-exclamation-triangle fa-lg"></i>{{ error }}</p>
-        {% else %}
-          <p class="alert alert-success">
-          <i class="fa fa-check-circle fa-lg"></i>{{ success }} </p>
-        {% endif %}
-        <form method="POST" action="" onkeypress="return alpha(event)" class="no-spinners uniForm login-form" enctype="multipart/form-data">
-        <!-- <form method="POST" action="" onkeypress="return alpha(event)"> -->
-         {% csrf_token %}  
-         {{ form|crispy }}
-
-         <!-- <br> -->
-         <!-- <input type="submit" value="Add Client" class="no-spinners btn btn-info" /> -->
-            <br>
-            <button type="submit" class="btn btn-info">
-                <i class="fa fa-check-square fa-lg"></i>
-                Add Client
-            </button>
-        </form>
-      </div>
-</div>
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 
 <script src="{% static 'js/jquery.js' %}"></script>
 
     <!-- Bootstrap Core JavaScript -->
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
-<<<<<<< HEAD
 <script>
-=======
-    <!-- Menu Toggle Script -->
-// <script>
-    // $("#menu-toggle").click(function(e) {
-        // e.preventDefault();
-        // $("#IDmenu").toggleClass("toggled");
-    // });
-// </script>
-// <script>
-    // $("#menu-toggle").click(function(e) {
-        // e.preventDefault();
-        // $("#MEMtype").toggleClass("toggled");
-    // });
-// </script>
-// <script>
-    // $("#menu-toggle").click(function(e) {
-        // e.preventDefault();
-        // $("#CIVstat").toggleClass("toggled");
-    // });
-// </script>
-
-<script>
-
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 var text = document.getElementById('id_client_odf');
 text.onkeypress = text.onpaste = checkInput;
 
@@ -227,7 +163,6 @@ function checkInput(e) {
         return false;
     }
 }
-<<<<<<< HEAD
 </script>
 <script type="text/javascript">
     text.onkeypress = text.onpaste = checkLength;
@@ -245,12 +180,6 @@ function checkInput(e) {
     }
 </script>
 <script>
-=======
-
-</script>
-<script>
-
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 var text = document.getElementById('id_client_maf');
 text.onkeypress = text.onpaste = checkInput;
 
@@ -263,7 +192,6 @@ function checkInput(e) {
         return false;
     }
 }
-<<<<<<< HEAD
 </script>
 <script type="text/javascript">
     text.onkeypress = text.onpaste = checkLength;
@@ -282,13 +210,6 @@ function checkInput(e) {
 </script>
 <script>
 var text = document.getElementById('id_capital');
-=======
-
-</script>
-<script>
-
-var text = document.getElementById('capital');
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 text.onkeypress = text.onpaste = checkInput;
 
 function checkInput(e) {
@@ -300,7 +221,6 @@ function checkInput(e) {
         return false;
     }
 }
-<<<<<<< HEAD
 </script>
 <script type="text/javascript">
     text.onkeypress = text.onpaste = checkLength;
@@ -345,13 +265,6 @@ function checkInput(e) {
     }
 }
 </script>
-=======
-
-</script>
-
-
-
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 
 
 {% endblock %}
