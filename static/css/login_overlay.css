@@ -3,28 +3,17 @@ body{
 }
 
 .login-page {
-<<<<<<< HEAD
   width: 300px;
   padding: 1% 0 0;
-=======
-  width: 360px;
-  padding: 5% 0 0;
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
   margin: -15px auto auto;
 }
 
 .form {
   position: relative;
   z-index: 1;
-<<<<<<< HEAD
   background: #EFF1F3;
   max-width: 360px;
   margin: 50px auto auto;
-=======
-  background: #F4fffd;
-  max-width: 360px;
-  margin: auto auto auto;
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
   padding: 45px;
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
