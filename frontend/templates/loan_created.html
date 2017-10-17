@@ -1,10 +1,6 @@
 {% extends "base2.html" %}
 
 {% load static from staticfiles %}
-<<<<<<< HEAD
-=======
-{% block title %} VAMPS|Log In {% endblock %}
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
@@ -14,7 +10,6 @@
 {% block content %}
 <script src="{% static 'js/jquery.js' %}"></script>
 <script src="{% static 'js/js_files/create_loan.js' %}"></script>
-<<<<<<< HEAD
 <title>VAMPS|Loan Details</title>
     <div id="breads">
         <ol class="breadcrumb">
@@ -92,24 +87,4 @@
             window.history.back();
         }
     </script>
-=======
-<title>VAMPS|Loan Application Form</title>
-
-<div class="login-page">
-    <div class="form">
-        CURRENT LOAN<hr>
-        <div>Name: {{name}}</div><hr>
-        <div>Balance: Php {{amount}}</div><hr>
-        <div>Type: {{type_of_loan}}</div><hr>
-        <div>Payment Duration: {{duration}} months</div><hr>
-        <div>Loan Expiration: {{expiration}} </div><hr>
-        <div>Monthly Interest: {{interest_rate}}% </div><hr>
-    </div>
-
-</div>
-
-
-
-
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 {% endblock %}
