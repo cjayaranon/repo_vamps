@@ -1,0 +1,76 @@
+{% extends "base2.html" %}
+
+{% load staticfiles bootstrap %}
+{% block title %} VAMPS|Log In {% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+{% endblock%}
+
+{% block content %}
+  {% if user.is_authenticated %}
+  <title>VAMPS|User List</title>
+  <div id="breads">
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'home' %}">Main Menu</a>
+        </li>
+        <li>
+          Users
+        </li>
+        <li class="active">
+          <strong>User List</strong>
+        </li>
+    </ol>
+  </div>
+      <div class="form">
+        <h3>VAMPS Users</h3>
+        <br>
+        <table class="table">
+          <form action="/home/web-admin/user-lists/" method="POST">
+            {% csrf_token %}
+          <div class="input-group col-md-12">
+          <input type="text" class="search-query form-control" placeholder="Search via Last Name" name="search" />
+            <span class="input-group-btn">
+              <button class="btn btn-danger" type="submit" value="Search" id="search-button">
+                <span class=" glyphicon glyphicon-search"></span>
+              </button>
+            </span>
+        </div>
+        <!-- </form> -->
+        {% if object_list == None %}
+        {% else %}
+          <thead>
+            <tr>
+              <th align="left">First Name</th>
+              <th align="left">Last Name</th>
+              <th align="left">Position Type</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for User in object_list %}
+            <tr>
+              <td align="left">{{User.first_name}}</td>
+              <td align="left">{{User.last_name}}</td>
+              <td align="left">{{User.position}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </form>
+        </table>
+        {% endif %}
+      </div>
+    
+  {% else %}
+    <h3>CANNOT DISPLAY LIST OF USERS. <strong>YOU MUST LOGIN FIRST!</strong></h3>
+    <a href="{% url 'home' %}" class="btn btn-primary">
+      <i class="fa fa-sign-in fa-lg">
+        Login
+      </i>
+    </a>
+  {% endif %}
+
+{% endblock %}
+
+

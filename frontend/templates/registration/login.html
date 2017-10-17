@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load staticfiles bootstrap %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login_overlay.css' %}">
+{% endblock%}
+
+{% block content %}
+<title>VAMPS|Log In</title>
+
+<div class="login-page">
+    <div class="form">
+        {% if error %}
+          <p class="alert alert-danger">{{ error }}</p>
+        {% endif %}
+            {% if form.errors %}
+              <p>Your username and password didn't match. Please try again.</p>
+            {% endif %}
+        <form class="login-form" action="">{% csrf_token %}
+          <input class="form-control" type="text" placeholder="Enter Username" name="username" required>  
+          <input class="form-control" type="password" placeholder="Enter Password" name="password" required>
+          <div class="buttoncolor"><input type=submit value="Login" id="login-button"></div>
+          <input type="checkbox" checked="checked"> Remember me
+          <p class="message">Not registered? <a href="/register/">Create an account</a></p>
+          <input type="hidden" name="next" value="/home" />
+          
+        </form>
+      </div>
+</div>
+{% endblock %}

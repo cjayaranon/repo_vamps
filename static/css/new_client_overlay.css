@@ -1,0 +1,115 @@
+body{
+    font-family: 'SegoeUI', 'sans-serif';
+}
+
+h3{
+  margin-top: 10px;
+}
+
+.no-spinners {
+  -moz-appearance:textfield;
+}
+
+.no-spinners::-webkit-outer-spin-button,
+.no-spinners::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+.login-page {
+  width: 80vw;
+  padding: 5% 0 0;
+  margin: -15px auto auto;
+}
+
+/*floating form*/
+.form {
+  position: relative;
+  z-index: 1;
+  background: #EFF1F3;
+  max-width: 80vw;
+  margin: 0 auto 0;
+  padding: 20px 45px 20px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.small-form{
+  position: relative;
+  z-index: 1;
+  background: #EFF1F3;
+  max-width: 40vw;
+  margin: 0 auto 3vw;
+  padding: 20px 45px 20px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+/*input fields*/
+.form-control {
+  margin-bottom: 12px;
+}
+
+/*dropdown button colors*/
+.drp{
+  background-color: #ae0001;
+    font-family: 'SegoeUI', 'sans-serif';
+    text-transform: uppercase;
+    outline: 0;
+    width: 100%;
+    border: 0;
+    border-radius: 0 !important;
+    padding: 15px;
+    color: #fff;
+    font-size: 14px;
+    margin-top: 1vw;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+
+/*new client button hovers*/
+.drp:hover{
+  background-color: #bc0900;
+  color: #fff;
+}
+
+.form .message {
+  margin: 15px 0 0;
+  color: #666666;
+  font-size: 14px;
+}
+
+.form .message a {
+  color: #ed254e;
+  text-decoration: none;
+}
+
+.form-group {
+  font-family: 'SegoeUI', 'sans-serif';
+  color: #666666;
+}
+
+.nav-list {
+  align-items: left;
+}
+
+.drps{
+  margin-top: 1vw;
+  margin-bottom: 1vw;
+  color: #fff;
+}
+
+.drp a:hover{
+  color: #fff;
+  text-decoration: none;
+}
+
+.table{
+  margin-bottom: 10px;
+}
+
+.alert{
+  margin-bottom: 0px;
+}

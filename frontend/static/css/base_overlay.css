@@ -1,0 +1,105 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {outline: none !important;
+}
+html{
+    background:#EFF1F3;
+}
+@font-face {
+    font-family: SegoeUI;
+    src: url(../fonts/segoeuil.ttf);
+}
+body{
+    font-family: 'SegoeUI', 'sans-serif';
+}
+
+.header {
+    width: 100%;
+    overflow: hidden;
+    height: 100%;
+    
+}
+
+.logo-group {
+    padding-right: 0vw;
+    margin-top: 0vw;
+    padding-top: 1vw;
+    padding-bottom: 10px;
+}
+
+.logo {
+    height: 6vw;
+    width: 6vw;
+    align-content: center;
+}
+
+.name-group {
+    margin-top: 0vw;
+    padding-left: 1vw;
+    padding-top: 1vw;
+}
+
+.abbrev {
+    margin-top: 0vw;
+    margin-bottom: 0vw;
+}
+
+.full {
+    margin-top: 0vw;
+    margin-left: 0.2vw;
+}
+
+.ver {
+    margin-top: 0vw;
+    margin-left: 0.4vw;
+}
+
+.user-group {
+    padding-left: 0px;
+}
+
+.user-image {
+    padding-top: 20px;
+    height: 50%;
+    width: 100%;
+}
+
+.user-name {
+    /*margin-top: 10px;*/
+}
+
+.user-position {
+    /*margin-top: 0px;*/
+}
+
+.body {
+    background-color: #EFF1F3;
+}
+
+.footersize {
+    height: auto;
+    margin: auto auto -2vw;
+}
+
+.left{
+    padding-right: 0vw;
+    margin-top: 0vw;
+    padding-top: 1vw;
+    padding-bottom: 10px;
+}
+
+.center{
+    margin-top: 0vw;
+    padding-left: 1vw;
+    padding-top: 1vw;
+}
+
+.right{
+     padding-left: 0px;   
+}

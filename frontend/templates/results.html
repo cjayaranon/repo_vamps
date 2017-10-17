@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css '%}">
+{% endblock %}
+{% block content %}
+<h1>CLIENTS</h1>
+<form action="/results/" method="GET">
+  <input type="text" name="search" placeholder="Search..">
+  <input type=submit value="Search" id="search-button">
+</form>
+
+  {% if user.is_authenticated %}  
+      {% for Client in Client.objects.all %}
+        {{ Client.cust_number }} {{ Client.firstname }} {{ Client.lastname }}<br>
+      {% empty %}
+      <p>NO SUCH CLIENT</p>
+      {% endfor %}
+
+  {% else %}
+    <p>CANNOT DISPLAY LIST OF USERS. YOU MUST LOGIN FIRST! </p>
+      <button type="button" onclick="window.location.href='/' ">Login</button>
+  {% endif %}
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

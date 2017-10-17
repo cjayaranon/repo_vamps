@@ -1,0 +1,145 @@
+{% extends "base2.html" %}
+
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menu_overlay.css' %}">
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}"> -->
+    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+{% endblock%}
+
+{% block content %}
+<title>VAMPS|Bookkeeper</title>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav nav-list hidden-print" id="menu">
+                <li class="sidebar-brand">
+                    <a>
+                        Bookkeeper's Menu 
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="accordion-heading" data-toggle="collapse" data-target="#submenu1"><span class="nav-header-primary">Client Services
+                    <span class="pull-right"><b class="caret"></b></span></span></a>
+
+                    <ul class="nav nav-list collapse" id="submenu1">
+                        <li>
+                            <a href="/home/bookkeeper/add-new-client/">Add New Client</a>
+                        </li>
+                        <li>
+                            <a href="/client-lists/">View Client Account</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="accordion-heading" data-toggle="collapse" data-target="#submenu2"><span class="nav-header-primary">Loans
+                    <span class="pull-right"><b class="caret"></b></span></span></a>
+
+                    <ul class="nav nav-list collapse" id="submenu2">
+
+                        <li>
+                            <a href="{% url 'old_loan_search' %}" >View Past Loans</a>
+                        </li>
+                    </ul>
+                </li>
+
+                 <li>
+                    <a href="#" class="accordion-heading" data-toggle="collapse" data-target="#submenu3"><span class="nav-header-primary">Profile
+                    <span class="pull-right"><b class="caret"></b></span></span></a>
+
+                    <ul class="nav nav-list collapse" id="submenu3">
+                        <li>
+                            <a href="/edit-profile/">Edit Profile</a>
+                        </li>
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid hidden-print">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table class="table table-hover">
+                        {% if error %}
+                            <p class="alert alert-danger">
+                                <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i>{{ error }}</p>
+                        {% else %}
+                            <p style="color:green">{{ success }} </p>
+                        {% endif %}
+                            <div class="tab-pane active" id="home">
+                                <h1>Welcome Bookkeeper!</h1>
+                                <p>This is your main menu. You can choose what you want to do from the left side panel of the screen</p>
+                                <p>For some help, click <code>HELP TOPICS</code></p>
+                                <div class="help">
+                                    <a href="#" class="btn btn-info">
+                                        <i class="fa fa-question-circle fa-lg fa-fw"></i>
+                                    Help Topics</a>
+                                </div>
+                                <div style="padding-top: 1vw;">
+                                    <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">
+                                        <i class="fa fa-menu fa-lg fa-fw"></i>Show/Hide Menu</a>
+                                </div>
+                            </div>
+                            <thead>
+                                <h3>Notifications <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i></h3>
+                            </thead>
+                            <tbody>
+                                {% for items in upList %}
+                                <tr>
+                                    <!-- <td></td> -->
+                                    <td>{{items}}</td>
+                                    <td>Due for update interest</td>
+                                </tr>
+                                {% endfor %}
+                                {% for items in overList %}
+                                <tr>
+                                    <td>{{items}}</td>
+                                    <td>Overdue Loan</td>
+                                </tr>
+                                {% endfor %}
+                                {% for items in structList %}
+                                <tr>
+                                    <td>{{items}}</td>
+                                    <td>Restruct Fee not yet Paid</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- jQuery -->
+    <script src="{% static 'js/jquery.js' %}"></script>
+
+    <!-- Menu Toggle Script -->
+    <!-- hide/show menu -->
+    <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+
+    <!-- Tabs script -->
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+        $(".tabs").tabs();
+        });
+    </script>
+   
+{% endblock %}

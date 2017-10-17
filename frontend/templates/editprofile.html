@@ -1,0 +1,164 @@
+<!-- register.html -->
+{% extends "base2.html" %}
+{% load staticfiles bootstrap %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/client_profile_overlay.css' %}">
+{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+<title>VAMPS|Edit Profile</title>
+    <div id="breads">
+        <ol class="breadcrumb">
+            <li>
+                <a href="{% url 'home' %}">Main Menu</a>
+            </li>
+            <li class="active">Edit Profile</li>
+        </ol>
+    </div>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav nav-list" id="menu">
+                <li class="sidebar-brand">
+                    
+                </li>
+                <li class="active">
+                    <a href="#chgemail" class="active" data-toggle="tab" onclick="changeClass()">
+                        Change Email
+                    </a>
+                </li>
+                <li>
+                    <a href="#chguname" class="inactive" data-toggle="tab" onclick="changeClass()">
+                        Change Username
+                    </a>
+                </li>
+
+                 <li>
+                    <a href="#chgpass" class="inactive" data-toggle="tab" onclick="changeClass()">
+                        Change Password
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="tab-content">
+                            {% if error %}
+                                <p class="alert alert-danger">
+                                    <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i>{{ error }}</p>
+                            {% else %}
+                                <p style="color:green">{{ success }}</p>
+                            {% endif %}
+                            <div class="tab-pane fade in active" id="chgemail">
+                                <table class="table table-hover table-striped">
+                                    <form method="post" action="" onkeypress="return alpha(event)">
+                                    {% csrf_token %}
+                                        <div class="input-group col-md-12">
+                                            <thead>
+                                                <h3>Change Email</h3>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input type="email" class="form-control" name="curr_email" placeholder="Current email" required/>
+                                                    </td>
+                                                    <td>
+                                                        <input type="email" class="form-control" name="new_email" placeholder="New email" required/>
+                                                    </td>
+                                                    <td>
+                                                        <button type="submit" name="submit" value="changemail" class="btn btn-info">
+                                                        <i class="fa fa-check-square fa-lg fa-fw"></i>Change Email</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </div>
+                                    </form>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="chguname">
+                                <table class="table table-hover table-striped">
+                                    <form method="post" action="" onkeypress="return alpha(event)">
+                                    {% csrf_token %}
+                                        <div class="input-group col-md-12">
+                                            <thead>
+                                                <h3>Change Username</h3>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" class="form-control" name="curr_usr" placeholder="Current Username" required/>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" name="new_usr" placeholder="New username" />
+                                                    </td>
+                                                    <td>
+                                                        <button type="submit" name="submit" value="changeuser" class="btn btn-danger">
+                                                        <i class="fa fa-check-square fa-lg fa-fw"></i>Change Username</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </div>
+                                    </form>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="chgpass">
+                                <table class="table table-hover table-striped">
+                                    <form method="post" action="" onkeypress="return alpha(event)">
+                                    {% csrf_token %}
+                                        <div class="input-group col-md-12">
+                                            <thead>
+                                                <h3>Change Password</h3>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input type="password" class="form-control" name="curr_pass" placeholder="Current Password" required />
+                                                    </td>
+                                                    <td>
+                                                        <input type="password" class="form-control" name="new_pass" placeholder="New Password" required />
+                                                    </td>
+                                                    <td>
+                                                        <input type="password" class="form-control" name="conf_pass" placeholder="Confirm Password" required/>
+                                                    </td>
+                                                    <td>
+                                                        <button type="submit" name="submit" value="changepass" class="btn btn-danger">
+                                                        <i class="fa fa-check-square fa-lg fa-fw"></i>Change Password</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </div>
+                                    </form>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+    <h3>RESTRICTED ACCESS. <strong>YOU MUST LOGIN FIRST!</strong></h3>
+    <a href="{% url 'home' %}" class="btn btn-primary">
+      <i class="fa fa-sign-in fa-lg">
+        Login
+      </i>
+    </a>
+  {% endif %}
+
+    <script type="text/javascript">
+        function changeClass(){
+            $('.showhide').click(function() {
+            $(this).removeClass('inactive');
+            $(this).addClass('active');
+            });
+        }
+    </script>
+
+{% endblock %}

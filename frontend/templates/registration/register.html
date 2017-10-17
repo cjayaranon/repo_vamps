@@ -1,0 +1,115 @@
+<!-- register.html -->
+{% extends "base2.html" %}
+
+{% load staticfiles bootstrap %}
+
+{% block title %} VAMPS|Log In {% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+{% endblock%}
+
+{% block content %}
+<title>VAMPS|Add New User</title>
+  <div id="breads">
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'home' %}">Main Menu</a>
+        </li>
+        <li>
+          <a href="" onclick="goBack()">Users</a>
+        </li>
+        <li class="active">Add New User</li>
+    </ol>
+  </div>
+    <div class="form" >
+        {% if error %}
+        <p class="alert alert-danger">
+        <i class="fa fa-exclamation-triangle fa-lg"></i>{{ error }}</p>
+        {% else %}
+        <p style="color:green">{{ success }} </p>
+        {% endif %}
+        <form method="POST" action="" onkeypress="return alpha(event)" class="no-spinners uniForm login-form" enctype="multipart/form-data">
+        <!-- <form method="POST" action="" onkeypress="return alpha(event)"> -->
+         {% csrf_token %}
+         <table class="table table-responsive table-condensed table-hover">
+         <!-- {{ form|bootstrap }} -->
+          <div class="input-group col-md-12">
+            <thead>
+              <h3>Add New User Form</h3>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <label>{{form.first_name.label}}</label>
+                </td>
+                <td>
+                  {{form.first_name}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label>{{form.last_name.label}}</label>
+                </td>
+                <td>
+                  {{form.last_name}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label>{{form.username.label}}</label>
+                </td>
+                <td>
+                  {{form.username}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label>{{form.password1.label}}</label>
+                </td>
+                <td>
+                  {{form.password1}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label>{{form.password2.label}}</label>
+                </td>
+                <td>
+                  {{form.password2}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label>{{form.position.label}}</label>
+                </td>
+                <td>
+                  {{form.position}}
+                </td>
+              </tr>
+            </tbody>
+          </div>
+        </table>
+            <button class="btn btn-danger" type="submit" value="Register">Register</button>
+            <button class="btn btn-info" type="button" onclick="window.location.href='/' ">Cancel</button>
+            </button>
+        </form>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+

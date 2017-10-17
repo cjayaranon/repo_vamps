@@ -1,0 +1,81 @@
+{% extends "base2.html" %}
+
+{% load static from staticfiles %}
+{% block title %} VAMPS|Log In {% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+{% endblock%}
+
+{% block content %}
+<!-- <title>VAMPS|Loan Application Form</title>
+
+<div class="login-page">
+
+
+    <div class="form">
+    <table border="1" cellpadding="5" cellspacing="5">
+
+    {{recent_message}}
+    <tr>
+    <td>NAME</td><td>Date of Application</td><td>Amount</td>
+    <td></td><td></td>
+    </tr>
+
+
+    {% for application in applications %}
+    <tr style="text-align:left;">
+    <td width="500">{{application.client}}</td>
+    <td width="250">{{application.app_date}}</td>
+    <td width="250">{{application.app_amount}}</td>
+    <td><input type="submit" value="Approve" class="no-spinners" onclick="window.location='{{request.get_full_path|slice:"26"}}approve/{{application.app_id}}';" /></td>
+    <td><input type="submit" value="Reject" class="no-spinners" onclick="window.location='{{request.get_full_path|slice:"26"}}reject/{{application.app_id}}';" /></td>
+    </tr>
+    {% empty %}
+    <li>SORRY THIS CLIENT HAS NO PENDING LOAN APPLICATION.</li>
+    {% endfor %}
+
+
+    </table>
+    </div>
+
+
+
+</div>
+
+
+
+ -->
+
+
+       <div class="form">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th align="left">Name</th>
+              <th align="left">Date of Application</th>
+              <th align="left">Amount</th>
+
+            </tr>
+          </thead>
+          <tbody>
+          {% for application in applications %}
+            <tr>
+              <td align="left">{{application.client}}</td>
+              <!-- <td align="left">
+                <a href="\client-profile\{{ Client.cust_number }}">{{Client.firstname}}</a></td> -->
+              <td align="left">{{application.app_date}}</td>
+              <td align="left">{{application.app_amount}}</td>
+              <td><input type="submit" value="Approve" class="no-spinners" onclick="window.location='{{request.get_full_path|slice:"26"}}approve/{{application.app_id}}';" /></td>
+              <td><input type="submit" value="Reject" class="no-spinners" onclick="window.location='{{request.get_full_path|slice:"26"}}reject/{{application.app_id}}';" /></td>
+            </tr>
+            {% empty %}
+            <li>Sorry this Client doesn't have any pending loan application</li>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+    
+{% endblock %}

@@ -1,0 +1,138 @@
+{% extends "base2.html" %}
+
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menu_overlay.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+{% endblock%}
+
+{% block content %}
+<title>VAMPS|Cashier</title>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav nav-list" id="menu">
+                <li class="sidebar-brand">
+                    <a>
+                        Cashier's Menu
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="accordion-heading" data-toggle="collapse" data-target="#submenu1"><span class="nav-header-primary">Invoice
+                    <span class="pull-right"><b class="caret"></b></span></span></a>
+
+                    <ul class="nav nav-list collapse" id="submenu1">
+                        <li>
+                            <a href="{% url 'pay_cbu_search' %}">Capital Contribution</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'loan_invoice' %}">Loan Payment</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'pay_maf_search' %}">MAF Contribution</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'pay_odf_search' %}">ODF Contribution</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'pay_structfee_search' %}">Restructuring Fee Payment</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="accordion-heading" data-toggle="collapse" data-target="#submenu3"><span class="nav-header-primary">Inquiries
+                    <span class="pull-right"><b class="caret"></b></span></span></a>
+
+                    <ul class="nav nav-list collapse" id="submenu3">
+                        <li>
+                            <a href="/client-lists/">View Client Account</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'old_loan_search' %}">View Past Loans</a>
+                        </li>
+                        <!-- <li>
+                            <a href="">View MAF</a>
+                        </li>
+                        <li>
+                            <a href="">View ODF</a>
+                        </li> -->
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#" class="accordion-heading" data-toggle="collapse" data-target="#submenu4"><span class="nav-header-primary">Releases
+                    <span class="pull-right"><b class="caret"></b></span></span></a>
+
+                    <ul class="nav nav-list collapse" id="submenu4">
+                        <li>
+                            <a href="{% url 'release_maf_search' %}">MAF Release</a>
+                        </li>
+                        <li>
+                            <a href="/home/cashier/release-odf-search/">ODF Withdrawal</a>
+                        </li>
+                        <!-- <li>
+                            <a href="">Savings Withdrawal</a>
+                        </li> -->
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#" class="accordion-heading" data-toggle="collapse" data-target="#submenu4"><span class="nav-header-primary">Profile
+                    <span class="pull-right"><b class="caret"></b></span></span></a>
+
+                    <ul class="nav nav-list collapse" id="submenu4">
+                        <li>
+                            <a href="/edit_profile/">Edit Profile</a>
+                        </li>
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid hidden-print">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="home">
+                                <h1>Welcome Cashier!</h1>
+                                <p>This is your main menu. You can choose what you want to do from the left side panel of the screen</p>
+                                <p>For some help, click <code>HELP TOPICS</code></p>
+                                <div class="help">
+                                    <a href="#" class="btn btn-info">
+                                        <i class="fa fa-question-circle fa-lg fa-fw"></i>
+                                        Help Topics</a>
+                                </div>
+                                <div style="padding-top: 1vw;">
+                                    <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">
+                                        <i class="fa fa-menu fa-lg fa-fw"></i>Show/Hide Menu</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+{% endblock %}
