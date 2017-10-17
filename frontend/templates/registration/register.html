@@ -1,5 +1,4 @@
 <!-- register.html -->
-<<<<<<< HEAD
 {% extends "base2.html" %}
 
 {% load staticfiles bootstrap %}
@@ -97,34 +96,4 @@
             </button>
         </form>
       </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 {% endblock %}
-
-
-
-=======
-{% extends "base.html" %}
-{% block title %}User Registration{% endblock %}
-{% block head %}User Registration{% endblock %}
-{% block content %}
-    <form method="post" action=".">{% csrf_token %}
-        <table border="0">
-            {{ form.as_table }}
-        </table>
-        <button type="submit" value="Register">Register</button>
-        <button type="button" onclick="window.location.href='/' ">Login</button>
-    </form>
-{% endblock %}
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
