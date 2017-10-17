@@ -1,0 +1,72 @@
+{% extends "base2.html" %}
+<!-- {% load crispy_forms_tags %} -->
+{% load staticfiles bootstrap %}
+
+{% block title %} VAMPS|Log In {% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+{% endblock%}
+
+{% block content %}
+<title>VAMPS|Preview New Client</title>
+<div id="breads">
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'home' %}">Main Menu</a>
+        </li>
+        <li>Client Services</li>
+        <li>
+            <a href="" onclick="goBack()">Add New Client</a>
+        </li>
+        <li class="active">Preview New Client</li>
+    </ol>
+</div>
+
+    <div class="form" >
+        {% if error %}
+        <p class="alert alert-danger">
+        <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i>{{ error }}</p>
+        {% else %}
+        <p style="color:green">{{ success }} </p>
+        {% endif %}
+
+
+        <!-- Form -->
+        <form method="POST" action="" onkeypress="return alpha(event)" class="login-form" enctype="multipart/form-data">
+         {% csrf_token %}
+         <!-- {{forms|bootstrap}} -->
+            <table class="table table-responsive table-condensed table-hover">
+                <div class="input-group col-md-12">
+                
+                <!-- <input value="{{forms.firstname.value}}" readonly/> -->
+                    <thead>
+                        <h3>Preview New Client</h3>
+                        <h5>Please review the data below before submission. If there are <code>errors</code> please go back to the previous page.</h5>
+                    </thead>
+                    <tbody>
+                        {{forms}}
+                        
+                    </tbody>
+                </div>
+            </table>
+            <button name="submit" type="submit" value="submit" class="btn btn-info btn-default">
+                <i class="fa fa-check-square fa-lg fa-fw"></i>
+                Add Client
+            </button>
+        </form>
+      </div>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+<script type="text/javascript">
+    function goBack(){
+        window.history.back();
+    }
+</script>
+
+{% endblock %}

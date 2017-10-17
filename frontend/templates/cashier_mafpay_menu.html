@@ -1,0 +1,103 @@
+{% extends "base2.html" %}
+
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+{% endblock%}
+
+{% block content %}
+    {% if user.is_authenticated %}
+<title>VAMPS|MAF Search</title>
+<div id="breads">
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'home' %}">Main Menu</a>
+        </li>
+        <li>Invoice</li>
+        <li class="active">
+          MAF Search
+        </li>
+    </ol>
+</div>
+
+    <div class="form">
+      <h3>Mortuary Assistance Fund (MAF) Contribution</h3>
+      <br>
+      <table class="table">
+        <form action="/home/cashier/pay-maf-search/" method="POST">
+          {% csrf_token %}
+          <div class="input-group col-md-12">
+            <input type="text" class="search-query form-control" placeholder="Search via last name" name="search" />
+            <span class="input-group-btn">
+              <button class="btn btn-danger" type="submit" value="Search" id="search-button">
+                <span class=" glyphicon glyphicon-search"></span>
+              </button>
+            </span>
+          </div>
+          {% if object_list == None %}
+          {% else %}
+          <thead>
+            <tr>
+              <th>
+                Search Results
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for items in object_list %}
+            <tr>
+              <td>{{items}}</td>
+              <td>
+                <a href="\home\cashier\pay-maf-search\pay-maf-form\{{items.cust_number}}" class="btn btn-info">
+                  <i class="fa fa-plus-circle fa-lg fa-fw"></i>
+                  Add MAF
+                </a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td>Search returned nothing</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+          {% endif %}
+        </form>
+          <!-- <thead>
+            <tr>
+              <th align="left"><p>Client Name</p></th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody> -->
+        </table>
+    </div>
+
+
+    {% else %}
+    <p>CANNOT DISPLAY LIST OF USERS. YOU MUST LOGIN FIRST! </p>
+    <a href="{% url '/' %}" class="btn btn-primary">
+      <i class="fa fa-sign-in fa-lg">
+        Login
+      </i>
+    </a>
+    {% endif %}
+
+<script>
+var text = document.getElementById('id_app_amount');
+text.onkeypress = text.onpaste = checkInput;
+
+function checkInput(e) {
+    var e = e || event;
+    var char = e.type == 'keypress' 
+        ? String.fromCharCode(e.keyCode || e.which) 
+        : (e.clipboardData || window.clipboardData).getData('Text');
+    if (/[^\d.$]/gi.test(char)) {
+        return false;
+    }
+}
+
+</script>
+{% endblock %}

@@ -1,0 +1,947 @@
+{% extends "base2.html" %}
+
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/client_profile_overlay.css' %}">
+    <link rel="stylesheet" type="text/css" media="print" href="{% static 'css/bootstrap.min.css' %}">
+{% endblock%}
+
+{% block content %}
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/js_files/create_loan.js' %}"></script>
+<title>VAMPS|Client Profile</title>
+    <div id="breads" class="hidden-print">
+        <ol class="breadcrumb">
+            <li>
+                <a href="{% url 'home' %}">Main Menu</a>
+            </li>
+            <li>Client Services</li>
+            <li>
+                <a href="/client-lists/">Client Search</a>
+            </li>
+            <li class="active">Client Profile</li>
+        </ol>
+    </div>
+
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="hidden-print">
+            <ul class="sidebar-nav nav-list" id="menu">
+                <li class="sidebar-brand">
+                </li>
+                <li class="active">
+                    <a href="#basic" class="active" data-toggle="tab" onclick="changeClass()">
+                        Basic Information
+                    </a>
+                </li>
+                <li>
+                    <a href="#loanApps" class="inactive" data-toggle="tab" onclick="changeClass()">
+                        Loan Applications
+                    </a>
+                </li>
+                <li>
+                    <a href="#activeLoans" class="inactive" data-toggle="tab" onclick="changeClass()">Active Loans
+                    </a>
+                </li>
+                <li>
+                    <a href="#loanledger" class="inactive" data-toggle="tab" onclick="changeClass()">
+                        Loan Ledger
+                    </a>
+                </li>
+                <li>
+                    <a href="#mafledger" class="inactive" data-toggle="tab" onclick="changeClass()">
+                        MAF Subsidiary Ledger
+                    </a>
+                </li>
+                <li>
+                    <a href="#odfledger" class="inactive" data-toggle="tab" onclick="changeClass()">
+                        ODF Subsidiary Ledger
+                    </a>
+                </li>
+                <!-- <li>
+                    <a href="#ledger" class="accordion-heading" data-toggle="collapse" onclick="changeClass()" data-target="#subLedge" ><span class="nav-header-primary">Ledger<span class="pull-right"><b class="caret"></b></span></span></a>
+
+                    <ul class="nav nav-list collapse inactive" id="subLedge">
+                        
+                    </ul>
+
+                </li> -->
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper hidden-print">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="basic" name="basic">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <h3>CLIENT PROFILE</h3>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <p>Name:</p>
+                                            </td>
+                                            <td>
+                                                <p>{{client_id}}</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>Age:</p>
+                                            </td>
+                                            <td>
+                                                <p>{{client_id.age}}</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>Civil Status:</p>
+                                            </td>
+                                            <td>
+                                                <p>{{client_id.civil_status}}</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>Phone Number:</p>
+                                            </td>
+                                            <td>
+                                                <p>{{client_id.phone_number}}</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>Address:</p>
+                                            </td>
+                                            <td>
+                                                <p>{{client_id.address}}</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>Date of Birth:</p>
+                                            </td>
+                                            <td>
+                                                <p>{{client_id.birthdate}}</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>Educational Attainment:</p>
+                                            </td>
+                                            <td>
+                                                <p>{{client_id.educ_attain}}</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>Occupation:</p>
+                                            </td>
+                                            <td>
+                                                <p>{{client_id.occupation}}</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>Membership Type:</p>
+                                            </td>
+                                            <td>
+                                                <p>{{client_id.membership_type}}</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>ID Provided:</p>
+                                            </td>
+                                            <td>
+                                                <p>{{client_id.client_id_type}} ({{client_id.client_id_number}})</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>Status</p>
+                                            </td>
+                                            <td>
+                                                {{client_id.client_status}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>Beneficiary:</p>
+                                            </td>
+                                            <td>
+                                                <p>{{client_id.beneficiary}}</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>Capital</p>
+                                            </td>
+                                            {% if client_cap %}
+                                            <td>
+                                                <p>{{client_cap.capital}}</p>
+                                            </td>
+                                            {% else %}
+                                            <td>
+                                                <p class="alert alert-danger">
+                                                    <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i>This Client does not have capital yet</p>
+                                            </td>
+                                            {% endif %}
+                                        </tr>
+                                        <tr class="hidden-print">
+                                            <td>
+                                                <a class="btn btn-info" href="#editInfo" data-toggle="tab" onclick="changeClass()">
+                                                    <i class="fa fa-check-square fa-lg fa-fw"></i>Edit Client Info
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>                       
+                            <div class="tab-pane fade" id="loanApps" name="loanApps">
+                                <table class="table table-hover ">
+                                    <thead>
+                                        <h3>LOAN APPLICATIONS</h3>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th align="left">Client</th>
+                                            <td>{{client_id}}</td>
+                                        </tr>
+                                        {% if loan_app %}
+                                        <tr>
+                                            <th align="left">Date of Application</th>
+                                            <th align="left">ID</th>
+                                            <th align="left">Type</th>
+                                            <th align="left">Amount</th>
+                                            <th align="left">Status</th>
+                                        </tr>
+                                            {% for loan_app in loan_app %}
+                                        <tr>
+                                            <td align="left">{{loan_app.app_date}}</td>
+                                            <td>{{loan_app.app_id}}</td>
+                                            <td align="left">{{loan_app.app_kind}}</td>
+                                            <td align="left">{{loan_app.app_amount}}</td>
+                                                {% if user.position == 'Admin' %}
+                                                    {% if loan_app.app_status == 'Pending' %}
+                                                        {% if loan_app.restruct == True %}
+                                                            {% if struct.approval_status == False %}
+                                                            <td>
+                                                                <input type="submit" value="Approve" class="no-spinners btn btn-sm btn-info btn-default" onclick="window.location='/approve-loan-application/approve/{{loan_app.app_id}}';" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="submit" value="Reject" class="no-spinners btn btn-sm btn-info btn-danger" onclick="window.location='/approve-loan-application/reject/{{loan_app.app_id}}';"/>
+                                                            </td>
+                                                            {% else %}
+                                                            <td>Restruct Approved</td>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            <td>
+                                                                <input type="submit" value="Approve" class="no-spinners btn btn-sm btn-info btn-default" onclick="window.location='/approve-loan-application/approve/{{loan_app.app_id}}';" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="submit" value="Reject" class="no-spinners btn btn-sm btn-info btn-danger" onclick="window.location='/approve-loan-application/reject/{{loan_app.app_id}}';"/>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif loan_app.app_status == 'Denied' %}
+                                                <td>Application Denied</td>
+                                                    {% elif loan_app.app_status == 'Approved' %}
+                                                        {% if loan_app.restruct == True %}
+                                                            <td>Restruct Approved</td>
+                                                        {% else %}
+                                                            <td>Application Approved</td>
+                                                        {% endif %}
+                                                    {% else %}
+                                                    {% endif %}
+                                                {% elif user.position == 'Bookkeeper' %}
+                                                    {% if loan_app.app_status == 'Pending' %}
+                                                        {% if loan_app.restruct == True %}
+                                                            {% if struct.approval_status == False %}
+                                                            <td>
+                                                                <input type="submit" value="Approve" class="no-spinners btn btn-sm btn-info btn-default" onclick="window.location='/approve-loan-application/approve/{{loan_app.app_id}}';" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="submit" value="Reject" class="no-spinners btn btn-sm btn-info btn-danger" onclick="window.location='/approve-loan-application/reject/{{loan_app.app_id}}';"/>
+                                                            </td>
+                                                            {% else %}
+                                                            <td>Restruct Approved</td>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            <td>
+                                                                <input type="submit" value="Approve" class="no-spinners btn btn-sm btn-info btn-default" onclick="window.location='/approve-loan-application/approve/{{loan_app.app_id}}';" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="submit" value="Reject" class="no-spinners btn btn-sm btn-info btn-danger" onclick="window.location='/approve-loan-application/reject/{{loan_app.app_id}}';"/>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif loan_app.app_status == 'Denied' %}
+                                                <td>Application Denied</td>
+                                                    {% elif loan_app.app_status == 'Approved' %}
+                                                        {% if loan_app.restruct == True %}
+                                                            <td>Restruct Approved</td>
+                                                        {% else %}
+                                                            <td>Application Approved</td>
+                                                        {% endif %}
+                                                    {% else %}
+                                                    {% endif %}
+                                                {% else %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% else %}
+                                        <tr>
+                                            <td style="color: red;">
+                                                <p class="alert alert-danger">
+                                                    <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i>Sorry this Client does not have existing loan applications</p>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% if client_cap %}
+                                            {% if client_id.client_status == 'Active' %}
+                                                {% if user.position == 'Bookkeeper' %}
+                                        <tr class="hidden-print">
+                                            <td>
+                                                <a href="\add-new-loan-application\{{cust_number}}" class="btn btn-info btn-default">
+                                                    <i class="fa fa-check-square fa-lg fa-fw"></i>Add New
+                                                </a>
+                                            </td>
+                                        </tr>
+                                                {% elif user.position == 'Admin' %}
+                                        <tr class="hidden-print">
+                                            <td>
+                                                <a href="\add-new-loan-application\{{cust_number}}" class="btn btn-info btn-default">
+                                                    <i class="fa fa-check-square fa-lg fa-fw"></i>Add New
+                                                </a>
+                                            </td>
+                                        </tr>
+                                                {% else %}
+                                        <tr class="hidden-print">
+                                            <!-- <td>
+                                                <a class="btn btn-default disabled">
+                                                    <i class="fa fa-check-square fa-lg fa-fw"></i>Add New
+                                                </a>
+                                            </td -->>
+                                            <td>
+                                                <p class="alert alert-warning">
+                                                    <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i>
+                                                    Cashier Cannot Add Loan Application
+                                                </p>
+                                            </td>
+                                        </tr>
+                                                {% endif %}
+                                            {% else %}
+                                        <tr>
+                                            <td>
+                                                <p class="alert alert-warning">
+                                                    <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i>
+                                                    Client status is Inactive; cannot add loan applications
+                                                </p>
+                                            </td>
+                                        </tr>
+                                            {% endif %}
+                                        {% else %}
+                                            {% if client_id.client_status == 'Active' %}
+                                        <tr class="hidden-print" readonly>
+                                            <!-- <td>
+                                                <a class="btn btn-default disabled">
+                                                    <i class="fa fa-check-square fa-lg fa-fw"></i>Add New
+                                                </a>
+                                            </td> -->
+                                            <td>
+                                                <p class="alert alert-warning">
+                                                    <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i>
+                                                    Client does not have capital; cannot add loan applications
+                                                </p>
+                                            </td>
+                                        </tr>
+                                            {% else %}
+                                        <tr class="hidden-print">
+                                            <td>
+                                                <p class="alert alert-warning">
+                                                    <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i>
+                                                    Client status is Inactive; cannot add loan applications
+                                                </p>
+                                            </td>
+                                        </tr>
+                                            {% endif %}
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="activeLoans" name="activeLoans">
+                                <table class="table table-hover ">
+                                    <thead>
+                                        <h3>LOAN DETAILS</h3>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th align="left">Name:</th>
+                                            <td>{{client_id}}</td>
+                                        </tr>
+                                        {{loan_id}}
+                                        {% for loan in loan_id %}
+                                            {% if loan.loan_status == 'Outstanding' %}
+                                        <tr>
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <h4>{{loan.type_of_loan}}</h4>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Application ID</td>
+                                                        <td>{{loan.loan_application.app_id}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Loan ID</td>
+                                                        <td>{{loan.id}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Loan Amount</td>
+                                                        <td>Php{{provi_tot|unordered_list|striptags}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Payment Duration</td>
+                                                        <td>{{loan.loan_application.approval_date}} to <strong style="color:red;">{{provi_xp|unordered_list|striptags}}</strong> ({{loan.loan_duration}} months)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </tr>
+                                            {% else %}
+                                        <tr>
+                                            <table class="table table-hover">
+                                                <tbody>
+                                                     <tr>
+                                                        <td>Application ID</td>
+                                                        <td>{{loan.loan_application.app_id}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Loan ID</td>
+                                                        <td>{{loan.id}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Loan Amount</td>
+                                                        <td>Php{{provi_tot|unordered_list|striptags}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Loan already paid</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% for loan2 in loan_id_2 %}
+                                            {% if loan2.loan_status == 'Outstanding' %}
+                                        <tr>
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <h4>{{loan2.type_of_loan}}</h4>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Application ID</td>
+                                                        <td>{{loan2.loan_application.app_id}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Loan ID</td>
+                                                        <td>{{loan2.id}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Loan Amount</td>
+                                                        <td>Php{{emer_tot|unordered_list|striptags}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Payment Duration</td>
+                                                        <td>{{loan2.loan_application.approval_date}} to <strong style="color:red;">{{emer_xp|unordered_list|striptags}}</strong> ({{loan2.loan_duration}} months)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </tr>
+                                            {% else %}
+                                        <tr>
+                                            <table class="table table-hover">
+                                                <tbody>
+                                                     <tr>
+                                                        <td>Application ID</td>
+                                                        <td>{{loan2.loan_application.app_id}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Loan ID</td>
+                                                        <td>{{loan2.id}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Loan Amount</td>
+                                                        <td>Php{{emer_tot|unordered_list|striptags}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Loan already paid</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="loanledger" name="loanledger">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <h3>LOAN LEDGER</h3>
+                                    </thead>
+                            {% for loan2 in loan_id_2 %}
+                                {% if emer_loan %}
+                                    <tbody>
+                                    {% if loan2.update == True %}
+                                        <tr class="hidden-print">
+                                            <td>
+                                                <input type="submit" value="Update" class="btn btn-danger" onclick="window.location='/update/{{loan2.id}}' ">
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr class="hidden-print">
+                                            <td>
+                                                <button class="btn btn-default disabled">
+                                                Update
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                        <tr bgcolor="#d3d3d3">
+                                            <th align="left">Client</th>
+                                            <td>{{client_id}}</td>
+                                            <th align="left">Interest:</th>
+                                            <td>{{loan2.interest_rate}}</td>
+                                            <th align="left" style="color: red;">Emergency Loan</th>
+                                            <th align="left">Loan ID <b class="pull-right">{{loan2.id}}</b></th>
+                                        </tr>
+                                        <tr>
+                                            <th align="left">Date</th>
+                                            <th align="left">Reference</th>
+                                            <th align="left">Debit</th>
+                                            <th align="left">Credit</th>
+                                            <th align="left">Interest</th>
+                                            <th align="left">Total Loan Recievable</th>
+                                        </tr>
+                                    {% for pay in emer_loan %}
+                                        <tr>
+                                            <td>{{pay.trans_date}}</td>
+                                            <td>{{pay.reference}}</td>
+                                            <td>{{pay.debit_loanGranted}}</td>
+                                            <td>{{pay.credit_payment}}</td>
+                                            <td>{{pay.int_per_month}}</td>
+                                            <td>{{pay.total_loan_recievable}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                {% endif %}
+                            {% endfor %}
+                                    <tbody>
+                                        <tr></tr>
+                                    </tbody>
+                            {% for loan1 in loan_id %}
+                                {% if loan_ledger %}
+                                    <tbody>
+                                    {% if loan1.update == True %}
+                                        <tr class="hidden-print">
+                                            <td>
+                                                <input type="submit" value="Update" class="no-spinners btn btn-danger" onclick="window.location='/update/{{loan1.id}}';">
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr class="hidden-print">
+                                            <td>
+                                                <button class="btn btn-default disabled">
+                                                Update
+                                                </button>
+                                            </td>
+                                    {% endif %}
+                                    {% if loan1.overdue == True %}
+                                            <td>
+                                                <input type="submit" class="no-spinners btn btn-danger" onclick="window.location='/restructure/{{loan1.id}}'"value="Restructure">
+                                            </td>
+                                    {% else %}
+                                            <td>
+                                                <button class="btn btn-default disabled">
+                                                Restructure
+                                                </button>
+                                            </td>
+                                    {% endif %}
+                                        </tr>
+                                        <tr bgcolor="#d3d3d3">
+                                            <th align="left">Client</th>
+                                            <td>{{client_id}}</td>
+                                            <th align="left">Interest:</th>
+                                            <td>{{loan1.interest_rate}}</td>  
+                                            <th align="left" style="color: red;">Providential Loan</th>
+                                            <th align="left">Loan ID <b class="pull-right">{{loan1.id}}</b></th>
+                                        </tr>
+                                        <tr>
+                                            <th align="left">Date</th>
+                                            <th align="left">Reference</th>
+                                            <th align="left">Debit</th>
+                                            <th align="left">Credit</th>
+                                            <th align="left">Interest</th>
+                                            <th align="left">Total Loan Recievable</th>
+                                        </tr>
+                                    {% for pay in loan_ledger %}
+                                        <tr>
+                                            <td>{{pay.trans_date}}</td>
+                                            <td>{{pay.reference}}</td>
+                                            <td>{{pay.debit_loanGranted}}</td>
+                                            <td>{{pay.credit_payment}}</td>
+                                            <td>{{pay.int_per_month}}</td>
+                                            <td>{{pay.total_loan_recievable}}</td>
+                                        </tr>
+                                    </tbody>
+                                    {% endfor %}
+                                {% endif %}
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                {% if loan_ledger_out %}
+                                    <tbody>
+                                        <tr bgcolor="#d3d3d3">
+                                            <th align="left">Client</th>
+                                            <td>{{client_id}}</td>
+                                            <th align="left">Interest:</th>
+                                            <td>{{loan1.interest_rate_over}}</td>
+                                            <th align="left" style="color: red;">Providential Loan</th>
+                                            <th align="left">Loan ID <b class="pull-right">{{loan1.id}}</b></th>
+                                        </tr>
+                                        <tr>
+                                            <th align="left">Date</th>
+                                            <th align="left">Reference</th>
+                                            <th align="left">Debit</th>
+                                            <th align="left">Credit</th>
+                                            <th align="left">Interest</th>
+                                            <th align="left">Total Loan Recievable</th>
+                                        </tr>
+                                    {% for pay in loan_ledger_out %}
+                                        <tr>
+                                            <td>{{pay.trans_date}}</td>
+                                            <td>{{pay.reference}}</td>
+                                            <td>{{pay.debit_loanGranted}}</td>
+                                            <td>{{pay.credit_payment}}</td>
+                                            <td>{{pay.int_per_month}}</td>
+                                            <td>{{pay.total_loan_recievable}}</td>
+                                        </tr>
+                                    </tbody>
+                                    {% endfor %}
+                                    </tbody>
+                                {% endif %}
+                            {% endfor %}
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="mafledger" name="mafledger">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <h3>MAF SUBSIDIARY LEDGER</h3>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th align="left">Client</th>
+                                            <td>{{client_id}}</td>
+                                            <th align="left">Beneficiary</th>
+                                            <td>{{client_id.beneficiary}}</td>
+                                        </tr>
+                                        {% if mafmaf %}
+                                        <tr>
+                                            <th align="left">Date</th>
+                                            <th align="left">Reference</th>
+                                            <th align="left">Debit</th>
+                                            <th align="left">Credit</th>
+                                            <th align="left">Total</th>
+                                        </tr>
+                                        {% for mafmaf in mafmaf %}
+                                        <tr>
+                                            <td>{{mafmaf.maf_contrib_date}}</td>
+                                            <td>{{mafmaf.maf_ref}}</td>
+                                            <td>{{mafmaf.maf_debit}}</td>
+                                            <td>{{mafmaf.maf_credit}}</td>
+                                            <td>{{mafmaf.maf_total}}</td>
+                                        {% endfor %}
+                                        {% else %}
+                                        <tr>
+                                            <td style="color: red;">
+                                                <p class="alert alert-danger">
+                                                    <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i>Sorry this Client does not have MAF contributions</p>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="odfledger" name="odfledger">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <h3>ODF SUBSIDIARY LEDGER</h3>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th align="left">Client</th>
+                                            <td>{{client_id}}</td>
+                                        </tr>
+                                        {% if odfs %}
+                                        <tr>
+                                            <th align="left">Date</th>
+                                            <th align="left">Reference</th>
+                                            <th align="left">Debit</th>
+                                            <th align="left">Credit</th>
+                                            <th align="left">Total</th>
+                                        </tr>
+                                        {% for odfs in odfs %}
+                                        <tr>
+                                            <td>{{odfs.odf_contrib_date}}</td>
+                                            <td>{{odfs.odf_ref}}</td>
+                                            <td>{{odfs.odf_debit}}</td>
+                                            <td>{{odfs.odf_credit}}</td>
+                                            <td>{{odfs.odf_total}}</td>
+                                        {% endfor %}
+                                        {% else %}
+                                        <tr>
+                                            <td style="color: red;">
+                                                <p class="alert alert-danger">
+                                                    <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i>Sorry this Client does not have ODF contributions</p>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="editInfo" name="editinfo">
+                                <table class="table table-hover">
+                                    <form method="post" action="" onkepress="return alpha(event)">
+                                        {% csrf_token %}
+                                        <thead>
+                                            <td>
+                                                <h3>Edit Client Info</h3>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <button type="submit" name="submit" value="changeinfo" class="btn btn-info">
+                                                    <i class="fa fa-check-square fa-lg fa-fw"></i>
+                                                        Save
+                                                </button>
+                                                <a href="#basic" class="btn btn-danger" data-toggle="tab" onclick="changeClass()">
+                                                    <i class="fa fa-arrow fa-lg fa-fw"></i>
+                                                    Cancel
+                                                </a>
+                                            </td>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <p>First Name:</p>
+                                                </td>
+                                                <td>
+                                                    {{client_id.firstname}}
+                                                </td>
+                                                <td>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>Middle Name:</p>
+                                                </td>
+                                                <td>
+                                                    {{client_id.middlename}}
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="middlename" placeholder="New Middle Name"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>Last Name:</p>
+                                                </td>
+                                                <td>
+                                                    {{client_id.lastname}}
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="lastname" placeholder="New Last Name"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>Civil Status:</p>
+                                                </td>
+                                                <td>
+                                                    <p>{{client_id.civil_status}}</p>
+                                                </td>
+                                                <td>
+                                                    <select name="civil_status" class="form-control">
+                                                        <option></option>
+                                                        <option>Single</option>
+                                                        <option>Married</option>
+                                                        <option>Widowed</option>
+                                                        <option>Separated</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>Phone Number:</p>
+                                                </td>
+                                                <td>
+                                                    <p>{{client_id.phone_number}}</p>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="phone_number" id="id_phone_number" placeholder="New Phone Number"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>Address:</p>
+                                                </td>
+                                                <td>
+                                                    <p>{{client_id.address}}</p>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="address" placeholder="New Address"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>Date of Birth:</p>
+                                                </td>
+                                                <td>
+                                                    <p>{{client_id.birthdate}}</p>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="birthdate" placeholder="yyyy/mm/dd"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>Educational Attainment:</p>
+                                                </td>
+                                                <td>
+                                                    <p>{{client_id.educ_attain}}</p>
+                                                </td>
+                                                <td>
+                                                    <select name="educ_attain" class="form-control">
+                                                        <option></option>
+                                                        <option>Grade School</option>
+                                                        <option>High School</option>
+                                                        <option>College Undergraduate</option>
+                                                        <option>College Graduate</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>Occupation:</p>
+                                                </td>
+                                                <td>
+                                                    <p>{{client_id.occupation}}</p>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="occupation" placeholder="New Occupation"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>Membership Type:</p>
+                                                </td>
+                                                <td>
+                                                    <p>{{client_id.membership_type}}</p>
+                                                </td>
+                                                <td>
+                                                    <select name="membership_type" class="form-control">
+                                                        <option></option>
+                                                        <option>Allied Worker</option>
+                                                        <option>Driver</option>
+                                                        <option>Operator</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>ID Provided:</p>
+                                                </td>
+                                                <td>
+                                                    <p>{{client_id.client_id_type}}</p>
+                                                </td>
+                                                <td>
+                                                    <select name="client_id_type" class="form-control">
+                                                        <option></option>
+                                                        <option>SSS</option>
+                                                        <option>TIN</option>
+                                                        <option>Others</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>ID Number</p>
+                                                </td>
+                                                <td>
+                                                    {{client_id.client_id_number}}
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="client_id_number" placeholder="New ID"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>Beneficiary:</p>
+                                                </td>
+                                                <td>
+                                                    <p>{{client_id.beneficiary}}</p>
+                                                </td>
+                                                <td>
+                                                    <select name="beneficiary" class="form-control">
+                                                        <option></option>
+                                                        <option>Single</option>
+                                                        <option>Spouse</option>
+                                                        <option>Parents</option>
+                                                        <option>Heirs</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </form>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+<script type="text/javascript">
+    function goBack(){
+        window.history.back();
+    }
+</script>
+
+<script type="text/javascript">
+    function changeClass(){
+        $('.showhide').click(function() {
+        $(this).removeClass('inactive');
+        $(this).addClass('active');
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+    $(".tabs").tabs();
+    });
+</script>
+
+
+{% endblock %}

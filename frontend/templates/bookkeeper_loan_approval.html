@@ -9,7 +9,7 @@
 {% endblock%}
 
 {% block content %}
-<title>VAMPS|Loan Application Form</title>
+<!-- <title>VAMPS|Loan Application Form</title>
 
 <div class="login-page">
 
@@ -32,7 +32,10 @@
     <td><input type="submit" value="Approve" class="no-spinners" onclick="window.location='{{request.get_full_path|slice:"26"}}approve/{{application.app_id}}';" /></td>
     <td><input type="submit" value="Reject" class="no-spinners" onclick="window.location='{{request.get_full_path|slice:"26"}}reject/{{application.app_id}}';" /></td>
     </tr>
+    {% empty %}
+    <li>SORRY THIS CLIENT HAS NO PENDING LOAN APPLICATION.</li>
     {% endfor %}
+
 
     </table>
     </div>
@@ -43,5 +46,36 @@
 
 
 
+ -->
 
+
+       <div class="form">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th align="left">Name</th>
+              <th align="left">Date of Application</th>
+              <th align="left">Amount</th>
+
+            </tr>
+          </thead>
+          <tbody>
+          {% for application in applications %}
+            <tr>
+              <td align="left">{{application.client}}</td>
+              <!-- <td align="left">
+                <a href="\client-profile\{{ Client.cust_number }}">{{Client.firstname}}</a></td> -->
+              <td align="left">{{application.app_date}}</td>
+              <td align="left">{{application.app_amount}}</td>
+              <td><input type="submit" value="Approve" class="no-spinners" onclick="window.location='{{request.get_full_path|slice:"26"}}approve/{{application.app_id}}';" /></td>
+              <td><input type="submit" value="Reject" class="no-spinners" onclick="window.location='{{request.get_full_path|slice:"26"}}reject/{{application.app_id}}';" /></td>
+            </tr>
+            {% empty %}
+            <li>Sorry this Client doesn't have any pending loan application</li>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+    
 {% endblock %}

@@ -15,9 +15,9 @@ class MyUserChangeForm(UserChangeForm):
 class UserAdmin(AuthUserAdmin):
     form = MyUserChangeForm
     fieldsets = (
-        (None, {'fields': ('username', 'password','position', 'userpic')}),
+        (None, {'fields': ('username', 'password','position',)}),
         (_('Personal info'), {
-            'fields': ('first_name', 'last_name', 'email', 'position','userpic')
+            'fields': ('first_name', 'last_name', 'email', 'position',)
         }
         ),
         (_('Permissions'), {

@@ -16,68 +16,68 @@ $(document).ready(function() {
     var yescoll = false;
     var nocoll = false;
 
-    $("#btn-prov").click(function(){
-        $(this).css('background-color','#888888');
-        $("#btn-em").css('background-color','');
+    // $("#btn-prov").click(function(){
+    //     $(this).css('background-color','#888888');
+    //     $("#btn-em").css('background-color','');
 
-        providential = true;
-        emergency = false;
+    //     providential = true;
+    //     emergency = false;
 
-        $("#prov-1").show();
-        $("#prov-2").hide();
-        $("#prov-3").hide();
-        $("#prov-4").hide();
-        $("#amount").hide();
-        $("#final-submit").hide();
-        loan_type = "Providential"
-    }); 
+    //     $("#prov-1").show();
+    //     $("#prov-2").hide();
+    //     $("#prov-3").hide();
+    //     $("#prov-4").hide();
+    //     $("#amount").hide();
+    //     $("#final-submit").hide();
+    //     loan_type = "Providential"
+    // }); 
 
-    $("#btn-em").click(function(){
-        // Add script to check existing balance
-        $(this).css('background-color','#888888');
-        $("#btn-prov").css('background-color','');
+    // $("#btn-em").click(function(){
+    //     // Add script to check existing balance
+    //     $(this).css('background-color','#888888');
+    //     $("#btn-prov").css('background-color','');
 
-        providential = false;
-        emergency = true;
+    //     providential = false;
+    //     emergency = true;
 
-        $("#prov-1").hide();
-        $("#prov-2").hide();
-        $("#prov-3").hide();
-        $("#prov-4").hide();
-        $("#amount").show();
-        $("#final-submit").show();
-        loan_type = "Emergency"
-    }); 
+    //     $("#prov-1").hide();
+    //     $("#prov-2").hide();
+    //     $("#prov-3").hide();
+    //     $("#prov-4").hide();
+    //     $("#amount").show();
+    //     $("#final-submit").show();
+    //     loan_type = "Emergency"
+    // }); 
 
-    $("#btn-oper").click(function(){
-        $(this).css('background-color','#888888');
-        $("#btn-driv").css('background-color','');
+    // $("#btn-oper").click(function(){
+    //     $(this).css('background-color','#888888');
+    //     $("#btn-driv").css('background-color','');
 
-        operator = true;
-        driver = false;
+    //     operator = true;
+    //     driver = false;
 
-        $("#prov-1").show();
-        $("#prov-2").show();
-        $("#prov-3").hide();
-        $("#prov-4").hide();
-        $("#amount").hide();
-        $("#final-submit").hide();
-    }); 
+    //     $("#prov-1").show();
+    //     $("#prov-2").show();
+    //     $("#prov-3").hide();
+    //     $("#prov-4").hide();
+    //     $("#amount").hide();
+    //     $("#final-submit").hide();
+    // }); 
 
-    $("#btn-driv").click(function(){
-        $(this).css('background-color','#888888');
-        $("#btn-oper").css('background-color','');
+    // $("#btn-driv").click(function(){
+    //     $(this).css('background-color','#888888');
+    //     $("#btn-oper").css('background-color','');
 
-        operator = false;
-        driver = true;
+    //     operator = false;
+    //     driver = true;
 
-        $("#prov-1").show();
-        $("#prov-2").hide();
-        $("#prov-3").show();
-        $("#prov-4").hide();
-        $("#amount").hide();
-        $("#final-submit").hide();
-    }); 
+    //     $("#prov-1").show();
+    //     $("#prov-2").hide();
+    //     $("#prov-3").show();
+    //     $("#prov-4").hide();
+    //     $("#amount").hide();
+    //     $("#final-submit").hide();
+    // }); 
 
     $("#btn-inline").click(function(){
 
@@ -87,12 +87,13 @@ $(document).ready(function() {
         inline = true;
         outline = false;
 
-        $("#prov-1").show();
-        $("#prov-2").show();
-        $("#prov-3").show();
-        $("#prov-4").hide();
-        $("#amount").hide();
-        $("#final-submit").hide();
+        // $("#prov-1").show();
+        // $("#prov-2").show();
+        // $("#prov-3").show();
+        // $("#prov-4").hide();
+        $("#nxt").show();
+        // $("#amount").hide();
+        // $("#final-submit").hide();
     }); 
     $("#btn-outline").click(function(){
         // Add script to Check CBU
@@ -102,13 +103,15 @@ $(document).ready(function() {
         inline = false;
         outline = true;
 
-        $("#prov-1").show();
-        $("#prov-2").show();
-        $("#prov-3").show();
-        $("#prov-4").hide();
-        $("#amount").hide();
-        $("#final-submit").hide();
-    }); 
+        // $("#prov-1").show();
+        // $("#prov-2").show();
+        // $("#prov-3").show();
+        // $("#prov-4").hide();
+        $("#nxt").show();
+        // $("#amount").hide();
+        // $("#final-submit").hide();
+    });
+
 
     $("#btn-yescoll").click(function(){
         // Add script to Check CBU

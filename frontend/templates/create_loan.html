@@ -12,8 +12,17 @@
 <script src="{% static 'js/jquery.js' %}"></script>
 <script src="{% static 'js/js_files/create_loan.js' %}"></script>
 <title>VAMPS|Loan Application Form</title>
+<div id="breads">
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'home' %}">Main Menu</a>
+        </li>
+        <li>Client Services</li>
+        <li class="active">Add New Client</li>
+    </ol>
+</div>
 
-<div class="login-page">
+
     <div class="form">
         CREATE LOAN<hr>
         <div>
@@ -50,8 +59,6 @@
         <input id="val-comaker" type="button" hidden value="{{comaker}}"/>
         <input id="val-pending" type="button" hidden value="None"/>
     </div>
-
-</div>
 
 
 

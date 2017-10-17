@@ -1,0 +1,54 @@
+{% extends "base2.html" %}
+
+{% load staticfiles bootstrap %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login_overlay.css' %}">
+{% endblock%}
+
+{% block content %}
+<title>VAMPS|System Message</title>
+<div class="login-page">
+	<div class="form">
+		<div>
+			{% if error %}
+			<h3 class="alert alert-danger">
+				<i class="fa fa-exclamation-triangle fa-lg"></i>ERROR
+			</h3>
+			<p>{{ error }}</p>
+			<ul>
+				{% for items in list %}
+				<li align="left">{{items}}</li>
+				{% endfor %}
+				{% for items in list2 %}
+				<li align="left">{{items}}</li>
+				{% endfor %}
+			</ul>
+			<div>
+				<a class="btn btn-info" onclick="goBack()">
+					<i class="fa fa-wrench fa-lg"></i>
+					Edit
+				</a>
+			</div>
+			{% else %}
+			<h3 class="alert alert-success">
+				<i class="fa fa-check-circle-o"></i>SUCCESS</h3>
+			<p>{{ success }}</p>
+			<div>
+				<a class="btn btn-info" href="{% url 'home' %}">
+					<i class="fa fa-home fa-lg"></i>
+					Home
+				</a>
+			</div>
+			{% endif %}
+		</div>
+		
+	</div>
+</div>
+
+<script type="text/javascript">
+    function goBack(){
+        window.history.back();
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends "base2.html" %}
+
+{% load staticfiles bootstrap %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+{% endblock%}
+
+{% block content %}
+<title>VAMPS|ODF Release</title>
+<div id="breads">
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'home' %}">Main Menu</a>
+        </li>
+        <li>Releases</li>
+        <li class="active">
+            ODF Search
+        </li>
+    </ol>
+</div>
+
+  {% if user.is_authenticated %}  
+    
+      <div class="form">
+        <h3>Operators-Drivers Fund (ODF) Release
+        </h3>
+        <table class="table">
+          <form action="/home/cashier/release-odf-search/" method="POST">
+            {% csrf_token %}
+          <div class="input-group col-md-12">
+          <input type="text" class="search-query form-control" placeholder="Search via Last Name" name="search" />
+            <span class="input-group-btn">
+              <button class="btn btn-danger" type="submit" value="Search" id="search-button">
+                <span class=" glyphicon glyphicon-search"></span>
+              </button>
+            </span>
+        </div>
+        <!-- </form> -->
+          {% if object_list == None %}
+          {% else %}
+          <thead>
+            <tr>
+              <th>
+                Search Results
+              </th>
+              <!-- <th align="left"><p>Client</p></th> -->
+              <!-- <th align="left"><p>ODF</p></th> -->
+              <!-- <th align="left"><p>Balance</p></th> -->
+            </tr>
+          </thead>
+          
+          <tbody>
+            <tr>
+              <td></td>
+              <td align="left">{{object_list.odf_client}}</td>
+              <td align="left">{{object_list.odf_total}}</td>
+              {% if object_list.odf_total != 0.00 %}
+                {% if object_list.odf_total != None %}
+              <td>
+                <a href="/home/cashier/release-odf-search/release-odf/{{object_list.odf_client.cust_number}}" class="btn btn-info" name="submit">
+                  <i class="fa fa-check-square fa-lg fa-fw"></i>Release ODF
+                </a>
+              </td>
+                {% else %}
+                <td>
+                <a class="btn btn-info disabled">
+                  <i class="fa fa-check-square fa-lg fa-fw"></i>
+                  Release ODF
+                </a>
+              </td>
+                {% endif %}
+              {% else %}
+              <td>
+                <a class="btn btn-info disabled">
+                  <i class="fa fa-check-square fa-lg fa-fw"></i>
+                  Release ODF
+                </a>
+              </td>
+              {% endif %}
+            </tr>
+              {% endif %}
+            
+          </tbody>
+        </form>
+        </table>
+      </div>
+  
+
+    
+  {% else %}
+    <p>CANNOT DISPLAY LIST OF USERS. YOU MUST LOGIN FIRST! </p>
+    <a href="{% url '/' %}" class="btn btn-primary">
+      <i class="fa fa-sign-in fa-lg">
+        Login
+      </i>
+    </a>
+  {% endif %}
+{% endblock %}

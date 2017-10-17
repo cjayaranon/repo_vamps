@@ -1,0 +1,234 @@
+{% extends "base2.html" %}
+
+{% load staticfiles bootstrap %}
+<!-- {% load crispy_forms_tags %} -->
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+{% endblock%}
+
+{% block content %}
+<script src="{% static 'js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/js_files/create_loan.js' %}"></script>
+
+<title>VAMPS|Approve Loan Form</title>
+    <div id="breads">
+        <ol class="breadcrumb">
+            <li>
+                <a href="{% url 'home' %}">Main Menu</a>
+            </li>
+            <li>Client Services</li>
+            <li>Client Search</li>
+            <li>
+                <a href="" onclick="goBack()">Client Profile</a>
+            </li>
+            <li class="active">Loan Application Form</li>
+        </ol>
+    </div>
+<style type="text/css">
+    textarea{
+        height: 25px;
+    }
+</style>
+    <div class="form" >
+        <div>
+            <h3>Loan Approval Form</h3>
+        </div>
+        {% if error %}
+        <p class="alert alert-danger">
+        <i class="fa fa-exclamation triangle fa-lg"></i>{{ error }}</p>
+        {% else %}
+        <p style="color:green">{{ success }} </p>
+        {% endif %}
+        <form method="POST" action="" onkeypress="return alpha(event)" class="no-spinners">
+         {% csrf_token %}
+         <!-- {{ coll|bootstrap }} -->
+         <!-- {{ com|bootstrap }} -->
+         <table class="table">
+            <tr>
+                <td>
+                    <table class="table table-hover">
+                        
+                            <tr>
+                                <td>
+                                    Client:
+                                </td>
+                                <th>{{client}}</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Membership Type:
+                                </td>
+                                <th>
+                                    {{client.membership_type}}
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Capital:
+                                </td>
+                                <th>
+                                    Php {{cap}}
+                                </th>                                
+                            </tr>
+                            <tr>
+                                <td>
+                                    Type of Loan:
+                                </td>
+                                <th>
+                                    {{type_of_loan}}
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Loan Amount:
+                                </td>
+                                <th>
+                                    Php {{app.app_amount}}
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Interest Rate:
+                                </td>
+                                <th>
+                                    {{intrs}}
+                                </th>
+                            </tr>
+                            {% if type_of_loan == 'Emergency' %}
+                            {% else %}
+                            <tr>
+                                <td>
+                                    Months to Pay:
+                                </td>
+                                <th>
+                                    {{mots}}
+                                </th>
+                            </tr>
+                            {% endif %}
+                    </table>
+                </td>
+                <td>
+                    <table class="table table-hover">
+                        <tr>
+                            {% if client.membership_type == 'Operator' %}
+                            <th>
+                            Please select Operator Line:
+                            </th>
+                            <td colspan=2>
+                                <input type="radio" id="btn-inline" name="line" value="Inside Line">Inside Line
+                            </td>
+                            <td>
+                                <input type="radio" id="btn-outline" name="line" value="Outside Line">Outside Line
+                            </td>
+                            {% else %}
+                            
+                            {% endif %}
+                        </tr>
+                            {% if type_of_loan == 'Providential' %}
+                        <tr>
+                            <th>Voucher No.</th>
+                            <td>
+                                <input class="form-control" name="voucher" type="text">
+                            </td>
+                        </tr>
+                            {% endif %}
+                            {% if cond %}
+                        <tr>
+                            <th>
+                                Co-Maker<i style="color: red;">*</i>
+                            </th>
+                            <td colspan=2>
+                                {{com.app_comaker}}
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Collateral<i style="color: red;">*</i>
+                            </th>
+                            <td colspan=2>
+                                {{coll.name}}
+                                {{coll.owner}}
+                                {{coll.val}}
+                            </td>
+                            <td colspan=2>
+                                {{coll.description}}
+                            </td>
+                        </tr>
+                        {% else %}
+                        {% endif %}
+                        {% if type_of_loan == 'Emergency' %}
+                        <tr>
+                            <th>Voucher No.</th>
+                            <td>
+                                <input class="form-control" name="voucher" type="text">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Months to Pay</th>
+                            <td>
+                                <input class="form-control" name="mot" type="number">
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan=2>
+                    <i style="color: red">*</i>Fill out either of <code>Co-Maker</code> or <code>Collateral</code>. Required for Loans exceeding the Clients Capital
+                </td>
+            </tr>
+            <tr>
+                <td colspan=2>
+                    <div class="alert alert-warning">
+                        <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i>
+                        Never leave this page without pressing the <code>Next</code> button. Loan application is already saved as <code>Approved</code> but actual Loan is not.
+                    </div>
+                </td>
+            </tr>
+         </table>
+         <br>
+         {% if client.membership_type == 'Driver' %}
+            <div id="nxt">
+                <button type="submit" class="btn btn-info btn-lg">
+                    <i class="fa fa-check-square fa-lg"></i>
+                    Next
+                </button>
+            </div>
+        {% else %}
+            <div id="nxt" hidden>
+                <button type="submit" class="btn btn-info btn-lg">
+                    <i class="fa fa-check-square fa-lg"></i>
+                    Next
+                </button>
+            </div>
+        {% endif %}
+        </form>
+      </div>
+
+<script>
+
+var text = document.getElementById('id_app_amount');
+text.onkeypress = text.onpaste = checkInput;
+
+function checkInput(e) {
+    var e = e || event;
+    var char = e.type == 'keypress' 
+        ? String.fromCharCode(e.keyCode || e.which) 
+        : (e.clipboardData || window.clipboardData).getData('Text');
+    if (/[^\d.$]/gi.test(char)) {
+        return false;
+    }
+}
+
+</script>
+
+<script type="text/javascript">
+    function goBack(){
+        window.history.back();
+    }
+</script>
+{% endblock %}

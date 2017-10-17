@@ -1,13 +1,13 @@
-<!-- success.html -->
+
 {% extends "base.html" %}
-{% block title %}Registration Successful{% endblock %}
-{% block head %}
- Registration Completed Successfully
-{% endblock %}
+
 {% block content %}
+<title>VAMPS|Register</title>
 	<h1> Thank you for registering new user!</h1>
 	<p>The new user can now login</p>
     </br>
-    <button type="button" onclick="window.location.href='/' ">Login</button>
-    <a href="/web-admin/">Go back to admin page</a>
+    <button class="btn btn-primary" type="button" onclick="window.location.href='/logout/' ">
+        <i class="fa fa-sign-in fa-lg"></i>
+        Login</button>
+    <a href="/home/web-admin/">Go back to admin page</a>
 {% endblock %}

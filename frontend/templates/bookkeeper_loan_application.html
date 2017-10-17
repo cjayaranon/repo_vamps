@@ -1,6 +1,6 @@
 {% extends "base2.html" %}
 
-{% load staticfiles %}
+{% load staticfiles bootstrap %}
 {% load crispy_forms_tags %}
 
 {% block css %}
@@ -10,27 +10,86 @@
 
 {% block content %}
 <title>VAMPS|Loan Application Form</title>
+    <div id="breads">
+        <ol class="breadcrumb">
+            <li>
+                <a href="{% url 'home' %}">Main Menu</a>
+            </li>
+            <li>Client Services</li>
+            <li>Client Search</li>
+            <li>
+                <a href="" onclick="goBack()">Client Profile</a>
+            </li>
+            <li class="active">Loan Application Form</li>
+        </ol>
+    </div>
 
-<div class="login-page">
     <div class="form" >
     <div>
         <h3>Loan Application Form</h3>
+        <br>
+
     </div>
         {% if error %}
-          <p class="alert alert-danger">
-          <i class="fa fa-exclamation triangle fa-lg"></i>{{ error }}</p>
+        <p class="alert alert-danger">
+        <i class="fa fa-exclamation triangle fa-lg"></i>{{ error }}</p>
         {% else %}
-          <p class="alert alert-success">
-          <i class="fa fa-check-circle fa-lg"></i>{{ success }}</p>
+        <p style="color:green">{{ success }} </p>
         {% endif %}
         <form method="POST" action="" onkeypress="return alpha(event)" class="no-spinners">
          {% csrf_token %}
-         {{ form|crispy }}
-         <!-- <table>
-         {{ form.as_table }}
-         </table> -->
-
-         <!-- <input type="submit" value="Add Loan" class="no-spinners" /> -->
+         <!-- {{ form|bootstrap }} -->
+         <table class="table table-hover">
+            <div class="input-group col-md-12">
+                <tbody>
+                    <tr>
+                        <td>
+                            <p>Client:</p>
+                        </td>
+                        <td>
+                            <p>{{client}}</p>
+                        </td>
+                        <td>
+                            <p>Date:</p>
+                        </td>
+                        <td>
+                            <p>{{form.app_date}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Membership Type:</p>
+                        </td>
+                        <td>
+                            <p>{{client.membership_type}}</p>
+                        </td>
+                        <td>
+                            <p>Type of Loan:</p>
+                        </td>
+                        <td>
+                            <p>{{form.app_kind}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Client Capital:</p>
+                        </td>
+                        <td>
+                            <p>{{cap.capital}}</p>
+                        </td>
+                        <td>
+                            <p>Loan Amount:</p>
+                        </td>
+                        <td>
+                            <p>{{form.app_amount}}</p>
+                            <p class="alert alert-warning">
+                                <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i>Take caution this is monetary value in Philippine Peso
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </div>
+         </table>
          <br>
             <button type="submit" class="btn btn-info">
                 <i class="fa fa-check-square fa-lg"></i>
@@ -39,8 +98,6 @@
         </form>
       </div>
 
-
-</div>
 <script>
 
 var text = document.getElementById('id_app_amount');
@@ -57,4 +114,11 @@ function checkInput(e) {
 }
 
 </script>
+
+<script type="text/javascript">
+    function goBack(){
+        window.history.back();
+    }
+</script>
+
 {% endblock %}

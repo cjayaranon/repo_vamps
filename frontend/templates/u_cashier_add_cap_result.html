@@ -1,0 +1,89 @@
+{% extends "base2.html" %}
+
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+{% endblock%}
+
+{% block content %}
+    {% if user.is_authenticated %}
+<title>VAMPS|Capital Search</title>
+<div id="breads">
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'home' %}">Main Menu</a>
+        </li>
+        <li>Invoice</li>
+        <li class="active">
+          Capital Search
+        </li>
+    </ol>
+</div>
+
+    <div class="form">
+      <h3>Capital Contribution</h3>
+      <br>
+      <table class="table">
+        <form action="/pay-odf-result/" method="GET">
+          <div class="input-group col-md-12">
+            <input type="text" class="search-query form-control" placeholder="Search via last name" name="search" />
+            <span class="input-group-btn">
+              <button class="btn btn-danger" type="submit" value="Search" id="search-button">
+                <span class=" glyphicon glyphicon-search"></span>
+              </button>
+            </span>
+          </div>
+        </form>
+          <thead>
+            <tr>
+              <th align="left"><p>ID</p></th>
+              <th align="left"><p>Last Name</p></th>
+              <th align="left"><p>First Name</p></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for Client in object_list %}
+            <tr>
+              <td align="left">{{Client.cust_number}}</td>
+              <td align="left">{{Client.lastname}}</td>
+              <td align="left">{{Client.firstname}}</td>
+              <td>
+                <a href="\pay-cbu-form\{{Client.cust_number}}" class="btn btn-info">
+                  <i class="fa fa-plus-circle fa-lg fa-fw"></i>Contribute
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+
+
+    {% else %}
+    <p>CANNOT DISPLAY LIST OF USERS. YOU MUST LOGIN FIRST! </p>
+    <a href="{% url '/' %}" class="btn btn-primary">
+      <i class="fa fa-sign-in fa-lg">
+        Login
+      </i>
+    </a>
+    {% endif %}
+
+<script>
+var text = document.getElementById('id_app_amount');
+text.onkeypress = text.onpaste = checkInput;
+
+function checkInput(e) {
+    var e = e || event;
+    var char = e.type == 'keypress' 
+        ? String.fromCharCode(e.keyCode || e.which) 
+        : (e.clipboardData || window.clipboardData).getData('Text');
+    if (/[^\d.$]/gi.test(char)) {
+        return false;
+    }
+}
+
+</script>
+{% endblock %}

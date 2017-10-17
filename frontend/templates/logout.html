@@ -1,18 +1,21 @@
 {% extends "base.html" %}
-{% load staticfiles %}
-{% block title %}Welcome to Django{% endblock %}
-{% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/home.css '%}"/>
+{% load staticfiles bootstrap %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/login_overlay.css' %}">
 {% endblock %}
-{% block content %}
-<form class="form">
 
-</form>
-    <h1> THANK YOU FOR USING VAMPS!!! </h1>
-    {{ user.first_name }}
-    <a class="btn btn-primary" href="/">
-        <i class="fa fa-sign-in fa-lg"></i>
-        Login
-    </a>
-    <!-- <button type="button" onclick="window.location.href='/' ">Login</button> -->
+{% block content %}
+<title>VAMPS|User Logged Out</title>
+<div class="login-page">
+    <div class="form">
+        <div>
+            <h1> THANK YOU FOR USING VAMPS </h1>
+            {{ user.first_name }}
+        </div>
+        <a class="btn btn-primary" href="{% url 'home' %}">
+            <i class="fa fa-sign-in fa-lg"></i>
+            Login
+        </a>
+    </div>
+</div>
 {% endblock %}
