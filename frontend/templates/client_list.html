@@ -1,72 +1,80 @@
 {% extends "base2.html" %}
-{% load staticfiles %}
-{% block title %}Welcome to Django{% endblock %}
-{% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/home.css '%}"/>
-{% endblock %}
+
+{% load static from staticfiles %}
+{% block title %} VAMPS|Log In {% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+{% endblock%}
+
 {% block content %}
-<div class="container">
-  <div class="row" style="padding-top: 10vw">
-    <form action="/client-lists/" method="GET">
-      <div id="custom-search-input">
-        <div class="input-group col-md-12">
-          <input type="text" class="search-query form-control" placeholder="Search" name="search" />
+<title>VAMPS|View Clients</title>
+<div id="breads">
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'home' %}">Main Menu</a>
+        </li>
+        <li>Client Services</li>
+        <li class="active">
+          Client Search
+        </li>
+    </ol>
+</div>
+
+  {% if user.is_authenticated %}  
+    
+      <div class="form">
+        <h3> Search Client</h3>
+        <br>
+        <table class="table">
+          <form action="/client-lists/" method="POST">
+            {% csrf_token %}
+          <div class="input-group col-md-12">
+          <input type="text" class="search-query form-control" placeholder="Search via Last Name" name="search" />
             <span class="input-group-btn">
               <button class="btn btn-danger" type="submit" value="Search" id="search-button">
                 <span class=" glyphicon glyphicon-search"></span>
               </button>
             </span>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-
-	{% if user.is_authenticated %} 	
-  		<!-- {% for Client in object_list %}
-    		{{ Client.cust_number }} {{ Client.firstname }} {{ Client.lastname }}<br>
-    	{% empty %}
-    	<p>NO SUCH CLIENT</p>
-  		{% endfor %} -->
-      <div class="container">
-        <table class="table table-striped">
+          </div>
+          {% if object_list == None %}
+          {% else %}
           <thead>
             <tr>
-              <th>ID</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Membership Type</th>
+              <th>Search Results</th>
             </tr>
           </thead>
           <tbody>
-          {% for Client in object_list %}
+            {% for items in object_list %}
             <tr>
-              <td>{{Client.cust_number}}</td>
-              <td>{{Client.firstname}}</td>
-              <td>{{Client.lastname}}</td>
-              <td>{{Client.membership_type}}</td>
+              <td>{{items}}</td>
+              <td>
+                <a href="\client-profile\{{items.cust_number}}" class="btn btn-info">
+                  <i class="fa fa-chevron-circle-right fa-lg fa-fw"></i>
+                  View Profile
+                </a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td>Search returned nothing</td>
             </tr>
             {% endfor %}
           </tbody>
+          {% endif %}
+          </form>
         </table>
       </div>
-        
-        <!-- <p>No Clients</p> -->
+    
 
-  		<!-- <a href="/bookkeeper/">Go back to bookkeeper page</a> -->
-      <!-- <a href="{% url 'logout' %}" class="btn btn-danger">
-        <i class="fa fa-sign-out fa-lg"></i>
-        Logout
-      </a> -->
-		<!-- <button type="button" onclick="window.location.href='/logout/' ">Logout</button> -->
-		
-	{% else %}
-		<p>CANNOT DISPLAY LIST OF USERS. YOU MUST LOGIN FIRST! </p>
+    
+  {% else %}
+    <p>CANNOT DISPLAY LIST OF USERS. YOU MUST LOGIN FIRST! </p>
     <a href="{% url '/' %}" class="btn btn-primary">
       <i class="fa fa-sign-in fa-lg">
         Login
       </i>
     </a>
-			<!-- <button type="button" onclick="window.location.href='/' ">Login</button> -->
-	{% endif %}
+  {% endif %}
 {% endblock %}

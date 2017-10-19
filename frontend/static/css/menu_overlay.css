@@ -9,12 +9,12 @@
  }
 
  p {
-    color: #ffffff;
+    color: #000000;
  }
 
  .header {
     position: fixed;
-    height: 13vw;
+    height: 9vw;
     background-color: #ffffff;
  }
 
@@ -37,10 +37,11 @@
     position: fixed;
     left: 250px;
     width: 0;
-    height: 100%;
+
+    height: 300%;
     margin-left: -250px;
     overflow-y: auto;
-    background: #000;
+    background: #545556;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -55,7 +56,7 @@
     width: 100%;
     position: absolute;
     padding: 15px;
-    margin-top: 13vw;
+    margin-top: 9vw;
 }
 
 #wrapper.toggled #page-content-wrapper {
@@ -68,7 +69,7 @@
 .sidebar-nav {
     position: absolute;
     top: 0;
-    width: 260px;
+    width: 280px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -82,12 +83,12 @@
 .sidebar-nav li a {
     display: block;
     text-decoration: none;
-    color: #999999;
+    color: #FFFFFF;
 }
 
 .sidebar-nav li a:hover {
     text-decoration: none;
-    color: #f9dc5c;
+    color: #FED766;
     background: rgba(255,255,255,0.2);
 }
 
@@ -103,7 +104,7 @@
 }
 
 .sidebar-nav > .sidebar-brand a {
-    color: #bc0900;
+    color: #FE4A49;
 }
 
 .sidebar-nav > .sidebar-brand a:hover {
@@ -121,7 +122,8 @@
     }
 
     #sidebar-wrapper {
-        width: 260px;
+        width: 280px;
+        height: 100%;
     }
 
     #wrapper.toggled #sidebar-wrapper {
@@ -139,46 +141,15 @@
     }
 }
 
-/*.btn {
-  background-color: #740001;
-  font-family: 'SegoeUI', 'sans-serif';
-  text-transform: uppercase;
-  outline: 0;
-  width: 100%;
-  border: 0;
-  border-radius: 0 !important;
-  padding: 15px;
-  color: #fff;
-  font-size: 14px;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
-  cursor: pointer;
-}*/
-
-.btn2 {
-    background-color: #49306b;
-    font-family: 'SegoeUI', 'sans-serif';
-    text-transform: uppercase;
-    outline: 0;
-    width: 100%;
-    border: 0;
-    border-radius: 0 !important;
-    padding: 15px;
-    color: #fff;
-    font-size: 14px;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
-  cursor: pointer;
-}
-
-.btn:hover {
-    background: #ed254e;
+.help .btn:hover {
+    background: #FE4A49;
+    border-color: #FE4A49;
     color: #ffffff;
 }
 
-.btn2:hover {
-    background: #6b479b;
-    color: #ffffff;
+.btn-danger:hover {
+    background-color: #FE4A49;
+    border-color: #FE4A49;
 }
 
 /*help button*/

@@ -1,0 +1,82 @@
+{% extends "base2.html" %}
+
+{% load static from staticfiles %}
+{% block title %} VAMPS|Log In {% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+{% endblock%}
+
+{% block content %}
+<title>VAMPS|View Clients</title>
+<div id="breads">
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'home' %}">Main Menu</a>
+        </li>
+        <li>Client Services</li>
+        <li class="active">
+            Client Search
+        </li>
+    </ol>
+</div>
+
+  {% if user.is_authenticated %}  
+    
+      <div class="form">
+        <table class="table table-hover">
+          <form action="/results/" method="GET">
+          <div class="input-group col-md-12">
+          <input type="text" class="search-query form-control" placeholder="Search via last name" name="search" />
+            <span class="input-group-btn">
+              <button class="btn btn-danger" type="submit" value="Search" id="search-button">
+                <span class=" glyphicon glyphicon-search"></span>
+              </button>
+            </span>
+        </div>
+        </form>
+          <thead>
+            <tr>
+              <!-- <th align="left"><p>ID</p></th> -->
+              <th align="left"><p>Last Name</p></th>
+              <th align="left"><p>First Name</p></th>
+              <th align="left"><p>Membership Type</p></th>
+            </tr>
+          </thead>
+          {% for Client in object_list %}
+          <tbody>
+            <tr>
+              <!-- <td align="left">{{Client.cust_number}}</td> -->
+              <td align="left">{{Client.lastname}}</td>
+              <td align="left">{{Client.firstname}}</td>
+              <td align="left">{{Client.membership_type}}</td>
+              <td>
+                <a href="\client-profile\{{ Client.cust_number }}" class="btn btn-info btn-sm">
+                <i class="fa fa-chevron-circle-right fa-fw"></i>View Clients Profile
+                </a>
+              </td>
+            </tr>
+              {% empty %}
+            <tr>
+              <td style="color: red;">
+                <p class="alert alert-danger">
+                <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i>Sorry this Client does not exist</p>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+  
+
+    
+  {% else %}
+    <p>CANNOT DISPLAY LIST OF USERS. YOU MUST LOGIN FIRST! </p>
+    <a href="{% url '/' %}" class="btn btn-primary">
+      <i class="fa fa-sign-in fa-lg">
+        Login
+      </i>
+    </a>
+  {% endif %}
+{% endblock %}

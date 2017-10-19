@@ -3,17 +3,17 @@ body{
 }
 
 .login-page {
-  width: 360px;
-  padding: 5% 0 0;
+  width: 300px;
+  padding: 1% 0 0;
   margin: -15px auto auto;
 }
 
 .form {
   position: relative;
   z-index: 1;
-  background: #F4fffd;
+  background: #EFF1F3;
   max-width: 360px;
-  margin: auto auto auto;
+  margin: 50px auto auto;
   padding: 45px;
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);

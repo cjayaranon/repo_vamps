@@ -1,7 +1,6 @@
 {% extends "base2.html" %}
 
 {% load static from staticfiles %}
-{% block title %} VAMPS|Log In {% endblock %}
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
@@ -11,22 +10,81 @@
 {% block content %}
 <script src="{% static 'js/jquery.js' %}"></script>
 <script src="{% static 'js/js_files/create_loan.js' %}"></script>
-<title>VAMPS|Loan Application Form</title>
-
-<div class="login-page">
-    <div class="form">
-        CURRENT LOAN<hr>
-        <div>Name: {{name}}</div><hr>
-        <div>Balance: Php {{amount}}</div><hr>
-        <div>Type: {{type_of_loan}}</div><hr>
-        <div>Payment Duration: {{duration}} months</div><hr>
-        <div>Loan Expiration: {{expiration}} </div><hr>
-        <div>Monthly Interest: {{interest_rate}}% </div><hr>
+<title>VAMPS|Loan Details</title>
+    <div id="breads">
+        <ol class="breadcrumb">
+            <li>
+                <a href="{% url 'home' %}">Main Menu</a>
+            </li>
+            <li>Loans</li>
+            <li>
+                <a href="" onclick="goBack()">Search</a>
+            </li>
+            <li class="active">View Loan Details</li>
+        </ol>
     </div>
 
-</div>
+    <div class="form">
+        <table class="table table-hover">
+            <div class="input-group col-md-12">
+                <thead>
+                    <h3>Loan Details</h3>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <p>Name:</p>
+                        </td>
+                        <td>{{name}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Balance:</p>
+                        </td>
+                        <td>
+                            <p>Php {{amount}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Loan Type:</p>
+                        </td>
+                        <td>
+                            <p>{{type_of_loan}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Payment Duration:</p>
+                        </td>
+                        <td>
+                            <p>{{duration}} months</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Loan Expiration:</p>
+                        </td>
+                        <td>
+                            <p>{{expiration}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Monthly Interest:</p>
+                        </td>
+                        <td>
+                            <p>{{interest_rate}}%</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </div>
+        </table>
+    </div>
 
-
-
-
+    <script type="text/javascript">
+        function goBack(){
+            window.history.back();
+        }
+    </script>
 {% endblock %}

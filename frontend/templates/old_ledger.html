@@ -1,0 +1,140 @@
+{% extends "base2.html" %}
+
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+{% endblock%}
+
+{% block content %}
+    {% if user.is_authenticated %}
+    <title>VAMPS|Old Loan Search</title>
+	<div id="breads">
+	    <ol class="breadcrumb">
+	        <li>
+	            <a href="{% url 'home' %}">Main Menu</a>
+	        </li>
+	        <li>
+	        	<a href="{% url 'old_loan_search' %}">Old Loan Search</a>
+	        </li>
+	        <li class="active">
+	          Old Loan
+	        </li>
+	    </ol>
+	</div>
+	<div>
+		<table class="table table-hover">
+			<thead>
+				<h3>LOAN DETAILS</h3>
+			</thead>
+			<tbody>
+				<tr>
+					<th align="left">Client</th>
+					<td>{{loan.client}}</td>
+					<th>{{loan.type_of_loan}} Loan</th>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><strong style="color: red;">PAID</strong></td>
+				</tr>
+			</tbody>
+		</table>
+		{% if loan %}
+		<table class="table table-hover">
+			<tbody>
+				<tr>
+					<th align="left">Application ID</th>
+					<td>{{loan.loan_application.app_id}}</td>
+					<th align="left">Loan ID</th>
+					<td>{{loan.id}}</td>
+					<th align="left">Loan Amount</th>
+					<td>{{loan.loan_amount}}</td>
+					<th align="left">Duration</th>
+					<td>{{loan.loan_duration}} months</td>
+				</tr>
+			{% if ins %}
+				<tr>
+					<th align="left">Date</th>
+					<th align="left">Reference</th>
+					<th align="left">Debit/Loan Granted</th>
+					<th align="left">Credit/Payment</th>
+					<th align="left">Interest (per month)</th>
+					<th align="left">Total Loan Receivable</th>
+				</tr>
+				{% for items in ins %}
+				<tr>
+					<td>{{items.trans_date}}</td>
+					<td>{{items.reference}}</td>
+					<td>{{items.debit_loanGranted}}</td>
+					<td>{{items.credit_payment}}</td>
+					<td>{{items.int_per_month}}</td>
+					<td>{{items.total_loan_recievable}}</td>
+				</tr>
+				{% endfor %}
+			{% endif %}
+			</tbody>
+		{% endif %}
+		</table>
+		{% if out %}
+		<table class="table table-hover">
+			<tbody>
+				<tr>
+					<th align="left">Application ID</th>
+					<td>{{loan.loan_application.app_id}}</td>
+					<th align="left">Loan ID</th>
+					<td>{{loan.id}}</td>
+					<th align="left">Loan Amount</th>
+					<td>{{loan.loan_amount}}</td>
+					<th align="left">Duration</th>
+					<td>{{loan.loan_duration}} months</td>
+				</tr>
+				<tr>
+					<th align="left">Date</th>
+					<th align="left">Reference</th>
+					<th align="left">Debit/Loan Granted</th>
+					<th align="left">Credit/Payment</th>
+					<th align="left">Interest (per month)</th>
+					<th align="left">Total Loan Receivable</th>
+				</tr>
+				{% for items in out %}
+				<tr>
+					<td>{{items.trans_date}}</td>
+					<td>{{items.reference}}</td>
+					<td>{{items.debit_loanGranted}}</td>
+					<td>{{items.credit_payment}}</td>
+					<td>{{items.int_per_month}}</td>
+					<td>{{items.total_loan_recievable}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% endif %}
+	</div>
+    {% else %}
+    <p>CANNOT DISPLAY LIST OF USERS. YOU MUST LOGIN FIRST! </p>
+    <a href="{% url '/' %}" class="btn btn-primary">
+      <i class="fa fa-sign-in fa-lg">
+        Login
+      </i>
+    </a>
+    {% endif %}
+
+<script>
+var text = document.getElementById('id_app_amount');
+text.onkeypress = text.onpaste = checkInput;
+
+function checkInput(e) {
+    var e = e || event;
+    var char = e.type == 'keypress' 
+        ? String.fromCharCode(e.keyCode || e.which) 
+        : (e.clipboardData || window.clipboardData).getData('Text');
+    if (/[^\d.$]/gi.test(char)) {
+        return false;
+    }
+}
+
+</script>
+{% endblock %}
