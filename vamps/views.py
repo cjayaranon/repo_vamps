@@ -880,27 +880,22 @@ class ClientProfile(View):
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        try:
-            # with: everything
-            # without:
-            client_id = Client.objects.get(cust_number=int(self.kwargs.get('id')))
-            client_cap = client_capital.objects.filter(cap_client=client_id).last()
-            
-            mafmaf = MAF.objects.filter(maf_client=client_id)
-            odfs = ODF.objects.filter(odf_client=client_id)
+        client_id = Client.objects.get(cust_number=int(self.kwargs.get('id')))
+        client_cap = client_capital.objects.filter(cap_client=client_id).last()
 
-            loan_app = loanApplication.objects.filter(client=client_id)
-            loan_id = Loan.objects.filter(client=client_id, loan_status="Outstanding", type_of_loan="Providential")
-            loan_id_2 = Loan.objects.filter(client=client_id, loan_status="Outstanding", type_of_loan="Emergency")
-            loan_ledger = payLoanLedger_in.objects.filter(client__type_of_loan="Providential", client=loan_id)
-            emer_loan = payLoanLedger_in.objects.filter(client__type_of_loan="Emergency", client=loan_id_2)
-            loan_ledger_out = payLoanLedger_over.objects.filter(client=loan_id)
-            print "try"
-            if Restruct.objects.get(loan_root=loan_app, approval_status=True):
-                print "if"
-                stru = Restruct.objects.get(loan_root=loan_app, approval_status=True)
-                # struc = stru[0].loan_root
-                
+        mafmaf = MAF.objects.filter(maf_client=client_id)
+        odfs = ODF.objects.filter(odf_client=client_id)
+
+        loan_app = loanApplication.objects.filter(client=client_id)
+        loan_id = Loan.objects.filter(client=client_id, loan_status="Outstanding", type_of_loan="Providential")
+        loan_id_2 = Loan.objects.filter(client=client_id, loan_status="Outstanding", type_of_loan="Emergency")
+        loan_ledger = payLoanLedger_in.objects.filter(client__type_of_loan="Providential", client=loan_id)
+        emer_loan = payLoanLedger_in.objects.filter(client__type_of_loan="Emergency", client=loan_id_2)
+        loan_ledger_out = payLoanLedger_over.objects.filter(client=loan_id)
+        stru = Restruct.objects.filter(loan_root=loan_app, approval_status=True)
+        try:
+            if stru.exists():
+                print 'go'
                 provi_tot = []
                 emer_tot = []
                 provi_datestart = []
@@ -917,7 +912,7 @@ class ClientProfile(View):
                     emer_tot.append(loan_id_2[index].loan_amount + loan_id_2[index].loan_overflow)
                     emer_datestart.append(loan_id_2[index].loan_application.approval_date)
                     emer_xp.append(compute_dur(loan_id_2[index].loan_application.approval_date, loan_id_2[index].loan_duration))
-                print "struct: True"
+
                 return render(request, 'client_profile.html', {
                     'client_cap': client_cap,
                     'loan_app': loan_app,
@@ -946,6 +941,7 @@ class ClientProfile(View):
                 emer_datestart = []
                 provi_xp = []
                 emer_xp = []
+
                 for index in xrange(len(loan_id)):
                     provi_tot.append(loan_id[index].loan_amount + loan_id[index].loan_overflow)
                     provi_datestart.append(loan_id[index].loan_application.approval_date)
@@ -955,7 +951,7 @@ class ClientProfile(View):
                     emer_tot.append(loan_id_2[index].loan_amount + loan_id_2[index].loan_overflow)
                     emer_datestart.append(loan_id_2[index].loan_application.approval_date)
                     emer_xp.append(compute_dur(loan_id_2[index].loan_application.approval_date, loan_id_2[index].loan_duration))
-                print "struct: False"
+
                 return render(request, 'client_profile.html', {
                     'client_cap': client_cap,
                     'loan_app': loan_app,
@@ -974,27 +970,166 @@ class ClientProfile(View):
                     'odfs': odfs,
                     'cust_number': client_id.cust_number,
                     'client_id': client_id,
+                    'struct':stru
                 })
         except:
-            # with: Client
-            # without: everything
-            # pwde wala MAF, ODF, client_capital
-            client_id = Client.objects.get(cust_number=int(self.kwargs.get('id')))
-            client_cap = client_capital.objects.filter(cap_client=client_id).last()
+            pass
+        # try:
+        #     # with: everything
+        #     # without:
+        #     print "try"
+        #     if Restruct.objects.get(loan_root=loan_app, approval_status=True):
+        #         print "if"
+        #         stru = Restruct.objects.get(loan_root=loan_app, approval_status=True)
+        #         # struc = stru[0].loan_root
+                
+        #         provi_tot = []
+        #         emer_tot = []
+        #         provi_datestart = []
+        #         emer_datestart = []
+        #         provi_xp = []
+        #         emer_xp = []
+
+        #         for index in xrange(len(loan_id)):
+        #             provi_tot.append(loan_id[index].loan_amount + loan_id[index].loan_overflow)
+        #             provi_datestart.append(loan_id[index].loan_application.approval_date)
+        #             provi_xp.append(compute_dur(loan_id[index].loan_application.approval_date, loan_id[index].loan_duration))
+                
+        #         for index in xrange(len(loan_id_2)):
+        #             emer_tot.append(loan_id_2[index].loan_amount + loan_id_2[index].loan_overflow)
+        #             emer_datestart.append(loan_id_2[index].loan_application.approval_date)
+        #             emer_xp.append(compute_dur(loan_id_2[index].loan_application.approval_date, loan_id_2[index].loan_duration))
+        #         print "struct: True"
+        #         return render(request, 'client_profile.html', {
+        #             'client_cap': client_cap,
+        #             'loan_app': loan_app,
+        #             'loan_id': loan_id,
+        #             'loan_id_2': loan_id_2,
+        #             'provi_tot':provi_tot,
+        #             'provi_datestart': provi_datestart,
+        #             'provi_xp': provi_xp,
+        #             'emer_tot':emer_tot,
+        #             'emer_datestart':emer_datestart,
+        #             'emer_xp': emer_xp,
+        #             'loan_ledger': loan_ledger,
+        #             'emer_loan': emer_loan,
+        #             'loan_ledger_out':loan_ledger_out,
+        #             'mafmaf': mafmaf,
+        #             'odfs': odfs,
+        #             'cust_number': client_id.cust_number,
+        #             'client_id': client_id,
+        #             'struct':stru
+        #         })
+        #     else:
+        #         print "else1"
+        #         provi_tot = []
+        #         emer_tot = []
+        #         provi_datestart = []
+        #         emer_datestart = []
+        #         provi_xp = []
+        #         emer_xp = []
+        #         for index in xrange(len(loan_id)):
+        #             provi_tot.append(loan_id[index].loan_amount + loan_id[index].loan_overflow)
+        #             provi_datestart.append(loan_id[index].loan_application.approval_date)
+        #             provi_xp.append(compute_dur(loan_id[index].loan_application.approval_date, loan_id[index].loan_duration))
+                
+        #         for index in xrange(len(loan_id_2)):
+        #             emer_tot.append(loan_id_2[index].loan_amount + loan_id_2[index].loan_overflow)
+        #             emer_datestart.append(loan_id_2[index].loan_application.approval_date)
+        #             emer_xp.append(compute_dur(loan_id_2[index].loan_application.approval_date, loan_id_2[index].loan_duration))
+        #         print "struct: False"
+        #         return render(request, 'client_profile.html', {
+        #             'client_cap': client_cap,
+        #             'loan_app': loan_app,
+        #             'loan_id': loan_id,
+        #             'loan_id_2': loan_id_2,
+        #             'provi_tot':provi_tot,
+        #             'provi_datestart': provi_datestart,
+        #             'provi_xp': provi_xp,
+        #             'emer_tot':emer_tot,
+        #             'emer_datestart':emer_datestart,
+        #             'emer_xp': emer_xp,
+        #             'loan_ledger': loan_ledger,
+        #             'emer_loan': emer_loan,
+        #             'loan_ledger_out':loan_ledger_out,
+        #             'mafmaf': mafmaf,
+        #             'odfs': odfs,
+        #             'cust_number': client_id.cust_number,
+        #             'client_id': client_id,
+        #         })
+
+        # except:
+        #     # with: Client
+        #     # without: everything
+        #     # pwde wala MAF, ODF, client_capital
+        #     client_id = Client.objects.get(cust_number=int(self.kwargs.get('id')))
+        #     client_cap = client_capital.objects.filter(cap_client=client_id).last()
             
-            mafmaf = MAF.objects.filter(maf_client=client_id)
-            odfs = ODF.objects.filter(odf_client=client_id)
+        #     mafmaf = MAF.objects.filter(maf_client=client_id)
+        #     odfs = ODF.objects.filter(odf_client=client_id)
 
-            print 'except'
+        #     print 'except'
 
-            return render(request, 'client_profile.html', {
-                'client_cap': client_cap,
-                'loan_app': loan_app,
-                'mafmaf': mafmaf,
-                'odfs': odfs,
-                'cust_number': client_id.cust_number,
-                'client_id': client_id,
-            })
+        #     return render(request, 'client_profile.html', {
+        #         'client_cap': client_cap,
+        #         'loan_app': loan_app,
+        #         'mafmaf': mafmaf,
+        #         'odfs': odfs,
+        #         'cust_number': client_id.cust_number,
+        #         'client_id': client_id,
+        #     })
+
+        # else:
+        #     client_id = Client.objects.get(cust_number=int(self.kwargs.get('id')))
+        #     client_cap = client_capital.objects.filter(cap_client=client_id).last()
+            
+        #     mafmaf = MAF.objects.filter(maf_client=client_id)
+        #     odfs = ODF.objects.filter(odf_client=client_id)
+
+        #     loan_app = loanApplication.objects.filter(client=client_id)
+        #     loan_id = Loan.objects.filter(client=client_id, loan_status="Outstanding", type_of_loan="Providential")
+        #     loan_id_2 = Loan.objects.filter(client=client_id, loan_status="Outstanding", type_of_loan="Emergency")
+        #     loan_ledger = payLoanLedger_in.objects.filter(client__type_of_loan="Providential", client=loan_id)
+        #     emer_loan = payLoanLedger_in.objects.filter(client__type_of_loan="Emergency", client=loan_id_2)
+        #     loan_ledger_out = payLoanLedger_over.objects.filter(client=loan_id)
+
+        #     print "else1"
+        #     provi_tot = []
+        #     emer_tot = []
+        #     provi_datestart = []
+        #     emer_datestart = []
+        #     provi_xp = []
+        #     emer_xp = []
+        #     for index in xrange(len(loan_id)):
+        #         provi_tot.append(loan_id[index].loan_amount + loan_id[index].loan_overflow)
+        #         provi_datestart.append(loan_id[index].loan_application.approval_date)
+        #         provi_xp.append(compute_dur(loan_id[index].loan_application.approval_date, loan_id[index].loan_duration))
+            
+        #     for index in xrange(len(loan_id_2)):
+        #         emer_tot.append(loan_id_2[index].loan_amount + loan_id_2[index].loan_overflow)
+        #         emer_datestart.append(loan_id_2[index].loan_application.approval_date)
+        #         emer_xp.append(compute_dur(loan_id_2[index].loan_application.approval_date, loan_id_2[index].loan_duration))
+        #     print "struct: False"
+        #     return render(request, 'client_profile.html', {
+        #         'client_cap': client_cap,
+        #         'loan_app': loan_app,
+        #         'loan_id': loan_id,
+        #         'loan_id_2': loan_id_2,
+        #         'provi_tot':provi_tot,
+        #         'provi_datestart': provi_datestart,
+        #         'provi_xp': provi_xp,
+        #         'emer_tot':emer_tot,
+        #         'emer_datestart':emer_datestart,
+        #         'emer_xp': emer_xp,
+        #         'loan_ledger': loan_ledger,
+        #         'emer_loan': emer_loan,
+        #         'loan_ledger_out':loan_ledger_out,
+        #         'mafmaf': mafmaf,
+        #         'odfs': odfs,
+        #         'cust_number': client_id.cust_number,
+        #         'client_id': client_id,
+        #     })
+
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
