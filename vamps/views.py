@@ -32,32 +32,6 @@ from vamps.forms import RegistrationForm
 
 User = get_user_model()
 
-@login_required
-import datetime, pdfkit
-
-# Create your views here.
-#views.py
-from vamps.forms import RegistrationForm
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from django.core.urlresolvers import reverse
-from django.contrib.auth import authenticate
-from django.contrib.auth import logout as auth_logout
-from django.contrib.auth import login as auth_login
-from django.views.decorators.csrf import csrf_protect
-from django.shortcuts import render_to_response, render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
-from django.template import RequestContext, Context
-from django.template.loader import get_template
-from django.contrib.auth import get_user_model
-from django.views.generic import View
-from django.conf import settings
-from django.views.generic import TemplateView
-from clients.models import Client, Loan, LoanInformation, loanApplication, payLoan
-from clients.forms import ClientForm, LoanApplicationForm, PayLoanForm
-
-User = get_user_model()
-
 
 @csrf_protect
 def register(request):

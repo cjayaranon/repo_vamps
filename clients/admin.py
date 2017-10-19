@@ -1,9 +1,5 @@
 from django.contrib import admin
-<<<<<<< HEAD
 from .models import Client, client_capital, loanApplication, Loan, payLoanLedger_in, payLoanLedger_over, MAF, ODF, Collateral, Restruct
-=======
-from .models import Client, loanApplication, Loan, LoanInformation, payLoan
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 # Register your models here.
 
 
