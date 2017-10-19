@@ -1,11 +1,5 @@
-<<<<<<< HEAD
 from django.forms import ModelForm, Textarea
 from clients.models import Client, Collateral, client_capital, MAF, ODF, loanApplication, Restruct, payLoanLedger_in, payLoanLedger_over, Loan
-=======
-from django.forms import ModelForm
-from clients.models import Client
-from clients.models import loanApplication, payLoan
->>>>>>> 549418614833c8e5b4d8caf88e6746fdc1fb1760
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit, Field
 from crispy_forms.bootstrap import FormActions, PrependedText, AppendedText
