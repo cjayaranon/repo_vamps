@@ -340,7 +340,7 @@ class Loan(models.Model):
     )
     loan_duration = models.PositiveIntegerField()
     loan_status = models.CharField(
-        max_length=11, 
+        max_length=12, 
         choices=(
             ('Outstanding', "Outstanding"),
             ('Paid', "Paid"),
