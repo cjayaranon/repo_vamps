@@ -417,7 +417,11 @@ class ClientList(View):
     def get(self, request, *args, **kwargs):
         try:
             products1 = Client.objects.all()
-            return render(request, 'clients_list.html', {'object_list':products1})
+            return render(request, 'clients_list.html', {
+                'object_list':products1,
+                'count':products1.count(),
+                'date':datetime.datetime.today()
+                })
         except:
             error = 'There are no clients in the database'
             return render(request, 'success.html', {'error': error})
@@ -425,9 +429,15 @@ class ClientList(View):
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
-        products = Client.objects.filter(lastname__startswith=request.POST['search'])
+        products1 = Client.objects.all()
+        products = products1.filter(lastname__startswith=request.POST['search'])
+        # products = Client.objects.filter(lastname__startswith=request.POST['search'])
         if products:
-            return render(request, 'clients_list.html', {'object_list':products})
+            return render(request, 'clients_list.html', {
+                'object_list':products,
+                'count':products1.count(),
+                'date':datetime.datetime.today()
+                })
         else:
             messages.error(request, 'Search returned nothing')
             return render(request, 'clients_list.html')
