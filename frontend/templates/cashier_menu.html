@@ -49,7 +49,7 @@
 
                     <ul class="nav nav-list collapse" id="submenu3">
                         <li>
-                            <a href="/client-lists/">View Client Account</a>
+                            <a href="{% url 'profile_search' %}">View Client Account</a>
                         </li>
                         <li>
                             <a href="{% url 'old_loan_search' %}">View Past Loans</a>
@@ -100,7 +100,13 @@
             <div class="container-fluid hidden-print">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="tab-content">
+                        <table class="table table-hover">
+                        {% if error %}
+                            <p class="alert alert-danger">
+                                <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i>{{ error }}</p>
+                        {% else %}
+                            <p style="color:green">{{ success }} </p>
+                        {% endif %}
                             <div class="tab-pane active" id="home">
                                 <h1>Welcome Cashier!</h1>
                                 <p>This is your main menu. You can choose what you want to do from the left side panel of the screen</p>
@@ -115,7 +121,30 @@
                                         <i class="fa fa-menu fa-lg fa-fw"></i>Show/Hide Menu</a>
                                 </div>
                             </div>
-                        </div>
+                            <thead>
+                                <h3>Notifications <i style="color: red;" class="fa fa-exclamation-triangle fa-lg fa-fw"></i></h3>
+                            </thead>
+                            <tbody>
+                                {% for items in upList %}
+                                <tr>
+                                    <td>{{items}}</td>
+                                    <td>Due for update interest</td>
+                                </tr>
+                                {% endfor %}
+                                {% for items in overList %}
+                                <tr>
+                                    <td>{{items}}</td>
+                                    <td>Overdue Loan</td>
+                                </tr>
+                                {% endfor %}
+                                {% for items in structList %}
+                                <tr>
+                                    <td>{{items}}</td>
+                                    <td>Restruct Fee not yet Paid</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
