@@ -44,6 +44,9 @@
                         <li>
                             <a href="{% url 'profile_search' %}">View Client Account</a>
                         </li>
+                        <li>
+                            <a href="#">Client List</a>
+                        </li>
                     </ul>
                 </li>
                 <li>
@@ -124,7 +127,7 @@
                                 </div>
                             </div>
                             <thead>
-                                <h3>Notifications <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i></h3>
+                                <h3>Notifications<i style="color:red;" class="fa fa-exclamation-triangle fa-lg fa-fw"></i></h3>
                             </thead>
                             <tbody>
                                 {% for items in upList %}

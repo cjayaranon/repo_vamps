@@ -30,7 +30,7 @@
                             <a href="/home/bookkeeper/add-new-client/">Add New Client</a>
                         </li>
                         <li>
-                            <a href="/client-lists/">View Client Account</a>
+                            <a href="{% url 'profile_search' %}">View Client Account</a>
                         </li>
                     </ul>
                 </li>
@@ -88,7 +88,7 @@
                                 </div>
                             </div>
                             <thead>
-                                <h3>Notifications <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i></h3>
+                                <h3>Notifications <i style="color: red;" class="fa fa-exclamation-triangle fa-lg fa-fw"></i></h3>
                             </thead>
                             <tbody>
                                 {% for items in upList %}
