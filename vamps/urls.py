@@ -53,6 +53,7 @@ urlpatterns = [
     url(r'^edit-profile/$', views.Modify.as_view(), name="edit_profile"),
     url(r'^restricted/$', views.restricted, name="restricted"),
     url(r'^profile-lists/$', views.ClientViewFilter.as_view(), name="profile_search"),
+    url(r'^clients-list/$', views.ClientList.as_view(), name='clients_list'),
     url(r'^old-loan-search/$', views.ViewOldLoanSearch.as_view(), name="old_loan_search"),
     url(r'^view-old-loan/(?P<id>\w+)', views.ViewOldLoan.as_view()),
     url(r'^add-new-loan-application/(?P<id>\w+)', views.loan_application.as_view(), name="new_loan"),
