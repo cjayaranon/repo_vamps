@@ -134,7 +134,33 @@ class cashier(View):
     """Cashier Home"""
     @method_decorator(login_required)
     def get(self, request, *arg, **kwargs):
-        context={}
+        loan_id = Loan.objects.filter(loan_status='Outstanding')
+        upList = []
+        overList = []
+        structList = []
+        for index in xrange(len(loan_id)):
+            if loan_id[index].update == True:
+                # context={'notifs':loan_id[index].update}
+                upList.append(loan_id[index].client)
+                print loan_id[index].update
+                # print 'yay'
+            else:
+                # print 'nay'
+                pass
+
+            if loan_id[index].overdue == True:
+                overList.append(loan_id[index].client)
+            else:
+                # print 'nay'
+                pass
+
+        prod = Restruct.objects.filter(restruct_status='Outstanding')
+        for index in xrange(len(prod)):
+            if prod[index].approval_status == False:
+                structList.append(prod[index].loan_root)
+            else:
+                pass
+        context = {'upList':upList, 'overList':overList, 'structList':structList}
         if request.user.position == 'Cashier':
             return render(request, "cashier_menu.html", context)
         else:
@@ -156,14 +182,16 @@ class bookkeeper(View):
                 # context={'notifs':loan_id[index].update}
                 upList.append(loan_id[index].client)
                 print loan_id[index].update
-                print 'yay'
+                # print 'yay'
             else:
-                print 'nay'
+                # print 'nay'
+                pass
 
             if loan_id[index].overdue == True:
                 overList.append(loan_id[index].client)
             else:
-                print 'nay'
+                # print 'nay'
+                pass
 
         prod = Restruct.objects.filter(restruct_status='Outstanding')
         for index in xrange(len(prod)):
@@ -369,17 +397,40 @@ class add_client(View):
 class ClientViewFilter(TemplateView):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        return render(request, 'client_list.html')
+        return render(request, 'profile_list.html')
 
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         products = Client.objects.filter(lastname__contains=request.POST['search'])
         if products:
-            return render(request, 'client_list.html', {'object_list':products})
+            return render(request, 'profile_list.html', {'object_list':products})
         else:
             messages.error(request, 'Search returned nothing or Client does not exist')
-            return render(request, 'client_list.html')
+            return render(request, 'profile_list.html')
+
+
+
+class ClientList(View):
+    """shows complete list of clients"""
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        try:
+            products1 = Client.objects.all()
+            return render(request, 'clients_list.html', {'object_list':products1})
+        except:
+            error = 'There are no clients in the database'
+            return render(request, 'success.html', {'error': error})
+
+
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
+        products = Client.objects.filter(lastname__startswith=request.POST['search'])
+        if products:
+            return render(request, 'clients_list.html', {'object_list':products})
+        else:
+            messages.error(request, 'Search returned nothing')
+            return render(request, 'clients_list.html')
 
 
 class loan_application(View):
