@@ -549,3 +549,38 @@ class ODF(models.Model):
         decimal_places=2,
         # validators=[MinValueValidator(0.01)]
     )
+
+
+
+class Savings(models.Model):
+    savings_client=models.ForeignKey(Client)
+    savings_id=models.AutoField(primary_key=True)
+    savings_contrib_date=models.DateField(
+        'Date of Contribution: ',
+        default=datetime.now)
+    savings_ref=models.CharField(
+        max_length=99,
+        null=False,
+        default="forwarded balance")
+    savings_debit=models.DecimalField(
+        null=True,
+        default="-",
+        blank=True,
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(0.01)])
+    savings_credit=models.DecimalField(
+        null=True,
+        default="-",
+        blank=True,
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(0.01)])
+    savings_total=models.DecimalField(
+        null=True,
+        default="",
+        blank=True,
+        max_digits=10,
+        decimal_places=2,
+        # validators=[MinValueValidator(0.01)]
+    )
