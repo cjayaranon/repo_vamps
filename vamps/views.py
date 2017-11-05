@@ -5,7 +5,7 @@ import types
 # Create your views here.
 #views.py
 from clients.models import Client, client_capital, Loan, loanApplication, payLoanLedger_in, payLoanLedger_over, MAF, ODF, Restruct
-from clients.forms import ClientForm, CollateralForm, CoMakerForm, CapitalForm, LoanApplicationForm, StructLoanApplicationForm, RestructForm, PayLoanForm, PayLoanForm_o, MAFform, ODFform
+from clients.forms import ClientForm, CollateralForm, CoMakerForm, CapitalForm, LoanApplicationForm, StructLoanApplicationForm, RestructForm, PayLoanForm, PayLoanForm_o, MAFform, ODFform, SavingsForm
 from decimal import *
 from django.conf import settings
 from django.contrib import messages
