@@ -43,6 +43,8 @@ urlpatterns = [
     url(r'^home/cashier/release-odf-search/release-odf/(?P<id>\w+)', views.ReleaseODFForm.as_view()),
     url(r'^home/cashier/pay-cbu/$', views.PayCBU.as_view(), name="pay_cbu_search"),
     url(r'^home/cashier/pay-cbu/pay-cbu-form/(?P<id>\w+)', views.PayCBUform.as_view()),
+    url(r'^home/cashier/add-savings-search/$', views.SavingsAddSearch.as_view(), name="add_savings_search"),
+    url(r'^home/cashier/add-savings-search/add-savings/(?P<id>\w+)', views.SavingsAdd.as_view(), name="add_savings"),
 
     url(r'^home/bookkeeper/$', views.bookkeeper.as_view(), name="book_menu"),
     url(r'^home/bookkeeper/add-new-client/$', views.add_client.as_view(), name="add_new_client"),

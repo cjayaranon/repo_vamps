@@ -1959,8 +1959,8 @@ class ReleaseODFForm(View):
 
 
 
-class SavingsSearch(TemplateView):
-    """Cashier/Admin access only. For creating/adding/withdrawing savings"""
+class SavingsAddSearch(TemplateView):
+    """Cashier/Admin access only. For creating/adding savings"""
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
@@ -1973,6 +1973,58 @@ class SavingsSearch(TemplateView):
             client_status="Active"
         )
         return render(request, 'cashier_savingsSearch.html', {'object_list':products})
+
+
+
+class SavingsAdd(View):
+    
+    
+    def post(self, request, *args, **kwargs):
+        form = SavingsForm()
+        client_id = int(request.POST['savings_client'])
+
+        try:
+            ref = Savings.objects.filter(savings_client__cust_number=client_id).last()
+            cred = float(request.POST.get('maf_credit'))
+            ref = float(request.savings_total)
+            tot = ref + cred
+
+            data = {
+                'savings_client': request.POST.get('savings_client'),
+                'savings_contrib_date': request.POST.get('savings_contrib_date'),
+                'savings_ref': ref,
+                'savings_debit': '',
+                'savings_credit': cred,
+                'savings_total': tot
+            }
+            forms = SavingsForm(data)
+
+        except:
+            data = {
+                'savings_client': request.POST.get('savings_client'),
+                'savings_contrib_date': request.POST.get('savings_contrib_date'),
+                'savings_ref': ref,
+                'savings_debit': '',
+                'savings_credit': cred,
+                'savings_total': tot
+            }
+            forms = SavingsForm(data)
+
+        if forms.is_valid():
+            forms.save()
+            messages.success(request, 'Savings contribution saved')
+            return render(request, 'cashier_savingsAdd.html', {'form':form})
+        else:
+            raise ValidationError(('%s') % forms.is_bound())
+
+
+    def get(self, request, *args, **kwargs):
+        client_id = kwargs.get('id')
+        client = Client.objects.get(cust_number=client_id)
+        form = SavingsForm(initial={'savings_client': client})
+        form.fields['savings_client'].widget.attrs['readonly']
+        form.fields['savings_contrib_date'].widget.attrs['readonly']
+        return render(request, 'cashier_savingsAdd.html', {'form':form})
 
 
 
