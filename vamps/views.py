@@ -1959,6 +1959,23 @@ class ReleaseODFForm(View):
 
 
 
+class SavingsSearch(TemplateView):
+    """Cashier/Admin access only. For creating/adding/withdrawing savings"""
+
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        return render(request, 'cashier_savingsSearch.html')
+
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
+        products = Client.objects.filter(
+            lastname__contains=request.POST['search'],
+            client_status="Active"
+        )
+        return render(request, 'cashier_savingsSearch.html', {'object_list':products})
+
+
+
 class PayStructFeeSearch(TemplateView):
     """Cashier/Admin access only. Returns loan_apps and restructs that are pending"""
 
