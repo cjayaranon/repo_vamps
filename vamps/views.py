@@ -2022,8 +2022,8 @@ class SavingsAdd(View):
         client_id = kwargs.get('id')
         client = Client.objects.get(cust_number=client_id)
         form = SavingsForm(initial={'savings_client': client})
-        form.fields['savings_client'].widget.attrs['readonly']
-        form.fields['savings_contrib_date'].widget.attrs['readonly']
+        form.fields['savings_client'].widget.attrs['readonly'] = True
+        form.fields['savings_contrib_date'].widget.attrs['readonly'] = True
         return render(request, 'cashier_savingsAdd.html', {'form':form})
 
 
