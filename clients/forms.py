@@ -1,5 +1,5 @@
 from django.forms import ModelForm, Textarea
-from clients.models import Client, Collateral, client_capital, MAF, ODF, loanApplication, Restruct, payLoanLedger_in, payLoanLedger_over, Loan
+from clients.models import Client, Collateral, client_capital, MAF, ODF, Savings, loanApplication, Restruct, payLoanLedger_in, payLoanLedger_over, Loan
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Submit, Field
 from crispy_forms.bootstrap import FormActions, PrependedText, AppendedText
@@ -295,4 +295,25 @@ class ODFform(ModelForm):
         'odf_debit': ('Debit'),
         'odf_credit': ('Credit'),
         'odf_total': ('Total')
+        }
+
+class SavingsForm(ModelForm):
+    class Meta:
+        model = Savings
+        fields = [
+        'savings_client',
+        'savings_contrib_date',
+        'savings_ref',
+        'savings_debit',
+        'savings_credit',
+        'savings_total'
+        ]
+
+        labels = {
+        'savings_client': ('Client Name'),
+        'savings_contrib_date': ('Date'),
+        'savings_ref': ('Reference'),
+        'savings_debit': ('Debit'),
+        'savings_credit': ('Credit'),
+        'savings_total': ('Total')
         }
