@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Client, client_capital, loanApplication, Loan, payLoanLedger_in, payLoanLedger_over, MAF, ODF, Collateral, Restruct
+from .models import Client, client_capital, loanApplication, Loan, payLoanLedger_in, payLoanLedger_over, MAF, ODF, Savings, Collateral, Restruct
 # Register your models here.
 
 
@@ -34,6 +34,9 @@ class PayMAFAdmin(admin.ModelAdmin):
 class PayODFAdmin(admin.ModelAdmin):
     list_display = ['odf_client', 'odf_contrib_date', 'odf_ref', 'odf_debit', 'odf_credit', 'odf_total', 'odf_id']
 
+class AddSavingsAdmin(admin.ModelAdmin):
+    list_display = ['savings_client', 'savings_contrib_date', 'savings_ref', 'savings_debit', 'savings_credit', 'savings_total', 'savings_id']
+
             
 admin.site.register(Client, ClientsAdmin)
 admin.site.register(client_capital, ClientCapitalAdmin)
@@ -45,3 +48,4 @@ admin.site.register(payLoanLedger_in ,PayAdmin_IN)
 admin.site.register(payLoanLedger_over, PayAdmin_OVER)
 admin.site.register(MAF, PayMAFAdmin)
 admin.site.register(ODF, PayODFAdmin)
+admin.site.register(Savings, AddSavingsAdmin)
