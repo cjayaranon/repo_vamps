@@ -4,7 +4,7 @@ import types
 
 # Create your views here.
 #views.py
-from clients.models import Client, client_capital, Loan, loanApplication, payLoanLedger_in, payLoanLedger_over, MAF, ODF, Restruct
+from clients.models import Client, client_capital, Loan, loanApplication, payLoanLedger_in, payLoanLedger_over, MAF, ODF, Savings, Restruct
 from clients.forms import ClientForm, CollateralForm, CoMakerForm, CapitalForm, LoanApplicationForm, StructLoanApplicationForm, RestructForm, PayLoanForm, PayLoanForm_o, MAFform, ODFform, SavingsForm
 from decimal import *
 from django.conf import settings
@@ -946,6 +946,7 @@ class ClientProfile(View):
 
         mafmaf = MAF.objects.filter(maf_client=client_id)
         odfs = ODF.objects.filter(odf_client=client_id)
+        savings = Savings.objects.filter(savings_client=client_id)
 
         loan_app = loanApplication.objects.filter(client=client_id)
         loan_id = Loan.objects.filter(client=client_id, loan_status="Outstanding", type_of_loan="Providential")
@@ -990,6 +991,7 @@ class ClientProfile(View):
                     'loan_ledger_out':loan_ledger_out,
                     'mafmaf': mafmaf,
                     'odfs': odfs,
+                    'savings': savings,
                     'cust_number': client_id.cust_number,
                     'client_id': client_id,
                     'struct':stru
@@ -1029,6 +1031,7 @@ class ClientProfile(View):
                     'loan_ledger_out':loan_ledger_out,
                     'mafmaf': mafmaf,
                     'odfs': odfs,
+                    'savings': savings,
                     'cust_number': client_id.cust_number,
                     'client_id': client_id,
                     'struct':stru
@@ -1897,13 +1900,17 @@ class ReleaseODFSearch(TemplateView):
             lastname__contains=request.POST['search'],
             client_status="Active"
             )
-        products = ODF.objects.filter(odf_client=client).last()
-        if products:
-            if products.odf_total != 0.00:
-                return render(request, 'cashier_odfrelease_search.html', {'object_list':products})
-            else:
-                messages.error(request, 'Client have depleted ODF')
-                return render(request, 'cashier_odfrelease_search.html', {'object_list':products})
+        # products = ODF.objects.filter(odf_client=client).last()
+        products = []
+        if client:
+            for index in xrange(len(client)):
+                odfs = ODF.objects.filter(odf_client=client[index]).last()
+                products.append(odfs)
+            # if products.odf_total != 0.00:
+            #     return render(request, 'cashier_odfrelease_search.html', {'object_list':products})
+            # else:
+            #     messages.error(request, 'Client have depleted ODF')
+            return render(request, 'cashier_odfrelease_search.html', {'object_list':products})
         else:
             messages.error(request, 'Search returned nothing. Client does not exist or ODF contributions does not exist')
             return render(request, 'cashier_odfrelease_search.html')
@@ -2003,10 +2010,10 @@ class SavingsAdd(View):
             data = {
                 'savings_client': request.POST.get('savings_client'),
                 'savings_contrib_date': request.POST.get('savings_contrib_date'),
-                'savings_ref': ref,
+                'savings_ref': 'forwarded balance',
                 'savings_debit': '',
-                'savings_credit': cred,
-                'savings_total': tot
+                'savings_credit': request.POST.get('savings_credit'),
+                'savings_total': request.POST.get('savings_credit')
             }
             forms = SavingsForm(data)
 
@@ -2026,6 +2033,85 @@ class SavingsAdd(View):
         form.fields['savings_contrib_date'].widget.attrs['readonly'] = True
         return render(request, 'cashier_savingsAdd.html', {'form':form})
 
+
+class SavingsReleaseSearch(TemplateView):
+    """Cashier/Admin access only. Returns client accts with savings only"""
+
+    def get(self, request, *args, **kwars):
+        return render(request, 'cashier_savingsReleaseSearch.html')
+
+
+    def post(self, request, *args, **kwargs):
+        client = Client.objects.filter(
+            lastname__contains=request.POST['search'],
+            client_status="Active"
+        )
+        products = []
+        if client:
+            for index in xrange(len(client)):
+                sav = Savings.objects.filter(savings_client=client[index]).last()
+                products.append(sav)
+            return render(request, 'cashier_savingsReleaseSearch.html', {'object_list':products})
+        else:
+            messages.error(request, 'Search returned nothing. Client or Savings does not exist.')
+            return render(request, 'cashier_savingsReleaseSearch.html')
+
+
+
+class SavingsRelease(View):
+
+
+    def get(self, request, *args, **kwargs):
+        client_id = kwargs.get('id')
+        client = Client.objects.get(cust_number=client_id, client_status="Active")
+        fund = Savings.objects.filter(savings_client__cust_number=client_id)
+        return render(request, 'cashier_savings_release.html', {'object_list':fund, 'client':client})
+
+    # def post(self, request, *args, **kwargs):
+        
+    #     pass
+
+
+
+class SavingsReleaseForm(View):
+
+    def get(self, request, *args, **kwargs):
+        client_id = kwargs.get('id')
+        client = Client.objects.get(cust_number=client_id)
+        fund = Savings.objects.filter(savings_client__cust_number=client_id).last()
+        form = SavingsForm(initial={'savings_client': client, 'savings_ref':'Withdrawal'})
+        form.fields['savings_client'].widget.attrs['readonly'] = True
+        form.fields['savings_contrib_date'].widget.attrs['readonly'] = True
+        return render(request, 'cashier_savings_release_form.html', {'form':form})
+
+    def post(self, request, *args, **kwargs):
+        form = SavingsForm()
+        client_id = int(kwargs.get('id'))
+        client = Client.objects.get(cust_number=client_id)
+        fund = Savings.objects.filter(savings_client=client_id, savings_client__client_status="Active").last()
+
+        deb = float(request.POST['savings_debit'])
+        ref = float(fund.savings_total)
+        tot = ref - deb
+
+        data = {
+            'savings_client': client_id,
+            'savings_contrib_date': datetime.datetime.today().date(),
+            'savings_ref': 'Savings Withdrawal',
+            'savings_debit': request.POST['savings_debit'],
+            'savings_credit': '',
+            'savings_total': tot
+        }
+
+        form = SavingsForm(data)
+
+        if form.is_valid():
+            form.save()
+            success = 'Savings release recorded'
+            return render(request, 'success.html', {'success':success})
+        else:
+            error = 'Please fill the form properly'
+            return render(request, 'success.html', {'error':error, 'list':forms.errors})
 
 
 class PayStructFeeSearch(TemplateView):
