@@ -16,7 +16,7 @@
         </li>
         <li>Releases</li>
         <li class="active">
-            ODF Search
+            Release ODF Search
         </li>
     </ol>
 </div>
@@ -45,42 +45,34 @@
               <th>
                 Search Results
               </th>
-              <!-- <th align="left"><p>Client</p></th> -->
-              <!-- <th align="left"><p>ODF</p></th> -->
-              <!-- <th align="left"><p>Balance</p></th> -->
             </tr>
           </thead>
           
           <tbody>
+            {% for items in object_list %}
+              {% if items %}
             <tr>
               <td></td>
-              <td align="left">{{object_list.odf_client}}</td>
-              <td align="left">{{object_list.odf_total}}</td>
-              {% if object_list.odf_total != 0.00 %}
-                {% if object_list.odf_total != None %}
+              <td align="left">{{items.odf_client}}</td>
+              <td align="left">{{items.odf_total}}</td>
+                {% if items.odf_total != 0.00 %}
               <td>
                 <a href="/home/cashier/release-odf-search/release-odf/{{object_list.odf_client.cust_number}}" class="btn btn-info" name="submit">
                   <i class="fa fa-check-square fa-lg fa-fw"></i>Release ODF
                 </a>
               </td>
                 {% else %}
-                <td>
-                <a class="btn btn-info disabled">
-                  <i class="fa fa-check-square fa-lg fa-fw"></i>
+              <td>
+                <a class="btn btn-danger disabled">
+                  <i class="fa fa-times fa-lg fa-fw"></i>
                   Release ODF
                 </a>
               </td>
                 {% endif %}
-              {% else %}
-              <td>
-                <a class="btn btn-info disabled">
-                  <i class="fa fa-check-square fa-lg fa-fw"></i>
-                  Release ODF
-                </a>
-              </td>
-              {% endif %}
             </tr>
               {% endif %}
+            {% endfor %}
+          {% endif %}
             
           </tbody>
         </form>

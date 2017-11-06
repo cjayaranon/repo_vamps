@@ -1,7 +1,6 @@
 {% extends "base2.html" %}
 
-{% load staticfiles %}
-{% load crispy_forms_tags %}
+{% load staticfiles bootstrap %}
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
@@ -10,7 +9,7 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-<title>VAMPS|Add Savings Search</title>
+<title>VAMPS|Release Savings Search</title>
 <div id="breads">
     <ol class="breadcrumb">
         <li>
@@ -18,16 +17,16 @@
         </li>
         <li>Invoice</li>
         <li class="active">
-          Add Savings Search
+          Release Savings Search
         </li>
     </ol>
 </div>
 
     <div class="form">
-      <h3>Add Savings Contribution</h3>
+      <h3>Release Savings</h3>
       <br>
       <table class="table">
-        <form action="/home/cashier/add-savings-search/" method="POST">
+        <form action="/home/cashier/release-savings-search/" method="POST">
           {% csrf_token %}
           <div class="input-group col-md-12">
             <input type="text" class="search-query form-control" placeholder="Search via last name" name="search" />
@@ -48,15 +47,27 @@
           </thead>
           <tbody>
             {% for items in object_list %}
+              {% if items %}
             <tr>
-              <td>{{items}}</td>
+              <td>{{items.savings_client}}</td>
+              <td>{{items.savings_total}}</td>
+                {% if items.savings_total != 0.00 %}
               <td>
-                <a href="\home\cashier\add-savings-search\add-savings\{{items.cust_number}}" class="btn btn-info">
-                  <i class="fa fa-plus-circle fa-lg fa-fw"></i>
-                  Add Savings
+                <a href="\home\cashier\release-savings-search\release-savings\{{items.savings_client.cust_number}}" class="btn btn-info">
+                  <i class="fa fa-check-circle fa-lg fa-fw"></i>
+                  Release Savings
                 </a>
               </td>
+                {% else %}
+              <td>
+                <a class="btn btn-danger disabled">
+                  <i class="fa fa-times fa-lg fa-fw"></i>
+                  Release Savings
+                </a>
+              </td>
+                {% endif %}
             </tr>
+              {% endif %}
             {% empty %}
             <tr>
               <td>Search returned nothing</td>
@@ -77,20 +88,4 @@
       </i>
     </a>
     {% endif %}
-
-<script>
-var text = document.getElementById('id_app_amount');
-text.onkeypress = text.onpaste = checkInput;
-
-function checkInput(e) {
-    var e = e || event;
-    var char = e.type == 'keypress' 
-        ? String.fromCharCode(e.keyCode || e.which) 
-        : (e.clipboardData || window.clipboardData).getData('Text');
-    if (/[^\d.$]/gi.test(char)) {
-        return false;
-    }
-}
-
-</script>
 {% endblock %}

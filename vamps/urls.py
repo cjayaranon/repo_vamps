@@ -45,6 +45,9 @@ urlpatterns = [
     url(r'^home/cashier/pay-cbu/pay-cbu-form/(?P<id>\w+)', views.PayCBUform.as_view()),
     url(r'^home/cashier/add-savings-search/$', views.SavingsAddSearch.as_view(), name="add_savings_search"),
     url(r'^home/cashier/add-savings-search/add-savings/(?P<id>\w+)', views.SavingsAdd.as_view(), name="add_savings"),
+    url(r'^home/cashier/release-savings-search/$', views.SavingsReleaseSearch.as_view(), name="release_savings_search"),
+    url(r'^home/cashier/release-savings-search/release-savings/(?P<id>\w+)', views.SavingsRelease.as_view(), name="release_savings"),
+    url(r'^home/cashier/release-savings-search/release_savings/release-savings-form/(?P<id>\w+)', views.SavingsReleaseForm.as_view(), name="release_savings_form"),
 
     url(r'^home/bookkeeper/$', views.bookkeeper.as_view(), name="book_menu"),
     url(r'^home/bookkeeper/add-new-client/$', views.add_client.as_view(), name="add_new_client"),

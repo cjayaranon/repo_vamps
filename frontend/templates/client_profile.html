@@ -60,6 +60,11 @@
                         ODF Subsidiary Ledger
                     </a>
                 </li>
+                <li>
+                    <a href="#savingsledger" class="inactive" data-toggle="tab" onclick="changeClass()">
+                        Savings Subsidiary Ledger
+                    </a>
+                </li>
                 <!-- <li>
                     <a href="#ledger" class="accordion-heading" data-toggle="collapse" onclick="changeClass()" data-target="#subLedge" ><span class="nav-header-primary">Ledger<span class="pull-right"><b class="caret"></b></span></span></a>
 
@@ -712,6 +717,43 @@
                                             <td style="color: red;">
                                                 <p class="alert alert-danger">
                                                     <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i>Sorry this Client does not have ODF contributions</p>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="savingsledger" name="savingsledger">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <h3>SAVINGS SUBSIDIARY LEDGER</h3>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th align="left">Client</th>
+                                            <td>{{client_id}}</td>
+                                        </tr>
+                                        {% if savings %}
+                                        <tr>
+                                            <th align="left">Date</th>
+                                            <th align="left">Reference</th>
+                                            <th align="left">Debit</th>
+                                            <th align="left">Credit</th>
+                                            <th align="left">Total</th>
+                                        </tr>
+                                        {% for sav in savings %}
+                                        <tr>
+                                            <td>{{sav.savings_contrib_date}}</td>
+                                            <td>{{sav.savings_ref}}</td>
+                                            <td>{{sav.savings_debit}}</td>
+                                            <td>{{sav.savings_credit}}</td>
+                                            <td>{{sav.savings_total}}</td>
+                                        {% endfor %}
+                                        {% else %}
+                                        <tr>
+                                            <td style="color: red;">
+                                                <p class="alert alert-danger">
+                                                    <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i>Sorry this Client does not have Savings contributions</p>
                                             </td>
                                         </tr>
                                         {% endif %}
