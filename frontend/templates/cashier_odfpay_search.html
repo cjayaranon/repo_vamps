@@ -1,6 +1,6 @@
 {% extends "base2.html" %}
 
-{% load staticfiles %}
+{% load staticfiles bootstrap %}
 {% load crispy_forms_tags %}
 
 {% block css %}
@@ -10,7 +10,7 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-<title>VAMPS|ODF Search</title>
+<title>VAMPS|ODF Save</title>
 <div id="breads">
     <ol class="breadcrumb">
         <li>
@@ -18,7 +18,7 @@
         </li>
         <li>Invoice</li>
         <li class="active">
-          ODF Search
+          ODF Save Search
         </li>
     </ol>
 </div>
@@ -63,13 +63,6 @@
           </tbody>
           {% endif %}
         </form>
-          <!-- <thead>
-            <tr>
-              <th align="left"><p>Client Name</p></th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody> -->
         </table>
     </div>
 

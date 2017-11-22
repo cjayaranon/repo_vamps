@@ -38,6 +38,13 @@
             </span>
           </div>
           {% if object_list == None %}
+          <thead>
+            <tr>
+              <th>Search returned nothing</th>
+              <th>{{client_list}}</th>
+            </tr>
+          </thead>
+          {% elif object_list == 'here' %}
           {% else %}
           <thead>
             <tr>
@@ -47,35 +54,53 @@
             </tr>
           </thead>
           <tbody>
-            {% for object_list in object_list %}
+            {% for items in object_list %}
+              {% if items %}
             <tr>
-              <td align="left">{{object_list.maf_client}}</td>
-              <td align="left">{{object_list.maf_total}}</td>
+              <td>{{items.maf_client}}</td>
+              <td>{{items.maf_total}}</td>
+                {% if items.maf_total != 0.00 %}
               <td>
-                {% if object_list.maf_total != 0.00 %}
-                <a href="\home\cashier\maf-release-search\maf-release\{{object_list.maf_client.cust_number}}" class="btn btn-info">
+                <a href="{% url 'release_maf_table' id=items.maf_client.cust_number %}" class="btn btn-info">
                   <i class="fa fa-plus-circle fa-lg fa-fw"></i>
                   Release MAF
                 </a>
-                {% else %}
-                <button class="btn btn-info inactive">
-                  <i class="fa fa-plus-circle fa-lg fa-fw"></i>
-                  Release MAF
-                </button>
-                {% endif %}
               </td>
+                {% else %}
+              <td>
+                <a class="btn btn-default disabled">
+                  <i class="fa fa-times fa-lg fa-fw"></i>
+                  Release MAF
+                </a>
+              </td>
+                {% endif %}
             </tr>
+              {% endif %}
+            {% empty %}
+            <!-- <tr>
+              <td>Search returned nothing</td>
+              <td>{{object_list}}</td>
+            </tr> -->
+            {% endfor %}
+            {% for items in client_list %}
+              <tr>
+                <td>{{items}}</td>
+                <td>No MAF Contributions</td>
+                <td>
+                  <a href="{% url 'release_maf_table' id=items.cust_number %}" class="btn btn-info">
+                    <i class="fa fa-plus-circle fa-lg fa-fw"></i>
+                    Release MAF
+                  </a>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td>Search returned nothing</td>
+              </tr>
             {% endfor %}
           </tbody>
           {% endif %}
         </form>
-          <!-- <thead>
-            <tr>
-              <th align="left"><p>Client Name</p></th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody> -->
         </table>
     </div>
 

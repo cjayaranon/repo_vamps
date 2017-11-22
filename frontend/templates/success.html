@@ -34,6 +34,11 @@
 			<h3 class="alert alert-success">
 				<i class="fa fa-check-circle-o"></i>SUCCESS</h3>
 			<p>{{ success }}</p>
+			<ul>
+				{% for items in list %}
+				<li align="left">{{items}}</li>
+				{% endfor %}
+			</ul>
 			<div>
 				<a class="btn btn-info" href="{% url 'home' %}">
 					<i class="fa fa-home fa-lg"></i>
