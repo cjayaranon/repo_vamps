@@ -1,0 +1,143 @@
+{% extends "base2.html" %}
+
+{% load staticfiles bootstrap %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+{% endblock%}
+
+{% block content %}
+<title>VAMPS|MAF Release Form</title>
+  <div id="breads">
+    <ol class="breadcrumb">
+        <li>
+            <a href="{% url 'home' %}">Main Menu</a>
+        </li>
+        <li>Invoice</li>
+        <li>
+          <a href="{% url 'release_maf_search' %}">Search Client</a>
+        </li>
+        <li class="active">MAF Release Form</li>
+    </ol>
+  </div>
+    <div class="small-form" >
+        {% if error %}
+          <p class="alert alert-danger">
+          <i class="fa fa-exclamation triangle fa-lg"></i>{{ error }}</p>
+        {% else %}
+          <p style="color:green">{{ success }} </p>
+        {% endif %}
+        <form method="POST" action="" onkeypress="return checkInput(event)" class="no-spinners">
+         {% csrf_token %}
+          <table class="table table-responsive table-condensed table-hover">
+            <div class="input-group col-md-12">
+              <thead>
+                <h3>MAF Release Form</h3>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <label>Client</label>
+                  </td>
+                  <td>
+                    <p>{{client}}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>Date</label>
+                  </td>
+                  <td>
+                    <p>{{date}}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label>Who died?</label>
+                  </td>
+            {% if fund %}
+                  <td>
+                    <select name="dead" class="form-control">
+                      <option>Client</option>
+                      <option>Spouse</option>
+                      <option>Heirs</option>
+                    </select>
+                    <p class="alert alert-warning">
+                      <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i>Please take caution in selecting for this field. If <code>CLIENT</code> is selected all accounts shall be frozen and the whole MAF shall be released.
+                    </p>
+                  </td>
+            {% else %}
+                  <td>
+                    <select name="dead" class="form-control">
+                      <option>Client</option>
+                      <option selected>Spouse</option>
+                      <option>Heirs</option>
+                    </select>
+                    <p class="alert alert-warning">
+                      <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i>Please take caution in selecting for this field. If <code>CLIENT</code> is selected all accounts shall be frozen and the whole MAF shall be released.
+                    </p>
+                  </td>
+            {% endif %}
+                </tr>
+              </tbody>
+            </div>
+          </table>
+                    {% if fund.maf_total != 0.00 %}
+            <button type="submit" href="{% url 'release_maf_form' id=client.cust_number%}" class="btn btn-info">
+                <i class="fa fa-check-square fa-lg fa-fw"></i>
+                Release
+            </button>
+                    {% else  %}
+            <button type="submit" class="btn btn-info disabled">
+                <i class="fa fa-check-square fa-lg"></i>
+                Release
+            </button>
+                    {% endif %}
+        </form>
+      </div>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+<script>
+
+var text = document.getElementById('id_maf_credit');
+text.onkeypress = text.onpaste = checkInput;
+
+function checkInput(e) {
+    var e = e || event;
+    var char = e.type == 'keypress' 
+        ? String.fromCharCode(e.keyCode || e.which) 
+        : (e.clipboardData || window.clipboardData).getData('Text');
+    if (/[^\d.$]/gi.test(char)) {
+        return false;
+    }
+}
+</script>
+
+<script type="text/javascript">
+    function goBack(){
+        window.history.back();
+    }
+</script>
+
+<script type="text/javascript">
+    text.onkeypress = text.onpaste = checkLength;
+
+    function checkLength(){
+        var fieldLength = document.getElementById('id_maf_credit').value.length;
+        if(fieldLength <= 6){
+            return true;
+        }
+        else{
+            var str = document.getElementById('id_maf_credit').value;
+            str = str.substring(0, str.length - 1);
+            document.getElementById('id_maf_credit').value = str;
+        }
+    }
+</script>
+
+{% endblock %}

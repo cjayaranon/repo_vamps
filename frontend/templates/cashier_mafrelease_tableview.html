@@ -1,0 +1,108 @@
+{% extends "base2.html" %}
+
+{% load staticfiles bootstrap%}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+{% endblock%}
+
+{% block content %}
+    {% if user.is_authenticated %}
+    <title>VAMPS|MAF Release</title>
+	<div id="breads">
+	    <ol class="breadcrumb">
+	        <li>
+	            <a href="{% url 'home' %}">Main Menu</a>
+	        </li>
+	        <li>Invoice</li>
+	        <li class="active">
+	          <a href="{% url 'release_maf_search' %}">MAF Search</a>
+	        </li>
+	    </ol>
+	</div>
+	<div>
+		<table class="table table-hover">
+            <div class="input-group col-md-12">
+                <thead>
+                    <h3>MAF SUBSIDIARY LEDGER</h3>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th align="left">Client</th>
+                        <td>{{client}}</td>
+                        <th align="left">Beneficiary</th>
+                        <td>{{client.beneficiary}}</td>
+                    </tr>
+                    {% if object_list %}
+                    <tr>
+                        <th align="left">Date</th>
+                        <th align="left">Reference</th>
+                        <th align="left">Debit</th>
+                        <th align="left">Credit</th>
+                        <th align="left">Total</th>
+                    </tr>
+                    {% for mafmaf in object_list %}
+                    <tr>
+                        <td>{{mafmaf.maf_contrib_date}}</td>
+                        <td>{{mafmaf.maf_ref}}</td>
+                        <td>{{mafmaf.maf_debit}}</td>
+                        <td>{{mafmaf.maf_credit}}</td>
+                        <td>{{mafmaf.maf_total}}</td>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td style="color: red;">
+                            <p class="alert alert-danger">
+                                <i class="fa fa-exclamation-triangle fa-lg fa-fw"></i>Sorry this Client does not have MAF contributions</p>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                    	<td></td>
+                    	<td></td>
+                    	<td></td>
+                    	<td></td>
+                    	<td>
+                    		{% if client.client_status != 'Inactive' %}
+    			                <a href="{% url 'release_maf_form' id=client.cust_number %}" class="btn btn-info">
+    			                	<i class="fa fa-plus-circle fa-lg fa-fw"></i>
+			                	Release MAF
+    			                </a>
+                    		{% else %}
+                    		<a class="btn btn-info disabled">
+			                	<i class="fa fa-plus-circle fa-lg fa-fw"></i>
+			                	Release MAF
+			                </a>
+			                {% endif %}
+                    	</td>
+                    </tr>
+                </tbody>
+            </div>
+        </table>
+	</div>
+    {% else %}
+    <p>CANNOT DISPLAY LIST OF USERS. YOU MUST LOGIN FIRST! </p>
+    <a href="{% url '/' %}" class="btn btn-primary">
+      <i class="fa fa-sign-in fa-lg">
+        Login
+      </i>
+    </a>
+    {% endif %}
+
+<script>
+var text = document.getElementById('id_app_amount');
+text.onkeypress = text.onpaste = checkInput;
+
+function checkInput(e) {
+    var e = e || event;
+    var char = e.type == 'keypress' 
+        ? String.fromCharCode(e.keyCode || e.which) 
+        : (e.clipboardData || window.clipboardData).getData('Text');
+    if (/[^\d.$]/gi.test(char)) {
+        return false;
+    }
+}
+
+</script>
+{% endblock %}

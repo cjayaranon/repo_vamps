@@ -16,7 +16,7 @@
         </li>
         <li>Releases</li>
         <li class="active">
-            Release ODF Search
+            ODF Release Search
         </li>
     </ol>
 </div>
@@ -39,7 +39,6 @@
         </div>
         <!-- </form> -->
           {% if object_list == None %}
-          {% else %}
           <thead>
             <tr>
               <th>
@@ -49,21 +48,21 @@
           </thead>
           
           <tbody>
+          {% else %}
             {% for items in object_list %}
               {% if items %}
             <tr>
-              <td></td>
-              <td align="left">{{items.odf_client}}</td>
-              <td align="left">{{items.odf_total}}</td>
+              <td>{{items.odf_client}}</td>
+              <td>{{items.odf_total}}</td>
                 {% if items.odf_total != 0.00 %}
               <td>
-                <a href="/home/cashier/release-odf-search/release-odf/{{object_list.odf_client.cust_number}}" class="btn btn-info" name="submit">
+                <a href="/home/cashier/release-odf-search/release-odf/{{items.odf_client.cust_number}}" class="btn btn-info" name="submit">
                   <i class="fa fa-check-square fa-lg fa-fw"></i>Release ODF
                 </a>
               </td>
                 {% else %}
               <td>
-                <a class="btn btn-danger disabled">
+                <a class="btn btn-default disabled">
                   <i class="fa fa-times fa-lg fa-fw"></i>
                   Release ODF
                 </a>
@@ -71,10 +70,13 @@
                 {% endif %}
             </tr>
               {% endif %}
+            {% empty %}
+            <tr>
+              <td>Search returned nothing</td>
+            </tr>
             {% endfor %}
-          {% endif %}
-            
           </tbody>
+          {% endif %}
         </form>
         </table>
       </div>

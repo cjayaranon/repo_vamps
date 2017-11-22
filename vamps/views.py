@@ -379,7 +379,7 @@ class add_client(View):
             if forms.is_valid():
                 forms.save()
                 # enable
-                messages.success(request, 'Client created successfuly')
+                messages.success(request, 'Client created successfully')
                 return HttpResponseRedirect('/home/bookkeeper/add-new-client/')
             else:
                 error = 'Please fill the form properly'
@@ -416,7 +416,7 @@ class ClientList(View):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         try:
-            products1 = Client.objects.all()
+            products1 = Client.objects.all().order_by('lastname')
             return render(request, 'clients_list.html', {
                 'object_list':products1,
                 'count':products1.count(),
@@ -1717,7 +1717,7 @@ class PayMAFform(View):
 class ReleaseMAFsearch(TemplateView):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        return render(request, 'cashier_mafrelease_search.html')
+        return render(request, 'cashier_mafrelease_search.html', {'object_list':'here'})
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
@@ -1726,80 +1726,148 @@ class ReleaseMAFsearch(TemplateView):
             client_status="Active"
             )
         products = []
+        client_list = []
         
         if client:
             for index in xrange(len(client)):
                 mafs = MAF.objects.filter(maf_client=client[index]).last()
-                products.append(mafs)
-            return render(request, 'cashier_mafrelease_search.html', {'object_list':products})
+                if mafs != None:
+                    products.append(mafs)
+                else:
+                    client_list.append(client[index])
+            # return render(request, 'cashier_mafrelease_search.html', {'object_list':products, 'client_list':client_list})
         else:
             messages.error(request, 'Search returned nothing. Client does not exist or MAF contributions does not exist')
-            return render(request, 'cashier_mafrelease_search.html')
+        return render(request, 'cashier_mafrelease_search.html', {'object_list':products, 'client_list':client_list})
 
 
 
 
-class ReleaseMAFform(View):
+class ReleaseMAFtable(TemplateView):
     def get(self, request, *args, **kwargs):
         client_id = kwargs.get('id')
         client = Client.objects.get(cust_number=client_id)
         fund = MAF.objects.filter(maf_client__cust_number=client_id)
-        return render(request, 'cashier_mafrelease.html', {'object_list':fund, 'client':client})
+        return render(request, 'cashier_mafrelease_tableview.html', {'object_list':fund, 'client':client})
 
 
-    @method_decorator(login_required)
-    def post(self, request, *args, **kwargs):
-        form = MAFform()
+
+class ReleaseMAF(View):
+
+    def get(self, request, *args, **kwargs):
         client_id = int(kwargs.get('id'))
         client = Client.objects.get(cust_number=client_id)
-        fund = MAF.objects.filter(maf_client__cust_number=client_id, maf_client__client_status="Active").last()
+        date = datetime.datetime.today().date()
+        try:
+            fund = MAF.objects.filter(maf_client__cust_number=client_id, maf_client__client_status="Active").last()
+            return render(request, 'cashier_mafrelease_form.html', {'client':client, 'date':date, 'fund':fund})
+        except:
+            # fund = MAF.objects.filter(maf_client__cust_number=client_id, maf_client__client_status="Active").last()
+            return render(request, 'cashier_mafrelease_form.html', {'client':client, 'date':date})
 
-        client.client_status = "Inactive"
-        # enable
+    def post(self, request, *args, **kwargs):
+        client_id = int(kwargs.get('id'))
+        curr_client = Client.objects.get(cust_number=client_id)
+        clients = Client.objects.filter(client_status="Active")
+        date = datetime.datetime.today().date()
+        avail_fund = []
+        dummy = []
+        # for index in xrange(len(clients)):
+        #     mafs = MAF.objects.filter(maf_client=clients[index]).last()
+        #     if mafs is None or mafs == 0.00:
+        #         pass
+        #     else:
+        #         avail_fund.append(mafs.maf_client)
+        #         dummy.append(mafs.maf_total)
+        choice = request.POST.get('dead')
+        if choice == 'Client':
+            # release curr_client MAF (all)
+            ReleaseMAFall(curr_client.cust_number)
 
-        data = {
-            'maf_client':client_id,
-            'maf_contrib_date':datetime.datetime.today().date(),
-            'maf_ref': 'MAF release',
-            'maf_debit': fund.maf_total,
-            'maf_credit': '',
-            'maf_total': 0.00
-        }
-
-        form = MAFform(data)
-        
-        if form.is_valid():
-            client.save()
-            form.save()
+            # declare Inactive
+            curr_client.client_status = "Inactive"
+            # curr_client.save()
             # enable
-            # call func to subtract all MAFs
-            ReleaseMAFall(client)
-            messages.success(request, 'MAF release recorded')
-            return HttpResponseRedirect(reverse('release_maf', kwargs={'id':kwargs.get('id')}))
-        else:
-            error = 'Fatal Error'
-            return render(request, 'success.html', {'error':error, 'list':form.errors, 'list2':form})
+
+            ReleaseMAF_cl(curr_client)
+            
+            success = "All {}'s MAF has been successfully released.".format(curr_client)
+            addl = ['Client account is now Inactive.', "All the client's accounts are now frozen."]
+            return render(request, 'success.html', {'success':success, 'list':addl})
+        elif choice == 'Spouse':
+            # subtract all clients except curr_client
+            ReleaseMAF_benef(curr_client, choice)
+
+            success = "MAF has been successfully released for {}'s spouse.".format(curr_client)
+            addl = ['All clients with MAF has been deducted Php 50.00']
+            return render(request, 'success.html', {'success':success, 'list':addl})
+        elif choice == 'Heirs':
+            # subtract all clients except curr_client
+            ReleaseMAF_benef(curr_client, choice)
+
+            success = "MAF has been successfully released for {}'s heir.".format(curr_client)
+            addl = ['All clients with MAF has been deducted Php 25.00']
+            return render(request, 'success.html', {'success':success, 'list':addl})
 
 
 def ReleaseMAFall(arg):
-    """Subtracts Php100.00 from all members with MAF contribution
+    """Release all client MAF"""
+    client = Client.objects.get(cust_number=arg)
+    fund = MAF.objects.filter(maf_client=client).last()
+    if fund is None:
+        print "no MAF"
+    elif fund.maf_total == 0.00:
+        data = {
+            'maf_client':client,
+            'maf_contrib_date':datetime.datetime.today().date(),
+            'maf_ref': 'MAF account closed; client deceased.',
+            'maf_debit': 0.00,
+            'maf_credit': 0.00,
+            'maf_total': 0.00
+        }
+        forms = MAFform(data)
+        if forms.is_valid():
+            forms.save()
+            # enable
+        else:
+            print forms.errors
+    else:
+        data = {
+            'maf_client':fund.maf_client.cust_number,
+            'maf_contrib_date':datetime.datetime.today().date(),
+            'maf_ref': 'MAF release for {}'.format(client),
+            'maf_debit': fund.maf_total,
+            'maf_credit': '',
+            'maf_total': (float(fund.maf_total)-float(fund.maf_total))
+        }
+        forms = MAFform(data)
+        if forms.is_valid():
+            forms.save()
+            # enable
+        else:
+            print forms.errors
+
+
+def ReleaseMAF_cl(arg):
+    """Subtracts Php100.00 from all members with MAF contribution,
     if 0.00 or MAF DoesNotExist: pass"""
     clients = Client.objects.filter(client_status="Active")
     
     for index in xrange(len(clients)):
         mafs = MAF.objects.filter(maf_client=clients[index]).last()
         if mafs is None or mafs == 0.00:
-            pass
+            continue
         else:
             data = {
-                'maf_client':clients,
+                'maf_client':mafs.maf_client.cust_number,
                 'maf_contrib_date':datetime.datetime.today().date(),
-                'maf_ref': 'MAF release for {}'.format(arg),
+                'maf_ref': 'MAF release for {} (deceased)'.format(arg),
                 'maf_debit': 100.00,
                 'maf_credit': '',
                 'maf_total': (float(mafs.maf_total)-float(100.00))
             }
             forms = MAFform(data)
+
         if forms.is_valid():
             forms.save()
             # enable
@@ -1807,6 +1875,67 @@ def ReleaseMAFall(arg):
         else:
             print "error"
             print forms.errors
+
+def ReleaseMAF_benef(*args):
+    """Subtracts Php50.00 from all members with MAF contribution,
+    if 0.00 or MAF DoesNotExist: pass"""
+    clients = Client.objects.filter(client_status="Active")
+
+    if args[1] == 'Spouse':
+        for index in xrange(len(clients)):
+            mafs = MAF.objects.filter(maf_client=clients[index]).last()
+            if mafs is None or mafs.maf_total == 0.00:
+                continue
+            elif args[0].cust_number == mafs.maf_client.cust_number:
+                # print 'curr_client: {}'.format(arg)
+                continue
+            else:
+                # print 'client: {} - {}'.format(clients[index], mafs.maf_client)
+                # print 'index: {}'.format(index)
+                data = {
+                    'maf_client':mafs.maf_client.cust_number,
+                    'maf_contrib_date':datetime.datetime.today().date(),
+                    'maf_ref': 'MAF release for {}\'s spouse (deceased)'.format(args[0]),
+                    'maf_debit': 50.00,
+                    'maf_credit': '',
+                    'maf_total': (float(mafs.maf_total)-float(50.00))
+                }
+                forms = MAFform(data)
+
+            if forms.is_valid():
+                forms.save()
+                # enable
+                print "success"
+            else:
+                print "error"
+                print forms.errors
+    else:
+        for index in xrange(len(clients)):
+            mafs = MAF.objects.filter(maf_client=clients[index]).last()
+            if mafs is None or mafs == 0.00:
+                continue
+            elif args[0].cust_number == mafs.maf_client.cust_number:
+                # print 'curr_client: {}'.format(arg)
+                continue
+            else:
+                data = {
+                    'maf_client':mafs.maf_client.cust_number,
+                    'maf_contrib_date':datetime.datetime.today().date(),
+                    'maf_ref': 'MAF release for {}\'s heir (deceased)'.format(args[0]),
+                    'maf_debit': 25.00,
+                    'maf_credit': '',
+                    'maf_total': (float(mafs.maf_total)-float(25.00))
+                }
+                forms = MAFform(data)
+
+            if forms.is_valid():
+                forms.save()
+                # enable
+                print "success"
+            else:
+                print "error"
+                print forms.errors
+    
 
 
 class PayODFsearch(TemplateView):
@@ -1868,7 +1997,7 @@ class PayODFform(View):
         if request.POST['odf_credit'] != "" or request.POST['odf_credit'] != '-':
             print "error"
             if forms.is_valid():
-                # forms.save()
+                forms.save()
                 messages.success(request, 'ODF contribution recorded')
                 return render(request, 'cashier_odfpay.html', {'form':form})
             else:
@@ -1890,7 +2019,7 @@ class PayODFform(View):
 
 class ReleaseODFSearch(TemplateView):
     """Searches only clients with ODF != 0.00"""
-    template_name = 'cashier_odf_release.html'
+    # template_name = 'cashier_odf_release.html'
 
     def get(self, request, *args, **kwargs):
         return render(request, 'cashier_odfrelease_search.html')
@@ -1905,11 +2034,11 @@ class ReleaseODFSearch(TemplateView):
         if client:
             for index in xrange(len(client)):
                 odfs = ODF.objects.filter(odf_client=client[index]).last()
-                products.append(odfs)
-            # if products.odf_total != 0.00:
-            #     return render(request, 'cashier_odfrelease_search.html', {'object_list':products})
-            # else:
-            #     messages.error(request, 'Client have depleted ODF')
+                print odfs
+                if odfs != None:
+                    products.append(odfs)
+                else:
+                    pass
             return render(request, 'cashier_odfrelease_search.html', {'object_list':products})
         else:
             messages.error(request, 'Search returned nothing. Client does not exist or ODF contributions does not exist')
@@ -2050,7 +2179,10 @@ class SavingsReleaseSearch(TemplateView):
         if client:
             for index in xrange(len(client)):
                 sav = Savings.objects.filter(savings_client=client[index]).last()
-                products.append(sav)
+                if sav != None:
+                    products.append(sav)
+                else:
+                    pass
             return render(request, 'cashier_savingsReleaseSearch.html', {'object_list':products})
         else:
             messages.error(request, 'Search returned nothing. Client or Savings does not exist.')
@@ -2066,10 +2198,6 @@ class SavingsRelease(View):
         client = Client.objects.get(cust_number=client_id, client_status="Active")
         fund = Savings.objects.filter(savings_client__cust_number=client_id)
         return render(request, 'cashier_savings_release.html', {'object_list':fund, 'client':client})
-
-    # def post(self, request, *args, **kwargs):
-        
-    #     pass
 
 
 
