@@ -1796,10 +1796,10 @@ class ReleaseMAF(View):
             return render(request, 'success.html', {'success':success, 'list':addl})
         elif choice == 'Spouse':
             # subtract all clients except curr_client
-            ReleaseMAF_benef(curr_client, choice)
+            tots = ReleaseMAF_benef(curr_client, choice)
 
             success = "MAF has been successfully released for {}'s spouse.".format(curr_client)
-            addl = ['All clients with MAF has been deducted Php 50.00']
+            addl = ['All clients with MAF has been deducted Php 50.00', 'Total release: {}'.format(tots)]
             return render(request, 'success.html', {'success':success, 'list':addl})
         elif choice == 'Heirs':
             # subtract all clients except curr_client
@@ -1881,6 +1881,8 @@ def ReleaseMAF_benef(*args):
     if 0.00 or MAF DoesNotExist: pass"""
     clients = Client.objects.filter(client_status="Active")
 
+    total_release = []
+
     if args[1] == 'Spouse':
         for index in xrange(len(clients)):
             mafs = MAF.objects.filter(maf_client=clients[index]).last()
@@ -1905,10 +1907,13 @@ def ReleaseMAF_benef(*args):
             if forms.is_valid():
                 forms.save()
                 # enable
+                total_release.append(50)
                 print "success"
             else:
                 print "error"
                 print forms.errors
+        print total_release
+        return sum(total_release)
     else:
         for index in xrange(len(clients)):
             mafs = MAF.objects.filter(maf_client=clients[index]).last()
@@ -1931,10 +1936,13 @@ def ReleaseMAF_benef(*args):
             if forms.is_valid():
                 forms.save()
                 # enable
+                total_release.append(25)
                 print "success"
             else:
                 print "error"
                 print forms.errors
+        print total_release
+        return sum(total_release)
     
 
 
