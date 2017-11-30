@@ -16,7 +16,7 @@
         </li>
         <li>Invoice</li>
         <li>
-          <a href="" onclick="goBack()">Restructure Search</a>
+          <a href="\home\cashier\pay-structfee-search\">Restructure Search</a>
         </li>
         <li class="active">Pay Restructure Fee Form</li>
     </ol>
@@ -88,9 +88,13 @@
               </tbody>
             </div>
           </table>
-            <button type="submit" href="\home\cashier\pay-structfee-search\pay-structfee\{{objects.id}}" class="btn btn-info">
-                <i class="fa fa-check-square fa-lg"></i>
+            <button type="submit" name="submit" class="btn btn-info" value="pay">
+                <i class="fa fa-check-square fa-lg fa-fw"></i>
                 Pay
+            </button>
+            <button type="submit" name="submit" class="btn btn-danger" value="reject">
+                <i class="fa fa-times fa-lg fa-fw"></i>
+                Reject
             </button>
         </form>
       </div>

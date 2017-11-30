@@ -48,6 +48,11 @@ def register(request):
             user.save()
             success = "User is created!"
             return render(request, 'success.html', {'success':success})
+        else:
+            print form.errors
+            list2 = {"This value must contain only letters, numbers and underscores"}
+            error = "Please fill the form properly"
+            return render(request, 'success.html', {'error':error, 'list':form.errors, 'list2':list2})
     else:
         form = RegistrationForm()
     variables = RequestContext(request, {
@@ -746,7 +751,7 @@ class CreateLoan(View):
                         # mot = 12
                         intrs = 3.0
                         intrs2 = 3.0
-                        print "grrr"
+                        # print "grrr"
                 elif line == 'Outside Line':
                     if client_cap.capital >= 20000.00:
                         if application.app_amount > client_cap:
@@ -781,12 +786,14 @@ class CreateLoan(View):
                 else:
                     # client_cap.capital < 20 000.00
                     intrs = 3.0
-                    # if application.app_amount > client_cap.capital:
+                    if application.app_amount > client_cap.capital:
+                        intrs2 = 3.0
                     #     # ask for co-maker
                     #     over = application.app_amount - client_cap.capital
                     #     am = client_cap.capital
                     #     print 'pasok'
-                    # else:
+                    else:
+                        intrs2 = 0
                     #     # application.app_amount <= client_cap
                     #     print 'sa baba'
                     #     am = application.app_amount
@@ -954,10 +961,12 @@ class ClientProfile(View):
         loan_ledger = payLoanLedger_in.objects.filter(client__type_of_loan="Providential", client=loan_id)
         emer_loan = payLoanLedger_in.objects.filter(client__type_of_loan="Emergency", client=loan_id_2)
         loan_ledger_out = payLoanLedger_over.objects.filter(client=loan_id)
-        stru = Restruct.objects.filter(loan_root=loan_app, approval_status=True)
+        stru = Restruct.objects.filter(loan_root__restruct=True,approval_status=True).last()
+        print stru
         try:
-            if stru.exists():
-                print 'go'
+            if stru:
+                print 'gooooooooooooooo'
+                # print stru.approval_status
                 provi_tot = []
                 emer_tot = []
                 provi_datestart = []
@@ -1037,7 +1046,7 @@ class ClientProfile(View):
                     'struct':stru
                 })
         except:
-            pass
+            raise Http404
         # try:
         #     # with: everything
         #     # without:
@@ -1786,7 +1795,7 @@ class ReleaseMAF(View):
 
             # declare Inactive
             curr_client.client_status = "Inactive"
-            # curr_client.save()
+            curr_client.save()
             # enable
 
             ReleaseMAF_cl(curr_client)
@@ -2259,7 +2268,7 @@ class PayStructFeeSearch(TemplateView):
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
-        products = Restruct.objects.filter(loan_root__client__lastname__contains=request.POST['search'], approval_status=False)
+        products = Restruct.objects.filter(loan_root__client__lastname__contains=request.POST['search'], approval_status=True)
         if products:
             return render(request, 'cashier_paystructfee_search.html', {'object_list':products})
         else:
@@ -2273,21 +2282,45 @@ class PayStructFee(View):
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        struct_id = kwargs.get('id')
-        struct = Restruct.objects.get(id=struct_id, approval_status=False)
+        client_id = kwargs.get('id')
+        struct = Restruct.objects.get(loan_root__client__cust_number=client_id, approval_status=True, restruct_status='Pending')
+        print "struct_id: {}".format(struct.id)
+        print "loan_app_id from struct: {}".format(struct.loan_root.app_id)
+        print "cust_number from struct: {}".format(struct.loan_root.client.cust_number)
         # we get only one because User already selected from the search menu
         return render(request, "cashier_paystructfee.html", {'objects':struct})
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
-        struct_id = kwargs.get('id')
-        struct = Restruct.objects.get(id=struct_id, approval_status=False)
+        client_id = kwargs.get('id')
+        struct = Restruct.objects.get(loan_root__client__cust_number=client_id, approval_status=True, restruct_status='Pending')
+        loan_app = loanApplication.objects.get(app_id=struct.loan_root.app_id)
+        print "struct_id: {}".format(struct.id)
+        print "loan_app_id: {}".format(loan_app.app_id)
 
-        struct.restruct_fee = request.POST['fee']
-        struct.approval_status = True
-        struct.save()
-        success = "Payment Successful"
-        return render(request, 'success.html', {'success':success})
+        if request.POST.get('submit') == 'pay':
+            print "if"
+            struct.restruct_fee = request.POST['fee']
+            struct.restruct_status = 'Outstanding'
+            struct.save()
+            success = "Payment Successful"
+            return render(request, 'success.html', {'success':success})
+        elif request.POST.get('submit') == 'reject':
+            print "elif"
+            struct.approval_status = False
+            print struct.loan_root.app_id
+            # loan_app = loanApplication.objects.get(app_id=struct.loan_root.app_id)
+            # struct2 = Restruct.entry_set
+            print loan_app.app_id
+            
+            loan_app.app_status = 'Denied'
+            struct.save()
+            loan_app.save()
+            success = "Restructure was rejected"
+            return render(request, 'success.html', {'success':success})
+        else:
+            return HttpResponse(request.POST)
+
 
 
 def fetch_resources(uri, rel):
@@ -2427,6 +2460,7 @@ def restruct(request,id):
                 loan_ledger_in = payLoanLedger_in.objects.filter(client=loan_id).last()
                 loan_ledger_out = payLoanLedger_over.objects.filter(client=loan_id).last()
                 tot = float(loan_ledger_out.total_loan_recievable) + float(loan_ledger_in.total_loan_recievable)
+                # create loan application
                 data1 = {
                     'client': loan_id.client.cust_number,
                     'app_date': datetime.datetime.today().date(),
@@ -2435,19 +2469,21 @@ def restruct(request,id):
                     'restruct': 'True'
                 }
                 form1 = StructLoanApplicationForm(data1)
-                print data1
                 if form1.is_valid():
                     form1.save()
-                    print "saved"
                 else:
-                    print form1.errors
+                    pass
                 
+                # create restruct
+                struct_fee = (tot * 0.015) + 50.00
+                new_loan_app = loanApplication.objects.get(restruct=True, client=loan_id.client.cust_number, app_date=datetime.datetime.today().date())
                 info1 = {
-                    'loan_root': loan_id.loan_application.app_id,
+                    'loan_root': new_loan_app.app_id,
                     'loan_in_interest': loan_in,
                     'loan_in_amount': loan_ledger_in.total_loan_recievable,
                     'loan_over_interest': loan_over,
-                    'loan_over_amount': loan_ledger_out.total_loan_recievable
+                    'loan_over_amount': loan_ledger_out.total_loan_recievable,
+                    'restruct_fee': struct_fee
                 }
                 struct1 = RestructForm(info1)
                 if struct1.is_valid():
@@ -2455,15 +2491,13 @@ def restruct(request,id):
                     loan_id.overdue = False
                     loan_id.loan_status = 'Restructured'
                     loan_id.save()
-                    print "saved2"
                 else:
-                    print struct1.errors
+                    pass
 
             elif loan_over == 0.0:
                 # 1.5 x 0.0
                 # existing loan is within CBU at the time of application/approval
                 loan_ledger_in = payLoanLedger_in.objects.filter(client=loan_id).last()
-                # loan_ledger_out = payLoanLedger_over.objects.filter(client=loan_id).last()
                 tot = float(loan_ledger_out.total_loan_recievable)
                 data1 = {
                     'client': loan_id.client.cust_number,
@@ -2475,16 +2509,18 @@ def restruct(request,id):
                 form1 = StructLoanApplicationForm(data1)
                 if form1.is_valid():
                     form1.save()
-                    print "saved"
                 else:
-                    print form1.errors
+                    pass
                 
+                struct_fee = (tot * 0.015) + 50.00
+                new_loan_app = loanApplication.objects.get(restruct=True, client=loan_id.client.cust_number, app_date=datetime.datetime.today().date())
                 info1 = {
-                    'loan_root': loan_id.loan_application.app_id,
+                    'loan_root': new_loan_app.app_id,
                     'loan_in_interest': loan_in,
                     'loan_in_amount': loan_ledger_in.total_loan_recievable,
                     'loan_over_interest': 0,
-                    'loan_over_amount': 0
+                    'loan_over_amount': 0,
+                    'restruct_fee': struct_fee
                 }
                 struct1 = RestructForm(info1)
                 if struct1.is_valid():
@@ -2492,9 +2528,8 @@ def restruct(request,id):
                     loan_id.overdue = False
                     loan_id.loan_status = 'Restructured'
                     loan_id.save()
-                    print "saved2"
                 else:
-                    print struct1.errors
+                    pass
 
             else:
                 # does not exist
@@ -2520,18 +2555,18 @@ def restruct(request,id):
                 form2 = StructLoanApplicationForm(data2)
                 if form2.is_valid():
                     form2.save()
-                    print "saved"
                 else:
-                    print form2.errors
+                    pass
 
                 struct_fee = (tot * 0.015) + 50.00
+                new_loan_app = loanApplication.objects.get(restruct=True, client=loan_id.client.cust_number, app_date=datetime.datetime.today().date())
                 info2 = {
-                    'loan_root': loan_id.loan_application.app_id,
+                    'loan_root': new_loan_app.app_id,
                     'loan_in_interest': loan_in,
                     'loan_in_amount': loan_ledger_in.total_loan_recievable,
                     'loan_over_interest': loan_over,
                     'loan_over_amount': loan_ledger_out.total_loan_recievable,
-                    'restruct_fee': struct_fee,
+                    'restruct_fee': struct_fee
                 }
                 struct2 = RestructForm(info2)
                 if struct2.is_valid():
@@ -2539,9 +2574,8 @@ def restruct(request,id):
                     loan_id.overdue = False
                     loan_id.loan_status = 'Restructured'
                     loan_id.save()
-                    print "saved2"
                 else:
-                    print struct2.errors
+                    pass
 
             elif loan_over == 0.0:
                 # 3.0 x 0.0
@@ -2558,12 +2592,13 @@ def restruct(request,id):
                 form2 = StructLoanApplicationForm(data2)
                 if form2.is_valid():
                     form2.save()
-                    print "saved"
                 else:
-                    print form2.errors
+                    pass
 
+                struct_fee = (tot * 0.015) + 50.00
+                new_loan_app = loanApplication.objects.get(restruct=True, client=loan_id.client.cust_number, app_date=datetime.datetime.today().date())
                 info2 = {
-                    'loan_root': loan_id.loan_application.app_id,
+                    'loan_root': new_loan_app.app_id,
                     'loan_in_interest': loan_in,
                     'loan_in_amount': loan_ledger_in.total_loan_recievable,
                     'loan_over_interest': 0,
@@ -2577,7 +2612,7 @@ def restruct(request,id):
                     loan_id.save()
                     print "saved2"
                 else:
-                    print struct2.errors
+                    pass
             else:
                 # does not exist
                 print 'no update'

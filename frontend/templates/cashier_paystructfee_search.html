@@ -46,10 +46,10 @@
           <tbody>
             {% for items in object_list %}
             <tr>
-              <td align="left">{{items.loan_root}}</td>
-              <td align="left">{{items.restruct_fee}}</td>
+              <td>{{items.loan_root}}</td>
+              <td>{{items.restruct_fee}}</td>
               <td>
-                <a href="\home\cashier\pay-structfee-search\pay-structfee\{{items.id}}" class="btn btn-info">
+                <a href="\home\cashier\pay-structfee-search\pay-structfee\{{items.loan_root.client.cust_number}}" class="btn btn-info">
                   <i class="fa fa-plus-circle fa-lg fa-fw"></i>
                   Pay Restruct Fee
                 </a>
