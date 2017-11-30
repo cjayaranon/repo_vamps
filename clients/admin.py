@@ -14,7 +14,7 @@ class LoanApplicationAdmin(admin.ModelAdmin):
     list_display = ['client', 'app_kind', 'app_amount', 'app_date', 'app_status', 'app_id', 'restruct']
 
 class LoanAdmin(admin.ModelAdmin):
-    list_display = ['client', 'loan_status', 'interest_rate', 'interest_rate_over', 'id', 'update', 'overdue', 'type_of_loan']
+    list_display = ['client', 'loan_amount', 'loan_overflow', 'loan_status', 'interest_rate', 'interest_rate_over', 'id', 'update', 'overdue', 'type_of_loan']
 
 class RestructAdmin(admin.ModelAdmin):
 	list_display = ['loan_root', 'loan_in_interest', 'loan_in_amount', 'loan_over_interest', 'loan_over_amount', 'approval_status', 'restruct_status', 'restruct_fee', 'id']

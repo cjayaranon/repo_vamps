@@ -43,15 +43,13 @@
             <tr>
               <th align="left">Client</th>
               <th align="left">Loan Kind</th>
-              <th align="left">Loan Amount</th>
             </tr>
           </thead>
           <tbody>
             {% for items in object_list %}
             <tr>
-              <td align="left">{{items.client}}</td>
-              <td align="left">{{items.type_of_loan}}</td>
               <td align="left">{{items}}</td>
+              <td align="left">{{items.type_of_loan}}</td>
               <td>
                 <a href="\home\cashier\pay-loan-search\pay-loan-form\{{items.id}}" class="btn btn-info">
                   <i class="fa fa-plus-circle fa-lg fa-fw"></i>

@@ -281,14 +281,15 @@ class Restruct(models.Model):
         default=50.00,
         validators=[MinValueValidator(0.01)]
     )
-    approval_status = models.BooleanField(default=False)
+    approval_status = models.BooleanField(default=True)
     restruct_status = models.CharField(
         max_length=11, 
         choices=(
             ('Outstanding', "Outstanding"),
             ('Paid', "Paid"),
+            ('Pending', 'Pending')
         ), 
-        default="Outstanding")
+        default="Pending")
 
 
 
