@@ -225,6 +225,7 @@
                                             <th align="left">Date of Application</th>
                                             <th align="left">ID</th>
                                             <th align="left">Type</th>
+                                            <th align="left">Restructuring</th>
                                             <th align="left">Amount</th>
                                             <th align="left">Status</th>
                                         </tr>
@@ -233,19 +234,26 @@
                                             <td align="left">{{loan_app.app_date}}</td>
                                             <td>{{loan_app.app_id}}</td>
                                             <td align="left">{{loan_app.app_kind}}</td>
+                                            <td align="left">{{loan_app.restruct}}</td>
                                             <td align="left">{{loan_app.app_amount}}</td>
                                                 {% if user.position == 'Admin' %}
                                                     {% if loan_app.app_status == 'Pending' %}
                                                         {% if loan_app.restruct == True %}
-                                                            {% if struct.approval_status == False %}
+                                                            {% if struct.approval_status == True %}
+                                                                {% if struct.restruct_status == 'Pending' %}
+                                                            <td>Restructuring Fee Pending Payment</td>
+                                                                {% elif struct.restruct_status == 'Outstanding' %}
                                                             <td>
                                                                 <input type="submit" value="Approve" class="no-spinners btn btn-sm btn-info btn-default" onclick="window.location='/approve-loan-application/approve/{{loan_app.app_id}}';" />
                                                             </td>
                                                             <td>
                                                                 <input type="submit" value="Reject" class="no-spinners btn btn-sm btn-info btn-danger" onclick="window.location='/approve-loan-application/reject/{{loan_app.app_id}}';"/>
                                                             </td>
+                                                                {% else %}
+                                                            <td>Restructed Loan is Paid</td>
+                                                                {% endif %}
                                                             {% else %}
-                                                            <td>Restruct Approved</td>
+                                                            <td>Restruct Rejected {{struct.approval_status}}</td>
                                                             {% endif %}
                                                         {% else %}
                                                             <td>
@@ -259,42 +267,50 @@
                                                 <td>Application Denied</td>
                                                     {% elif loan_app.app_status == 'Approved' %}
                                                         {% if loan_app.restruct == True %}
-                                                            <td>Restruct Approved</td>
+                                                <td>Restruct Approved</td>
                                                         {% else %}
-                                                            <td>Application Approved</td>
+                                                <td>Application Approved</td>
                                                         {% endif %}
                                                     {% else %}
+                                                <td>Loan Paid</td>
                                                     {% endif %}
                                                 {% elif user.position == 'Bookkeeper' %}
                                                     {% if loan_app.app_status == 'Pending' %}
                                                         {% if loan_app.restruct == True %}
-                                                            {% if struct.approval_status == False %}
+                                                            {% if struct.approval_status == True %}
+                                                                {% if struct.restruct_status == 'Pending' %}
+                                                            <td>Restructuring Fee Pending Payment</td>
+                                                                {% elif struct.restruct_status == 'Outstanding' %}
                                                             <td>
                                                                 <input type="submit" value="Approve" class="no-spinners btn btn-sm btn-info btn-default" onclick="window.location='/approve-loan-application/approve/{{loan_app.app_id}}';" />
                                                             </td>
                                                             <td>
                                                                 <input type="submit" value="Reject" class="no-spinners btn btn-sm btn-info btn-danger" onclick="window.location='/approve-loan-application/reject/{{loan_app.app_id}}';"/>
                                                             </td>
+                                                                {% else %}
+                                                            <td>Restructed Loan is Paid</td>
+                                                                {% endif %}
                                                             {% else %}
-                                                            <td>Restruct Approved</td>
+                                                            <td>Restruct Rejected {{struct.approval_status}}</td>
                                                             {% endif %}
                                                         {% else %}
                                                             <td>
                                                                 <input type="submit" value="Approve" class="no-spinners btn btn-sm btn-info btn-default" onclick="window.location='/approve-loan-application/approve/{{loan_app.app_id}}';" />
                                                             </td>
                                                             <td>
-                                                                <input type="submit" value="Reject" class="no-spinners btn btn-sm btn-info btn-danger" onclick="window.location='/approve-loan-application/reject/{{loan_app.app_id}}';"/>
+                                                                <input type="submit" value="RejectS" class="no-spinners btn btn-sm btn-info btn-danger" onclick="window.location='/approve-loan-application/reject/{{loan_app.app_id}}';"/>
                                                             </td>
                                                         {% endif %}
                                                     {% elif loan_app.app_status == 'Denied' %}
                                                 <td>Application Denied</td>
                                                     {% elif loan_app.app_status == 'Approved' %}
                                                         {% if loan_app.restruct == True %}
-                                                            <td>Restruct Approved</td>
+                                                <td>Restruct Approved</td>
                                                         {% else %}
-                                                            <td>Application Approved</td>
+                                                <td>Application Approved</td>
                                                         {% endif %}
                                                     {% else %}
+                                                <td>Loan Paid</td>
                                                     {% endif %}
                                                 {% else %}
                                                 {% endif %}
