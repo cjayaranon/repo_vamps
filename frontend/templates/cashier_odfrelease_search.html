@@ -37,8 +37,8 @@
               </button>
             </span>
         </div>
-        <!-- </form> -->
           {% if object_list == None %}
+          {% else %}
           <thead>
             <tr>
               <th>
@@ -48,7 +48,6 @@
           </thead>
           
           <tbody>
-          {% else %}
             {% for items in object_list %}
               {% if items %}
             <tr>
@@ -56,7 +55,7 @@
               <td>{{items.odf_total}}</td>
                 {% if items.odf_total != 0.00 %}
               <td>
-                <a href="/home/cashier/release-odf-search/release-odf/{{items.odf_client.cust_number}}" class="btn btn-info" name="submit">
+                <a href="/home/cashier/release-odf-search/release-odf-view/{{items.odf_client.cust_number}}" class="btn btn-info" name="submit">
                   <i class="fa fa-check-square fa-lg fa-fw"></i>Release ODF
                 </a>
               </td>
