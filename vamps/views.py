@@ -2062,6 +2062,16 @@ class ReleaseODFSearch(TemplateView):
             return render(request, 'cashier_odfrelease_search.html')
 
 
+class ReleaseODFView(View):
+
+
+    def get(self, request, *args, **kwargs):
+        client_id = kwargs.get('id')
+        client = Client.objects.get(cust_number=client_id, client_status="Active")
+        fund = ODF.objects.filter(odf_client__cust_number=client_id)
+        return render(request, 'cashier_odfrelease_view.html', {'object_list':fund, 'client':client})
+
+
 class ReleaseODFForm(View):
     def get(self, request, *args, **kwargs):
         client_id = kwargs.get('id')
