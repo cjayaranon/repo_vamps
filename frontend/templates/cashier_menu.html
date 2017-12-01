@@ -86,7 +86,7 @@
 
                     <ul class="nav nav-list collapse" id="submenu4">
                         <li>
-                            <a href="/edit_profile/">Edit Profile</a>
+                            <a href="{% url 'edit_profile' %}">Edit Profile</a>
                         </li>
 
                     </ul>
@@ -118,29 +118,44 @@
                                 </div>
                                 <div style="padding-top: 1vw;">
                                     <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">
-                                        <i class="fa fa-menu fa-lg fa-fw"></i>Show/Hide Menu</a>
+                                        <i class="fa fa-menu fa-lg fa-fw"></i>Show/Hide Menu
+                                    </a>
                                 </div>
                             </div>
+                            <br>
                             <thead>
-                                <h3>Notifications <i style="color: red;" class="fa fa-exclamation-triangle fa-lg fa-fw"></i></h3>
+                                <tr bgcolor="#d3d3d3">
+                                    <th style="color:red;">Notifications</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
                             </thead>
                             <tbody>
                                 {% for items in upList %}
                                 <tr>
-                                    <td>{{items}}</td>
-                                    <td>Due for update interest</td>
+                                    <td align="left">
+                                        <i style="color:red;" class="fa fa-exclamation-triangle fa-lg fa-fw"></i>
+                                    </td>
+                                    <td align="left">{{items}}</td>
+                                    <td align="left">Due for update interest</td>
                                 </tr>
                                 {% endfor %}
                                 {% for items in overList %}
                                 <tr>
-                                    <td>{{items}}</td>
-                                    <td>Overdue Loan</td>
+                                    <td align="left">
+                                        <i style="color:red;" class="fa fa-exclamation-triangle fa-lg fa-fw"></i>
+                                    </td>
+                                    <td align="left">{{items}}</td>
+                                    <td align="left">Overdue Loan</td>
                                 </tr>
                                 {% endfor %}
                                 {% for items in structList %}
                                 <tr>
-                                    <td>{{items}}</td>
-                                    <td>Restruct Fee not yet Paid</td>
+                                    <td align="left">
+                                        <i style="color:red;"></i>
+                                    </td>
+                                    <td align="left">{{items}}</td>
+                                    <td align="left">Restruct Fee not yet Paid</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
