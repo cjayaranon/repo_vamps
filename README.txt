@@ -1,4 +1,4 @@
-This is a Django powered website developed on a Python virtual environment.When deploying please proceed according to your machine specifications.
+This is a Django powered website developed on a Python virtual environment. When deploying please proceed according to your machine specifications.
 
 Linux/Ubuntu
 [note] Your machine must have pip installed first.
@@ -21,3 +21,7 @@ Windows
 6. Go to the directory containing 'manage.py'
 7. Run 'python manage.py runserver <IP Address>:<port>
 8. Open browser and type the <IP Address>:<port>
+
+For the documentation files go to:
+a. System user manual go to https://drive.google.com/open?id=1F_Y_xkom5ceYfvelP0C9kdJXG0zZ6BWi
+b. Systems Analysis Document go to https://drive.google.com/open?id=0BykxFqwrA7BBMTZzVDhUNHhqM00
