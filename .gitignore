@@ -15,4 +15,5 @@
 local_settings.py
 settings_local.py
 var/log/
-
+Users/migrations
+clients/migrations
