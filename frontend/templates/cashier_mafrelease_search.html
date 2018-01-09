@@ -30,7 +30,7 @@
         <form action="{% url 'release_maf_search' %}" method="POST">
           {% csrf_token %}
           <div class="input-group col-md-12">
-            <input type="text" class="search-query form-control" placeholder="Search via last name" name="search" />
+            <input type="text" class="search-query form-control" placeholder="Search via last name" name="search" autofocus/>
             <span class="input-group-btn">
               <button class="btn btn-danger" type="submit" value="Search" id="search-button">
                 <span class=" glyphicon glyphicon-search"></span>
@@ -59,28 +59,15 @@
             <tr>
               <td>{{items.maf_client}}</td>
               <td>{{items.maf_total}}</td>
-                {% if items.maf_total != 0.00 %}
               <td>
                 <a href="{% url 'release_maf_table' id=items.maf_client.cust_number %}" class="btn btn-info">
                   <i class="fa fa-plus-circle fa-lg fa-fw"></i>
                   Release MAF
                 </a>
               </td>
-                {% else %}
-              <td>
-                <a class="btn btn-default disabled">
-                  <i class="fa fa-times fa-lg fa-fw"></i>
-                  Release MAF
-                </a>
-              </td>
-                {% endif %}
             </tr>
               {% endif %}
             {% empty %}
-            <!-- <tr>
-              <td>Search returned nothing</td>
-              <td>{{object_list}}</td>
-            </tr> -->
             {% endfor %}
             {% for items in client_list %}
               <tr>
@@ -95,7 +82,7 @@
               </tr>
             {% empty %}
               <tr>
-                <td>Search returned nothing</td>
+                <td>End of Search</td>
               </tr>
             {% endfor %}
           </tbody>

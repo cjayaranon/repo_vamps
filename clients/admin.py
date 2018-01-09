@@ -23,10 +23,20 @@ class CollAdmin(admin.ModelAdmin):
 	list_display = ['name', 'owner', 'description', 'val']
 
 class PayAdmin_IN(admin.ModelAdmin):
-    list_display = ['client', 'trans_date', 'reference', 'debit_loanGranted', 'credit_payment', 'int_per_month', 'total_loan_recievable', 'loan_pay_type', 'loan_pay_id']
+    list_display = ['get_client', 'trans_date', 'reference', 'debit_loanGranted', 'credit_payment', 'int_per_month', 'total_loan_recievable', 'loan_pay_type', 'loan_pay_id']
+
+    def get_client(self, obj):
+        return obj.client.client
+    get_client.short_description = 'Client'
+    get_client.admin_order_field = 'payLoanLedger_in__client'
 
 class PayAdmin_OVER(admin.ModelAdmin):
-    list_display = ['client', 'trans_date', 'reference', 'debit_loanGranted', 'credit_payment', 'int_per_month', 'total_loan_recievable', 'loan_pay_type', 'loan_pay_id',]
+    list_display = ['get_client', 'trans_date', 'reference', 'debit_loanGranted', 'credit_payment', 'int_per_month', 'total_loan_recievable', 'loan_pay_type', 'loan_pay_id',]
+
+    def get_client(self, obj):
+        return obj.client.client
+    get_client.short_description = 'Client'
+    get_client.admin_order_field = 'payLoanLedger_in__client'
 
 class PayMAFAdmin(admin.ModelAdmin):
     list_display = ['maf_client','maf_contrib_date', 'maf_ref', 'maf_debit', 'maf_credit', 'maf_total', 'maf_id']

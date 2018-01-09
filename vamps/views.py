@@ -850,8 +850,8 @@ class CreateLoan(View):
             else:
                 if coll_form.is_valid():
                     create_loan(application.client, application, am, over, intrs, intrs2, mots, kind)
-                    create_ledger(over, am, ref, kind, Loan.objects.get(client=application.client, loan_status="Outstanding"))
-                    create_ledger_over(over, am, ref, kind, Loan.objects.get(client=application.client, loan_status="Outstanding"))
+                    create_ledger(over, am, ref, kind, Loan.objects.filter(client=application.client, loan_status = "Outstanding", type_of_loan="Providential").last())
+                    create_ledger_over(over, am, ref, kind, Loan.objects.filter(client=application.client, loan_status = "Outstanding", type_of_loan="Providential").last())
                     coll_form.save()
                     # enable
                     print 'success1'
@@ -859,8 +859,8 @@ class CreateLoan(View):
                     application.app_comaker = Client.objects.get(cust_number=int(request.POST['app_comaker']))
                     application.save()
                     create_loan(application.client, application, am, over, intrs, intrs2, mots, kind)
-                    create_ledger(over, am, ref, kind, Loan.objects.get(client=application.client, loan_status="Outstanding"))
-                    create_ledger_over(over, am, ref, kind, Loan.objects.get(client=application.client, loan_status="Outstanding"))
+                    create_ledger(over, am, ref, kind, Loan.objects.filter(client=application.client, loan_status="Outstanding", type_of_loan="Providential").last())
+                    create_ledger_over(over, am, ref, kind, Loan.objects.filter(client=application.client, loan_status="Outstanding", type_of_loan="Providential").last())
                     # enable
                     print 'success2'
 
@@ -875,7 +875,7 @@ class CreateLoan(View):
                     over = 0
                     am = application.app_amount
                     create_loan(application.client, application, am, over, intrs, intrs2, mots, kind)
-                    create_ledger(over, am, ref, kind, Loan.objects.get(client=application.client, loan_status="Outstanding"))
+                    create_ledger(over, am, ref, kind, Loan.objects.filter(client=application.client, loan_status = "Outstanding", type_of_loan="Providential").last())
                 else:
                     messages.error(request, 'Please provide the Voucher Number')
                     return HttpResponseRedirect(reverse('create_loan', kwargs={'id':kwargs.get('id')}))
@@ -883,7 +883,7 @@ class CreateLoan(View):
                 over = 0
                 am = application.app_amount
                 create_loan(application.client, application, am, over, intrs, intrs2, mots, kind)
-                create_ledger(over, am, ref, kind, Loan.objects.get(client=application.client, loan_status="Outstanding", type_of_loan="Emergency"))
+                create_ledger(over, am, ref, kind, Loan.objects.filter(client=application.client, loan_status="Outstanding", type_of_loan="Emergency").last())
 
         success = 'Loan successfully created'
         return render(request, 'success.html', {'success':success})
@@ -958,250 +958,183 @@ class ClientProfile(View):
         loan_app = loanApplication.objects.filter(client=client_id)
         loan_id = Loan.objects.filter(client=client_id, loan_status="Outstanding", type_of_loan="Providential")
         loan_id_2 = Loan.objects.filter(client=client_id, loan_status="Outstanding", type_of_loan="Emergency")
-        loan_ledger = payLoanLedger_in.objects.filter(client__type_of_loan="Providential", client=loan_id)
-        emer_loan = payLoanLedger_in.objects.filter(client__type_of_loan="Emergency", client=loan_id_2)
-        loan_ledger_out = payLoanLedger_over.objects.filter(client=loan_id)
-        stru = Restruct.objects.filter(loan_root__restruct=True,approval_status=True).last()
-        print stru
+        loan_ledger = payLoanLedger_in.objects.filter(client__type_of_loan="Providential", client__client=client_id)
+        emer_loan = payLoanLedger_in.objects.filter(client__type_of_loan="Emergency", client__client=client_id)
+        loan_ledger_out = payLoanLedger_over.objects.filter(client__type_of_loan="Providential", client__client=client_id)
+        stru = Restruct.objects.filter(loan_root = loan_app, loan_root__restruct=True, approval_status=True).last()
         try:
             if stru:
-                print 'gooooooooooooooo'
-                # print stru.approval_status
                 provi_tot = []
                 emer_tot = []
                 provi_datestart = []
                 emer_datestart = []
                 provi_xp = []
                 emer_xp = []
+                provi_ledger = []
+                if loan_id and loan_id_2:
 
-                for index in xrange(len(loan_id)):
-                    provi_tot.append(loan_id[index].loan_amount + loan_id[index].loan_overflow)
-                    provi_datestart.append(loan_id[index].loan_application.approval_date)
-                    provi_xp.append(compute_dur(loan_id[index].loan_application.approval_date, loan_id[index].loan_duration))
-                
-                for index in xrange(len(loan_id_2)):
-                    emer_tot.append(loan_id_2[index].loan_amount + loan_id_2[index].loan_overflow)
-                    emer_datestart.append(loan_id_2[index].loan_application.approval_date)
-                    emer_xp.append(compute_dur(loan_id_2[index].loan_application.approval_date, loan_id_2[index].loan_duration))
+                    for index in xrange(len(loan_id)):
+                        provi_tot.append(loan_id[index].loan_amount + loan_id[index].loan_overflow)
+                        provi_datestart.append(loan_id[index].loan_application.approval_date)
+                        provi_xp.append(compute_dur(loan_id[index].loan_application.approval_date, loan_id[index].loan_duration))
+                        provi = zip(loan_id, provi_tot, provi_datestart, provi_xp)
 
-                return render(request, 'client_profile.html', {
-                    'client_cap': client_cap,
-                    'loan_app': loan_app,
-                    'loan_id': loan_id,
-                    'loan_id_2': loan_id_2,
-                    'provi_tot':provi_tot,
-                    'provi_datestart': provi_datestart,
-                    'provi_xp': provi_xp,
-                    'emer_tot':emer_tot,
-                    'emer_datestart':emer_datestart,
-                    'emer_xp': emer_xp,
-                    'loan_ledger': loan_ledger,
-                    'emer_loan': emer_loan,
-                    'loan_ledger_out':loan_ledger_out,
-                    'mafmaf': mafmaf,
-                    'odfs': odfs,
-                    'savings': savings,
-                    'cust_number': client_id.cust_number,
-                    'client_id': client_id,
-                    'struct':stru
-                })
+                    
+                    for index in xrange(len(loan_id_2)):
+                        emer_tot.append(loan_id_2[index].loan_amount + loan_id_2[index].loan_overflow)
+                        emer_datestart.append(loan_id_2[index].loan_application.approval_date)
+                        emer_xp.append(compute_dur(loan_id_2[index].loan_application.approval_date, loan_id_2[index].loan_duration))
+                        emer = zip(loan_id_2, emer_tot, emer_datestart, emer_xp)
+
+                    return render(request, 'client_profile.html', {
+                        'client_cap': client_cap,
+                        'loan_app': loan_app,
+                        'loan_id': loan_id,
+                        'loan_id_2': loan_id_2,
+                        'provi':provi,
+                        'emer':emer,
+                        'loan_ledger': loan_ledger,
+                        'emer_loan': emer_loan,
+                        'loan_ledger_out':loan_ledger_out,
+                        'mafmaf': mafmaf,
+                        'odfs': odfs,
+                        'savings': savings,
+                        'cust_number': client_id.cust_number,
+                        'client_id': client_id,
+                        'struct':stru
+                    })
+                else:
+                    if loan_id:
+                        for index in xrange(len(loan_id)):
+                            provi_tot.append(loan_id[index].loan_amount + loan_id[index].loan_overflow)
+                            provi_datestart.append(loan_id[index].loan_application.approval_date)
+                            provi_xp.append(compute_dur(loan_id[index].loan_application.approval_date, loan_id[index].loan_duration))
+                            provi = zip(loan_id, provi_tot, provi_datestart, provi_xp)
+                        return render(request, 'client_profile.html', {
+                            'client_cap': client_cap,
+                            'loan_app': loan_app,
+                            'loan_id': loan_id,
+                            'loan_id_2': loan_id_2,
+                            'provi':provi,
+                            'loan_ledger': loan_ledger,
+                            'emer_loan': emer_loan,
+                            'loan_ledger_out':loan_ledger_out,
+                            'mafmaf': mafmaf,
+                            'odfs': odfs,
+                            'savings': savings,
+                            'cust_number': client_id.cust_number,
+                            'client_id': client_id,
+                            'struct':stru
+                        })
+                    else:
+                        for index in xrange(len(loan_id_2)):
+                            emer_tot.append(loan_id_2[index].loan_amount + loan_id_2[index].loan_overflow)
+                            emer_datestart.append(loan_id_2[index].loan_application.approval_date)
+                            emer_xp.append(compute_dur(loan_id_2[index].loan_application.approval_date, loan_id_2[index].loan_duration))
+                            emer = zip(loan_id_2, emer_tot, emer_datestart, emer_xp)
+                        return render(request, 'client_profile.html', {
+                            'client_cap': client_cap,
+                            'loan_app': loan_app,
+                            'loan_id': loan_id,
+                            'loan_id_2': loan_id_2,
+                            'emer':emer,
+                            'loan_ledger': loan_ledger,
+                            'emer_loan': emer_loan,
+                            'loan_ledger_out':loan_ledger_out,
+                            'mafmaf': mafmaf,
+                            'odfs': odfs,
+                            'savings': savings,
+                            'cust_number': client_id.cust_number,
+                            'client_id': client_id,
+                            'struct':stru
+                        })
             else:
                 print "else"
+                print loan_ledger_out
                 provi_tot = []
                 emer_tot = []
                 provi_datestart = []
                 emer_datestart = []
                 provi_xp = []
                 emer_xp = []
+                bals = []
+                if loan_id and loan_id_2:
 
-                for index in xrange(len(loan_id)):
-                    provi_tot.append(loan_id[index].loan_amount + loan_id[index].loan_overflow)
-                    provi_datestart.append(loan_id[index].loan_application.approval_date)
-                    provi_xp.append(compute_dur(loan_id[index].loan_application.approval_date, loan_id[index].loan_duration))
+                    for index in xrange(len(loan_id)):
+                        provi_tot.append(loan_id[index].loan_amount + loan_id[index].loan_overflow)
+                        provi_datestart.append(loan_id[index].loan_application.approval_date)
+                        provi_xp.append(compute_dur(loan_id[index].loan_application.approval_date, loan_id[index].loan_duration))
+                        provi = zip(loan_id, provi_tot, provi_datestart, provi_xp)
+
                 
-                for index in xrange(len(loan_id_2)):
-                    emer_tot.append(loan_id_2[index].loan_amount + loan_id_2[index].loan_overflow)
-                    emer_datestart.append(loan_id_2[index].loan_application.approval_date)
-                    emer_xp.append(compute_dur(loan_id_2[index].loan_application.approval_date, loan_id_2[index].loan_duration))
+                    for index in xrange(len(loan_id_2)):
+                        emer_tot.append(loan_id_2[index].loan_amount + loan_id_2[index].loan_overflow)
+                        emer_datestart.append(loan_id_2[index].loan_application.approval_date)
+                        emer_xp.append(compute_dur(loan_id_2[index].loan_application.approval_date, loan_id_2[index].loan_duration))
+                        emer = zip(loan_id_2, emer_tot, emer_datestart, emer_xp)
 
-                return render(request, 'client_profile.html', {
-                    'client_cap': client_cap,
-                    'loan_app': loan_app,
-                    'loan_id': loan_id,
-                    'loan_id_2': loan_id_2,
-                    'provi_tot':provi_tot,
-                    'provi_datestart': provi_datestart,
-                    'provi_xp': provi_xp,
-                    'emer_tot':emer_tot,
-                    'emer_datestart':emer_datestart,
-                    'emer_xp': emer_xp,
-                    'loan_ledger': loan_ledger,
-                    'emer_loan': emer_loan,
-                    'loan_ledger_out':loan_ledger_out,
-                    'mafmaf': mafmaf,
-                    'odfs': odfs,
-                    'savings': savings,
-                    'cust_number': client_id.cust_number,
-                    'client_id': client_id,
-                    'struct':stru
-                })
+                    return render(request, 'client_profile.html', {
+                        'client_cap': client_cap,
+                        'loan_app': loan_app,
+                        'loan_id': loan_id,
+                        'loan_id_2': loan_id_2,
+                        'provi':provi,
+                        'emer':emer,
+                        'loan_ledger': loan_ledger,
+                        'emer_loan': emer_loan,
+                        'loan_ledger_out':loan_ledger_out,
+                        'mafmaf': mafmaf,
+                        'odfs': odfs,
+                        'savings': savings,
+                        'cust_number': client_id.cust_number,
+                        'client_id': client_id,
+                    })
+                else:
+                    if loan_id:
+                        for index in xrange(len(loan_id)):
+                            provi_tot.append(loan_id[index].loan_amount + loan_id[index].loan_overflow)
+                            provi_datestart.append(loan_id[index].loan_application.approval_date)
+                            provi_xp.append(compute_dur(loan_id[index].loan_application.approval_date, loan_id[index].loan_duration))
+                            provi = zip(loan_id, provi_tot, provi_datestart, provi_xp)
+                        return render(request, 'client_profile.html', {
+                            'client_cap': client_cap,
+                            'loan_app': loan_app,
+                            'loan_id': loan_id,
+                            'loan_id_2': loan_id_2,
+                            'provi':provi,
+                            'loan_ledger': loan_ledger,
+                            'emer_loan': emer_loan,
+                            'loan_ledger_out':loan_ledger_out,
+                            'mafmaf': mafmaf,
+                            'odfs': odfs,
+                            'savings': savings,
+                            'cust_number': client_id.cust_number,
+                            'client_id': client_id,
+                        })
+                    else:
+                        for index in xrange(len(loan_id_2)):
+                            emer_tot.append(loan_id_2[index].loan_amount + loan_id_2[index].loan_overflow)
+                            emer_datestart.append(loan_id_2[index].loan_application.approval_date)
+                            emer_xp.append(compute_dur(loan_id_2[index].loan_application.approval_date, loan_id_2[index].loan_duration))
+                            emer = zip(loan_id_2, emer_tot, emer_datestart, emer_xp)
+                        return render(request, 'client_profile.html', {
+                            'client_cap': client_cap,
+                            'loan_app': loan_app,
+                            'loan_id': loan_id,
+                            'loan_id_2': loan_id_2,
+                            'emer':emer,
+                            'loan_ledger': loan_ledger,
+                            'emer_loan': emer_loan,
+                            'loan_ledger_out':loan_ledger_out,
+                            'mafmaf': mafmaf,
+                            'odfs': odfs,
+                            'savings': savings,
+                            'cust_number': client_id.cust_number,
+                            'client_id': client_id,
+                        })
         except:
             raise Http404
-        # try:
-        #     # with: everything
-        #     # without:
-        #     print "try"
-        #     if Restruct.objects.get(loan_root=loan_app, approval_status=True):
-        #         print "if"
-        #         stru = Restruct.objects.get(loan_root=loan_app, approval_status=True)
-        #         # struc = stru[0].loan_root
-                
-        #         provi_tot = []
-        #         emer_tot = []
-        #         provi_datestart = []
-        #         emer_datestart = []
-        #         provi_xp = []
-        #         emer_xp = []
-
-        #         for index in xrange(len(loan_id)):
-        #             provi_tot.append(loan_id[index].loan_amount + loan_id[index].loan_overflow)
-        #             provi_datestart.append(loan_id[index].loan_application.approval_date)
-        #             provi_xp.append(compute_dur(loan_id[index].loan_application.approval_date, loan_id[index].loan_duration))
-                
-        #         for index in xrange(len(loan_id_2)):
-        #             emer_tot.append(loan_id_2[index].loan_amount + loan_id_2[index].loan_overflow)
-        #             emer_datestart.append(loan_id_2[index].loan_application.approval_date)
-        #             emer_xp.append(compute_dur(loan_id_2[index].loan_application.approval_date, loan_id_2[index].loan_duration))
-        #         print "struct: True"
-        #         return render(request, 'client_profile.html', {
-        #             'client_cap': client_cap,
-        #             'loan_app': loan_app,
-        #             'loan_id': loan_id,
-        #             'loan_id_2': loan_id_2,
-        #             'provi_tot':provi_tot,
-        #             'provi_datestart': provi_datestart,
-        #             'provi_xp': provi_xp,
-        #             'emer_tot':emer_tot,
-        #             'emer_datestart':emer_datestart,
-        #             'emer_xp': emer_xp,
-        #             'loan_ledger': loan_ledger,
-        #             'emer_loan': emer_loan,
-        #             'loan_ledger_out':loan_ledger_out,
-        #             'mafmaf': mafmaf,
-        #             'odfs': odfs,
-        #             'cust_number': client_id.cust_number,
-        #             'client_id': client_id,
-        #             'struct':stru
-        #         })
-        #     else:
-        #         print "else1"
-        #         provi_tot = []
-        #         emer_tot = []
-        #         provi_datestart = []
-        #         emer_datestart = []
-        #         provi_xp = []
-        #         emer_xp = []
-        #         for index in xrange(len(loan_id)):
-        #             provi_tot.append(loan_id[index].loan_amount + loan_id[index].loan_overflow)
-        #             provi_datestart.append(loan_id[index].loan_application.approval_date)
-        #             provi_xp.append(compute_dur(loan_id[index].loan_application.approval_date, loan_id[index].loan_duration))
-                
-        #         for index in xrange(len(loan_id_2)):
-        #             emer_tot.append(loan_id_2[index].loan_amount + loan_id_2[index].loan_overflow)
-        #             emer_datestart.append(loan_id_2[index].loan_application.approval_date)
-        #             emer_xp.append(compute_dur(loan_id_2[index].loan_application.approval_date, loan_id_2[index].loan_duration))
-        #         print "struct: False"
-        #         return render(request, 'client_profile.html', {
-        #             'client_cap': client_cap,
-        #             'loan_app': loan_app,
-        #             'loan_id': loan_id,
-        #             'loan_id_2': loan_id_2,
-        #             'provi_tot':provi_tot,
-        #             'provi_datestart': provi_datestart,
-        #             'provi_xp': provi_xp,
-        #             'emer_tot':emer_tot,
-        #             'emer_datestart':emer_datestart,
-        #             'emer_xp': emer_xp,
-        #             'loan_ledger': loan_ledger,
-        #             'emer_loan': emer_loan,
-        #             'loan_ledger_out':loan_ledger_out,
-        #             'mafmaf': mafmaf,
-        #             'odfs': odfs,
-        #             'cust_number': client_id.cust_number,
-        #             'client_id': client_id,
-        #         })
-
-        # except:
-        #     # with: Client
-        #     # without: everything
-        #     # pwde wala MAF, ODF, client_capital
-        #     client_id = Client.objects.get(cust_number=int(self.kwargs.get('id')))
-        #     client_cap = client_capital.objects.filter(cap_client=client_id).last()
-            
-        #     mafmaf = MAF.objects.filter(maf_client=client_id)
-        #     odfs = ODF.objects.filter(odf_client=client_id)
-
-        #     print 'except'
-
-        #     return render(request, 'client_profile.html', {
-        #         'client_cap': client_cap,
-        #         'loan_app': loan_app,
-        #         'mafmaf': mafmaf,
-        #         'odfs': odfs,
-        #         'cust_number': client_id.cust_number,
-        #         'client_id': client_id,
-        #     })
-
-        # else:
-        #     client_id = Client.objects.get(cust_number=int(self.kwargs.get('id')))
-        #     client_cap = client_capital.objects.filter(cap_client=client_id).last()
-            
-        #     mafmaf = MAF.objects.filter(maf_client=client_id)
-        #     odfs = ODF.objects.filter(odf_client=client_id)
-
-        #     loan_app = loanApplication.objects.filter(client=client_id)
-        #     loan_id = Loan.objects.filter(client=client_id, loan_status="Outstanding", type_of_loan="Providential")
-        #     loan_id_2 = Loan.objects.filter(client=client_id, loan_status="Outstanding", type_of_loan="Emergency")
-        #     loan_ledger = payLoanLedger_in.objects.filter(client__type_of_loan="Providential", client=loan_id)
-        #     emer_loan = payLoanLedger_in.objects.filter(client__type_of_loan="Emergency", client=loan_id_2)
-        #     loan_ledger_out = payLoanLedger_over.objects.filter(client=loan_id)
-
-        #     print "else1"
-        #     provi_tot = []
-        #     emer_tot = []
-        #     provi_datestart = []
-        #     emer_datestart = []
-        #     provi_xp = []
-        #     emer_xp = []
-        #     for index in xrange(len(loan_id)):
-        #         provi_tot.append(loan_id[index].loan_amount + loan_id[index].loan_overflow)
-        #         provi_datestart.append(loan_id[index].loan_application.approval_date)
-        #         provi_xp.append(compute_dur(loan_id[index].loan_application.approval_date, loan_id[index].loan_duration))
-            
-        #     for index in xrange(len(loan_id_2)):
-        #         emer_tot.append(loan_id_2[index].loan_amount + loan_id_2[index].loan_overflow)
-        #         emer_datestart.append(loan_id_2[index].loan_application.approval_date)
-        #         emer_xp.append(compute_dur(loan_id_2[index].loan_application.approval_date, loan_id_2[index].loan_duration))
-        #     print "struct: False"
-        #     return render(request, 'client_profile.html', {
-        #         'client_cap': client_cap,
-        #         'loan_app': loan_app,
-        #         'loan_id': loan_id,
-        #         'loan_id_2': loan_id_2,
-        #         'provi_tot':provi_tot,
-        #         'provi_datestart': provi_datestart,
-        #         'provi_xp': provi_xp,
-        #         'emer_tot':emer_tot,
-        #         'emer_datestart':emer_datestart,
-        #         'emer_xp': emer_xp,
-        #         'loan_ledger': loan_ledger,
-        #         'emer_loan': emer_loan,
-        #         'loan_ledger_out':loan_ledger_out,
-        #         'mafmaf': mafmaf,
-        #         'odfs': odfs,
-        #         'cust_number': client_id.cust_number,
-        #         'client_id': client_id,
-        #     })
+            # pass
 
 
     @method_decorator(login_required)
@@ -1243,15 +1176,38 @@ class ClientProfile(View):
 def compute_dur(*args):
     datestart = args[0]
     dur = args[1]
-    mot_end = datestart.month + dur
-
-    if mot_end >= 12:
-        temp_end_yr = mot_end / 12
-            
-        f_yr_end = datestart.year+temp_end_yr
-        f_date = '{}-{}-{}'.format(f_yr_end, datestart.month, datestart.day)
+    dd = 0
+    # mot_end = datestart.month + dur
+    if datestart.day == 31:
+        dd += 30
     else:
-        f_date = '{}-{}-{}'.format(datestart.year, datestart.month, datestart.day)
+        dd += datestart.day
+
+    if dur == 12:
+        f_yr_end = datestart.year+1
+        f_date = '{}-{}-{}'.format(f_yr_end, datestart.month, dd)
+        pass
+    elif dur > 12:
+        temp_end_yr = dur/12
+        mot_end = dur%12
+        f_yr_end = datestart.year+temp_end_yr
+        f_date = '{}-{}-{}'.format(f_yr_end, datestart.month, dd)
+        pass
+    else:
+        mot_end = datestart.month + dur
+        if mot_end > 12:
+            temp_end_yr = mot_end/12
+            temp_end_mot = mot_end%12
+            f_yr_end = datestart.year+temp_end_yr
+            f_date = '{}-{}-{}'.format(f_yr_end, temp_end_mot, dd)
+            pass
+        elif mot_end == 12:
+            f_date = '{}-{}-{}'.format(datestart.year+1, datestart.month, dd)
+            pass
+        else:
+            f_date = '{}-{}-{}'.format(datestart.year, mot_end, dd)
+            pass
+
 
     loan_xp = datetime.datetime.strptime(f_date, '%Y-%m-%d').date()
     return loan_xp
@@ -1288,7 +1244,7 @@ class ViewOldLoan(View):
 
 
 class PayLoanSearch(TemplateView):
-    """Bookkeeper access only. Returns only clients with
+    """Returns only clients with
     existing Loans"""
     template_name = 'cashier_loanpay_menu.html'
 
@@ -1298,8 +1254,19 @@ class PayLoanSearch(TemplateView):
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
+        bals = []
         products = Loan.objects.filter(client__lastname__contains=request.POST['search'], loan_status='Outstanding')
-        return render(request, 'cashier_loanpay_menu.html', {'object_list':products})
+        for index in xrange(len(products)):
+            temp_bal_in = payLoanLedger_in.objects.filter(client=products[index]).last()
+            temp_bal_out = payLoanLedger_over.objects.filter(client=products[index]).last()
+            if temp_bal_out:
+                temp_tot = temp_bal_in.total_loan_recievable + temp_bal_out.total_loan_recievable
+                bals.append(temp_tot)
+            else:
+                bals.append(temp_bal_in.total_loan_recievable)
+            
+        balance = zip(products, bals)
+        return render(request, 'cashier_loanpay_menu.html', {'object_list':products, 'balance':balance})
 
    
 
@@ -1307,249 +1274,256 @@ class PayLoan(View):
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
-        forms = PayLoanForm(request.POST)
-        form = PayLoanForm_o()
+        form = PayLoanForm()
+        form2 = PayLoanForm_o()
         client_id = int(self.kwargs.get('id'))
+        user_input = request.POST['credit_payment']
+        # print kwargs
 
-        if request.POST['credit_payment'] != "-" and request.POST['reference'] != "-":
+        if request.POST['credit_payment'] != "" or request.POST['reference'] != "":
 
             try:
                 # go here if model has data
                 # must go here because model is pre-populated by createLoan
-                ref = payLoanLedger_over.objects.filter(client=client_id).last()
-                # print 'try'
-                # print ref
-                if ref.total_loan_recievable != 0.00:
-                    # loan over still not payed
-                    # determine to pay overflow(3%) or within CBU(1.5%)
-                    print 'if1'
-                    print ref.total_loan_recievable
-
-                    if float(request.POST.get('credit_payment')) > float(ref.total_loan_recievable):
-                        # payment is greater than outstanding balance in ledger_out
-                        # include payment into ledger_in
-                        print 'if2'
-                        temp = float(request.POST.get('credit_payment')) - float(ref.total_loan_recievable)
-                        # for other ledger
-                        temp2 = float(request.POST.get('credit_payment')) - float(temp)
-                        # for this ledger
-                        tot = float(ref.total_loan_recievable) - float(temp2)
-                        # print temp
-                        # print tot
-
-                        if tot > 0.0:
-                            print 'if3'
-                            # overflow
-                            data = {
-                                'client': request.POST.get('client'),
-                                'trans_date': request.POST.get('trans_date'),
-                                'reference': request.POST.get('reference'),
-                                'debit_loanGranted': '',
-                                'credit_payment': temp2,
-                                'int_per_month': '',   #zero because this must auto update/compute monthly
-                                'total_loan_recievable': tot,
-                                'loan_pay_type': request.POST.get('loan_pay_type'),
-                                'loan_pay_received_by': request.POST.get('loan_pay_received_by')
-                            }
-                    
-                            form = PayLoanForm_o(data)
-
-                            # within CBU
-                            ref2 = payLoanLedger_in.objects.filter(client=client_id).last()
-                            tot2 = float(ref2.total_loan_recievable) - temp
-                            data2 = {
-                                'client': request.POST.get('client'),
-                                'trans_date': request.POST.get('trans_date'),
-                                'reference': request.POST.get('reference'),
-                                'debit_loanGranted': '',
-                                'credit_payment': temp,
-                                'int_per_month': '',   #zero because this must auto update/compute monthly
-                                'total_loan_recievable': tot2,
-                                'loan_pay_type': request.POST.get('loan_pay_type'),
-                                'loan_pay_received_by': request.POST.get('loan_pay_received_by')
-                            }
-
-                            forms = PayLoanForm(data2)
-
-                        else:
-                            print 'else3'
-                            print tot
-                            # tot == 0
-                            # overflow
-                            # tot_x = '({})'.format(tot)
-                            data = {
-                                'client': request.POST.get('client'),
-                                'trans_date': request.POST.get('trans_date'),
-                                'reference': request.POST.get('reference'),
-                                'debit_loanGranted': '',
-                                'credit_payment': temp2,
-                                'int_per_month': '',   #zero because this must auto update/compute monthly
-                                'total_loan_recievable': tot,
-                                'loan_pay_type': request.POST.get('loan_pay_type'),
-                                'loan_pay_received_by': request.POST.get('loan_pay_received_by')
-                            }
-                    
-                            form = PayLoanForm_o(data)
-
-                            # within CBU
-                            ref2 = payLoanLedger_in.objects.filter(client=client_id).last()
-                            tot2 = float(ref2.total_loan_recievable) - temp
-                            print tot2
-                            data2 = {
-                                'client': request.POST.get('client'),
-                                'trans_date': request.POST.get('trans_date'),
-                                'reference': request.POST.get('reference'),
-                                'debit_loanGranted': '',
-                                'credit_payment': temp,
-                                'int_per_month': '',   #zero because this must auto update/compute monthly
-                                'total_loan_recievable': tot2,
-                                'loan_pay_type': request.POST.get('loan_pay_type'),
-                                'loan_pay_received_by': request.POST.get('loan_pay_received_by')
-                            }
-
-                            forms = PayLoanForm(data2)
-
+                ref_out = payLoanLedger_over.objects.filter(client=client_id).last()
+                ref_in = payLoanLedger_in.objects.filter(client=client_id).last()
+                ref_tot = float(ref_out.total_loan_recievable)+float(ref_in.total_loan_recievable)
+                if user_input:
+                    if float(request.POST.get('credit_payment')) > ref_tot:
+                        error = "Pay amount exceeding remaining loan balance"
+                        list2 = ['remaining balance:', ref_tot]
+                        return render(request, 'success.html', {'error':error, 'list':list2})
                     else:
-                        # payment is less than or equal to outstanding balance in ledger_out
-                        print 'else2'
-                        print request.POST.get('credit_payment')
-                        tot = float(ref.total_loan_recievable) - float(request.POST.get('credit_payment'))
-                        print tot
-                        data = {
-                            'client': request.POST.get('client'),
-                            'trans_date': request.POST.get('trans_date'),
-                            'reference': request.POST.get('reference'),
-                            'debit_loanGranted': '',
-                            'credit_payment': request.POST.get('credit_payment'),
-                            'int_per_month': '',   #zero because this must auto update/compute monthly
-                            'total_loan_recievable': tot,
-                            'loan_pay_type': request.POST.get('loan_pay_type'),
-                            'loan_pay_received_by': request.POST.get('loan_pay_received_by')
-                        }
-                    
-                        forms = PayLoanForm_o(data)
-                else:
-                    print 'else1'
-                    # go here if payLoanLedger_over total_loan_recievable == 0
+                        if float(ref_tot) != 0.00:
+                            # loan over still not payed
+                            # determine to pay overflow(3%) or within CBU(1.5%)
+                            if float(ref_out.total_loan_recievable) != 0.00 and float(ref_in.total_loan_recievable) != 0.00:
+                                # false-false if overflow is not yet payed
+                                # true-false if overflow is payed, therefore pay only in
+                                if float(user_input) > float(ref_out.total_loan_recievable):
+                                    # payment is greater than balance in loan_ledger_out
+                                    temp = float(user_input) - float(ref_out.total_loan_recievable)
+                                    tot = float(ref_in.total_loan_recievable) - temp
 
-                    ref = payLoanLedger_in.objects.filter(client=client_id).last()
-                    if float(request.POST.get('credit_payment')) > float(ref.total_loan_recievable):
-                        error = "Overpay"
-                        return render(request, 'success.html', {'error':error})
-                    else:
-                        tot = float(ref.total_loan_recievable) - float(request.POST.get('credit_payment'))
-                        if tot != 0.00:
-                            data = {
-                                'client': request.POST.get('client'),
-                                'trans_date': request.POST.get('trans_date'),
-                                'reference': request.POST.get('reference'),
-                                'debit_loanGranted': '',
-                                'credit_payment': request.POST.get('credit_payment'),
-                                'int_per_month': '',   #zero because this must auto update/compute monthly
-                                'total_loan_recievable': tot,
-                                'loan_pay_type': request.POST.get('loan_pay_type'),
-                                'loan_pay_received_by': request.POST.get('loan_pay_received_by')
-                            }
-                            
+                                    data2 = {
+                                        'client': request.POST.get('client'),
+                                        'trans_date': request.POST.get('trans_date'),
+                                        'reference': request.POST.get('reference'),
+                                        'debit_loanGranted': '',
+                                        'credit_payment': ref_out.total_loan_recievable,
+                                        'int_per_month': '',   #zero because this must auto update/compute monthly
+                                        'total_loan_recievable': 0.00,
+                                        'loan_pay_type': request.POST.get('loan_pay_type'),
+                                        'loan_pay_received_by': request.user.position
+                                    }
+
+                                    if tot >= float(ref_in.total_loan_recievable):
+                                        data = {
+                                            'client': request.POST.get('client'),
+                                            'trans_date': request.POST.get('trans_date'),
+                                            'reference': request.POST.get('reference'),
+                                            'debit_loanGranted': '',
+                                            'credit_payment': ref_in.total_loan_recievable,
+                                            'int_per_month': '',   #zero because this must auto update/compute monthly
+                                            'total_loan_recievable': 0.00,
+                                            'loan_pay_type': request.POST.get('loan_pay_type'),
+                                            'loan_pay_received_by': request.user.position
+                                        }
+                                        loan_id = Loan.objects.get(id=client_id)
+                                        loan_id.loan_status = 'Paid'
+                                        loan_id.save()
+                                    else:
+                                        data = {
+                                            'client': request.POST.get('client'),
+                                            'trans_date': request.POST.get('trans_date'),
+                                            'reference': request.POST.get('reference'),
+                                            'debit_loanGranted': '',
+                                            'credit_payment': temp,
+                                            'int_per_month': '',   #zero because this must auto update/compute monthly
+                                            'total_loan_recievable': tot,
+                                            'loan_pay_type': request.POST.get('loan_pay_type'),
+                                            'loan_pay_received_by': request.user.position
+                                        }
+                                    
+                                    form = PayLoanForm(data)
+                                    form2 = PayLoanForm_o(data2)
+                                else:
+                                    # credit_payment <= out_total
+                                    tot2 = float(ref_out.total_loan_recievable) -  float(request.POST.get('credit_payment'))
+                                    data2 = {
+                                        'client': request.POST.get('client'),
+                                        'trans_date': request.POST.get('trans_date'),
+                                        'reference': request.POST.get('reference'),
+                                        'debit_loanGranted': '',
+                                        'credit_payment': request.POST.get('credit_payment'),
+                                        'int_per_month': '',   #zero because this must auto update/compute monthly
+                                        'total_loan_recievable': tot2,
+                                        'loan_pay_type': request.POST.get('loan_pay_type'),
+                                        'loan_pay_received_by': request.user.position
+                                    }
+                                    form2 = PayLoanForm_o(data2)
+
+                            else:
+                                # ledger_out is done, pay only ledger_in
+                                if float(ref_in.total_loan_recievable) != 0.00:
+                                    if float(user_input) > float(ref_in.total_loan_recievable):
+
+                                        temp = float(user_input) - float(ref_in.total_loan_recievable)
+                                        tot = float(ref_in.total_loan_recievable) - temp
+                                        data = {
+                                            'client': request.POST.get('client'),
+                                            'trans_date': request.POST.get('trans_date'),
+                                            'reference': request.POST.get('reference'),
+                                            'debit_loanGranted': '',
+                                            'credit_payment': ref_in.total_loan_recievable,
+                                            'int_per_month': '',   #zero because this must auto update/compute monthly
+                                            'total_loan_recievable': 0.00,
+                                            'loan_pay_type': request.POST.get('loan_pay_type'),
+                                            'loan_pay_received_by': request.user.position
+                                        }
+                                        change = {'change':temp}
+                                        form = PayLoanForm(data)
+                                        if tot == 0.00:
+                                            loan_id = Loan.objects.get(id=client_id)
+                                            loan_id.loan_status = 'Paid'
+                                            loan_id.save()
+                                    else:
+                                        print 'here'
+                                        temp = float(ref_in.total_loan_recievable) - float(request.POST.get('credit_payment'))
+                                        data = {
+                                            'client': request.POST.get('client'),
+                                            'trans_date': request.POST.get('trans_date'),
+                                            'reference': request.POST.get('reference'),
+                                            'debit_loanGranted': '',
+                                            'credit_payment': request.POST.get('credit_payment'),
+                                            'int_per_month': '',   #zero because this must auto update/compute monthly
+                                            'total_loan_recievable': temp,
+                                            'loan_pay_type': request.POST.get('loan_pay_type'),
+                                            'loan_pay_received_by': request.user.position
+                                        }
+                                        form = PayLoanForm(data)
+                                        if temp == 0.00:
+                                            loan_id = Loan.objects.get(id=client_id)
+                                            loan_id.loan_status = 'Paid'
+                                            loan_id.save()
+
+                                else:
+                                    # loan already paid
+                                    pass
                         else:
-                            # tot == 0
-                            data = {
-                            'client': request.POST.get('client'),
-                            'trans_date': request.POST.get('trans_date'),
-                                'reference': request.POST.get('reference'),
-                                'debit_loanGranted': '',
-                                'credit_payment': request.POST.get('credit_payment'),
-                                'int_per_month': '',   #zero because this must auto update/compute monthly
-                                'total_loan_recievable': tot,
-                                'loan_pay_type': request.POST.get('loan_pay_type'),
-                                'loan_pay_received_by': request.POST.get('loan_pay_received_by')
-                            }
-                            mod = Loan.objects.filter(client=client_id, loan_status="Outstanding").last()
-                            mod.loan_status = "Paid"
-                            mod.save()
-                            mod2 = loanApplication.objects.filter(client=client_id, app_status='Approved').last()
-                            mod2.app_status = "Paid"
-                            mod2.save()
-                        forms = PayLoanForm(data)
-                    # print forms.errors
-
-            except:
-                # go here if payLoanLedger_over is empty
-                # go here if loan_amount is within CBU
-                ref = payLoanLedger_in.objects.filter(client=client_id).last()
-                print ref
-                if float(request.POST.get('credit_payment')) > float(ref.total_loan_recievable):
-                    error = "Overpay"
-                    return render(request, 'success.html', {'error':error})
+                        # loan already paid
+                            pass
                 else:
-                    tot = float(ref.total_loan_recievable) - float(request.POST.get('credit_payment'))
-                    if tot != 0.00:
-                        data = {
-                            'client': request.POST.get('client'),
-                            'trans_date': request.POST.get('trans_date'),
-                            'reference': request.POST.get('reference'),
-                            'debit_loanGranted': '',
-                            'credit_payment': request.POST.get('credit_payment'),
-                            'int_per_month': '',   #zero because this must auto update/compute monthly
-                            'total_loan_recievable': tot,
-                            'loan_pay_type': request.POST.get('loan_pay_type'),
-                            'loan_pay_received_by': request.POST.get('loan_pay_received_by')
-                        }
+                    error = 'Please fill form properly'
+                    list2 = ['no input amount at Credit']
+                    return render(request, 'success.html', {'error':error, 'list':list2})
                         
-                    else:
-                        # tot == 0
-                        data = {
-                        'client': request.POST.get('client'),
-                        'trans_date': request.POST.get('trans_date'),
-                            'reference': request.POST.get('reference'),
-                            'debit_loanGranted': '',
-                            'credit_payment': request.POST.get('credit_payment'),
-                            'int_per_month': '',   #zero because this must auto update/compute monthly
-                            'total_loan_recievable': tot,
-                            'loan_pay_type': request.POST.get('loan_pay_type'),
-                            'loan_pay_received_by': request.POST.get('loan_pay_received_by')
-                        }
-                        mod = Loan.objects.filter(client=client_id, loan_status="Outstanding").last()
-                        mod.loan_status = "Paid"
-                        mod.save()
-                        mod2 = loanApplication.objects.filter(client=client_id, app_status='Approved').last()
-                        mod2.app_status = "Paid"
-                        mod2.save()
-                forms = PayLoanForm(data)
-                print 'except'
+            except Exception, e:
+                # raise e
+                # raise Http404
+                # pass
+                if user_input:
+                    ref_in = payLoanLedger_in.objects.filter(client=client_id).last()
 
-            if forms.is_valid() and form.is_valid():
-                # for loans over CBU
-                forms.save()
+                    if float(user_input) > float(ref_in.total_loan_recievable):
+                        error = "Pay amount exceeding remaining loan balance"
+                        list2 = ['remaining balance: {}'.format(float(ref_in.total_loan_recievable))]
+                        return render(request, 'success.html', {'error':error, 'list':list2})
+                    else:
+                        if float(ref_in.total_loan_recievable) != 0.00:
+                            if float(user_input) == float(ref_in.total_loan_recievable):
+                                data = {
+                                    'client': request.POST.get('client'),
+                                    'trans_date': request.POST.get('trans_date'),
+                                    'reference': request.POST.get('reference'),
+                                    'debit_loanGranted': '',
+                                    'credit_payment': request.POST.get('credit_payment'),
+                                    'int_per_month':'',
+                                    'total_loan_recievable': 0.00,
+                                    'loan_pay_type': request.POST.get('loan_pay_type'),
+                                    'loan_pay_received_by': request.user.position
+                                }
+                                form = PayLoanForm(data)
+                                loan_id = Loan.objects.get(id=client_id)
+                                loan_id.loan_status = 'Paid'
+                                loan_id.save()
+                            else:
+                                # payment is less than the remaining balance
+                                tot = float(ref_in.total_loan_recievable) - float(request.POST.get('credit_payment'))
+                                data = {
+                                    'client':request.POST.get('client'),
+                                    'trans_date':request.POST.get('trans_date'),
+                                    'reference':request.POST.get('reference'),
+                                    'debit_loanGranted': '',
+                                    'credit_payment': request.POST.get('credit_payment'),
+                                    'int_per_month': '',
+                                    'total_loan_recievable': tot,
+                                    'loan_pay_type':request.POST.get('loan_pay_type'),
+                                    'loan_pay_received_by': request.user.position
+                                }
+                                form = PayLoanForm(data)
+                else:
+                    error = 'Please fill form properly'
+                    list2 = ['no input amount at Credit']
+                    return render(request, 'success.html', {'error':error, 'list':list2})
+                
+            # else:
+            if form.is_valid() and form2.is_valid():
+                # for loan payment including 2 ledgers
+                form2.save()
                 form.save()
                 # enable
                 success = 'Loan payment successful and recorded'
-                # return render(request, 'receipt_template.html', {'success':success})
-                return render(request, 'success.html', {'success':success})
-            elif forms.is_valid():
-                # for loans within CBU
-                forms.save()
-                # enable
-                success = 'Loan payment successful and recorded'
-                # return render(request, 'receipt_template.html', 
-                #     {'data':data, 
-                #     'client': ref.client,
-                #     'user':request.user,
-                #     'gen_datetime': datetime.datetime.now(),
-                #     'ref':ref.loan_pay_id+1,
-                #     'am':num2words(request.POST['credit_payment'])
-                #     })
-                return render(request, 'success.html', {'success':success})
+                print 11
+                return render(request, 'receipt_template.html',{
+                    'data':data, 
+                    'client': ref_out,
+                    'user':request.user,
+                    'gen_datetime': datetime.datetime.now(),
+                    'ref':ref_out.loan_pay_id+1,
+                    'am':num2words(request.POST.get('credit_payment'))
+                    })
             else:
-                error = 'Please fill the form properly'
-                print forms.errors
-                print form.errors
-                return render(request, 'success.html', {'error':error, 'list': forms.errors, 'list2': form.errors})
-        elif request.POST['credit_payment'] == "-":
+                if form2.is_valid():
+                    # for loans outside CBU
+                    form2.save()
+                    # enable
+                    # success = 'Loan payment successful and recorded'
+                    print request.user
+                    return render(request, 'receipt_template.html', {
+                        'data':data2, 
+                        'client': ref_out,
+                        'user':request.user,
+                        'gen_datetime': datetime.datetime.now(),
+                        'ref':ref_out.loan_pay_id+1,
+                        'am':num2words(request.POST['credit_payment'])
+                        })
+                elif form.is_valid():
+                    # for loans within CBU
+                    form.save()
+                    # enable
+                    # success = 'Loan payment successful and recorded'
+                    print request.user
+                    print ref_in.client.loan_status
+                    return render(request, 'receipt_template.html', 
+                        {'data':data, 
+                        'client': ref_in,
+                        'user':request.user,
+                        'gen_datetime': datetime.datetime.now(),
+                        'ref':ref_in.loan_pay_id+1,
+                        'am':num2words(request.POST['credit_payment'])
+                        })
+                else:
+                    error = 'Please fill the form properly'
+                    print form.errors
+                    print form2.errors
+                    return render(request, 'success.html', {'error':error, 'list': form.errors, 'list2': form2.errors})
+
+        elif request.POST['credit_payment'] == "":
             error = 'Please fill the form properly'
             wrong = ['Credit/Payment']
             return render(request, 'success.html', {'error':error, 'list':wrong})
-        elif request.POST['reference'] == "-":
+        elif request.POST['reference'] == "":
             error = 'Please fill the form properly'
             wrong = ['OR Number']
             return render(request, 'success.html', {'error':error, 'list':wrong})
@@ -1567,9 +1541,9 @@ class PayLoan(View):
         
         if loan.loan_status == 'Outstanding':
             # loan is not yet fully paid
-            form = PayLoanForm(initial={'client':loan})
+            print loan.client
+            form = PayLoanForm(initial={'client':loan, 'loan_pay_received_by':request.user.position})
             form.fields['client'].widget.attrs['readonly'] = True
-
             return render(request, 'cashier_loan_pay.html', {'form': form})  
         elif loan.loan_status == 'Paid':
             # loan is already fully paid
@@ -1604,9 +1578,11 @@ class PayCBUform(View):
         form = CapitalForm()
         client_id = int(self.kwargs.get('id'))
         forms = CapitalForm(request.POST)
+        # ref = client_capital.objects.get(cap_client=client_id).last() #returns only 1 object
 
         try:
-            ref = client_capital.objects.get(cap_client=client_id).last() #returns only 1 object
+            # capital is present
+            ref = client_capital.objects.filter(cap_client=client_id).last() #returns only 1 object
             cred = float(request.POST.get('cap_contrib'))
             ref = float(ref.capital)
             tot = ref + cred
@@ -1619,6 +1595,7 @@ class PayCBUform(View):
             }
             forms = CapitalForm(data)
         except:
+            # go here to create capital
             data = {
                 'cap_client': request.POST.get('cap_client'),
                 'cap_contrib_date': request.POST.get('cap_contrib_date'),
@@ -1629,10 +1606,11 @@ class PayCBUform(View):
 
         if forms.is_valid():
             forms.save()
-            messages.success(request, 'Capital Contribution Recorded')
-            return render(request, 'cashier_add_cap.html', {'form':form})
+            success = 'Capital Contribution Recorded'
+            return render(request, 'success.html', {'success':success})
         else:
-            raise ValidationError(('%s') % forms.is_bound)
+            error = "Please fill the form properly."
+            return render(request, 'success.html', {'error':error, 'list':forms.errors})
 
     def get(self, request, *args, **kwargs):
         client_id = kwargs.get('id')
@@ -1671,27 +1649,31 @@ class PayMAFform(View):
     def post(self, request, *args, ** kwargs):
         form = MAFform()
         client_id = int(request.POST['maf_client'])
+        user_input = request.POST['maf_credit']
         # forms = MAFform(request.POST) #get form data
         # print client_id
 
         try:   #go here if model already has data
             #fetch last data from total field
             ref = MAF.objects.filter(maf_client__cust_number=client_id).last()   #returns last maf_total
-            cred = float(request.POST.get('maf_credit'))   #convert user input(unicode) to float
-            ref = float(ref.maf_total)   #convert queryset item to float
-            tot = ref + cred   #we use float to accomodate centavos
-            # print tot
-            data = {
-                'maf_client': request.POST.get('maf_client'),
-                'maf_contrib_date':request.POST.get('maf_contrib_date'),
-                'maf_ref':ref,
-                'maf_debit':'',
-                'maf_credit':cred,
-                'maf_total': tot
-            }
-            forms = MAFform(data)
-            print "try"
-
+            if user_input:
+                cred = float(request.POST.get('maf_credit'))   #convert user input(unicode) to float
+                ref = float(ref.maf_total)   #convert queryset item to float
+                tot = ref + cred   #we use float to accomodate centavos
+                # print tot
+                data = {
+                    'maf_client': request.POST.get('maf_client'),
+                    'maf_contrib_date':request.POST.get('maf_contrib_date'),
+                    'maf_ref':'deposit',
+                    'maf_debit':'',
+                    'maf_credit':cred,
+                    'maf_total': tot
+                }
+                forms = MAFform(data)
+            else:
+                error ='Please fill the form properly'
+                list2 = ['no input value at Credit']
+                return render(request, 'success.html', {'error':error, 'list':list2})
         except:   #go here if model is empty
             data = {
                 'maf_client':request.POST.get('maf_client'),
@@ -1704,14 +1686,13 @@ class PayMAFform(View):
             forms = MAFform(data)
             print "except"
 
-        print ref
-        print client_id
         if forms.is_valid():
             forms.save()
-            messages.success(request, 'MAF contribution recorded')
-            return render(request, 'cashier_mafpay.html', {'form':form})
+            success = 'MAF contribution recorded'
+            return render(request, 'success.html', {'success':success})
         else:
-            raise ValidationError(('%s') % forms.is_bound)
+            error = 'Please fill the form properly'
+            return render(request, 'success.html', {'error':error, 'list':forms.errors})
 
     def get(self, request, *args, **kwargs):
         client_id = kwargs.get('id')
@@ -1791,17 +1772,17 @@ class ReleaseMAF(View):
         choice = request.POST.get('dead')
         if choice == 'Client':
             # release curr_client MAF (all)
-            ReleaseMAFall(curr_client.cust_number)
+            client_acct = ReleaseMAFall(curr_client.cust_number)
 
             # declare Inactive
             curr_client.client_status = "Inactive"
             curr_client.save()
             # enable
 
-            ReleaseMAF_cl(curr_client)
+            contrib_accts = ReleaseMAF_cl(curr_client)
             
             success = "All {}'s MAF has been successfully released.".format(curr_client)
-            addl = ['Client account is now Inactive.', "All the client's accounts are now frozen."]
+            addl = ['Client account is now Inactive.', "All the client's accounts are now frozen.", "Client MAF: {}".format(client_acct), "Other members' contribution: {}.00".format(contrib_accts)]
             return render(request, 'success.html', {'success':success, 'list':addl})
         elif choice == 'Spouse':
             # subtract all clients except curr_client
@@ -1820,7 +1801,7 @@ class ReleaseMAF(View):
 
 
 def ReleaseMAFall(arg):
-    """Release all client MAF"""
+    """Release all client MAF. Accesses only the deceased client's MAF records"""
     client = Client.objects.get(cust_number=arg)
     fund = MAF.objects.filter(maf_client=client).last()
     if fund is None:
@@ -1831,7 +1812,7 @@ def ReleaseMAFall(arg):
             'maf_contrib_date':datetime.datetime.today().date(),
             'maf_ref': 'MAF account closed; client deceased.',
             'maf_debit': 0.00,
-            'maf_credit': 0.00,
+            'maf_credit': '',
             'maf_total': 0.00
         }
         forms = MAFform(data)
@@ -1841,10 +1822,11 @@ def ReleaseMAFall(arg):
         else:
             print forms.errors
     else:
+        temp = fund.maf_total
         data = {
             'maf_client':fund.maf_client.cust_number,
             'maf_contrib_date':datetime.datetime.today().date(),
-            'maf_ref': 'MAF release for {}'.format(client),
+            'maf_ref': 'MAF account closed; client deceased.',
             'maf_debit': fund.maf_total,
             'maf_credit': '',
             'maf_total': (float(fund.maf_total)-float(fund.maf_total))
@@ -1855,16 +1837,19 @@ def ReleaseMAFall(arg):
             # enable
         else:
             print forms.errors
+    return temp
 
 
 def ReleaseMAF_cl(arg):
     """Subtracts Php100.00 from all members with MAF contribution,
     if 0.00 or MAF DoesNotExist: pass"""
     clients = Client.objects.filter(client_status="Active")
+
+    total_release = []
     
     for index in xrange(len(clients)):
         mafs = MAF.objects.filter(maf_client=clients[index]).last()
-        if mafs is None or mafs == 0.00:
+        if mafs is None or mafs.maf_total == 0.00 or mafs.maf_total < 100.00:
             continue
         else:
             data = {
@@ -1880,10 +1865,12 @@ def ReleaseMAF_cl(arg):
         if forms.is_valid():
             forms.save()
             # enable
+            total_release.append(100)
             print "success"
         else:
             print "error"
             print forms.errors
+    return sum(total_release)
 
 def ReleaseMAF_benef(*args):
     """Subtracts Php50.00 from all members with MAF contribution,
@@ -1895,7 +1882,7 @@ def ReleaseMAF_benef(*args):
     if args[1] == 'Spouse':
         for index in xrange(len(clients)):
             mafs = MAF.objects.filter(maf_client=clients[index]).last()
-            if mafs is None or mafs.maf_total == 0.00:
+            if mafs is None or mafs.maf_total == 0.00 or mafs.maf_total < 50.00:
                 continue
             elif args[0].cust_number == mafs.maf_client.cust_number:
                 # print 'curr_client: {}'.format(arg)
@@ -1926,7 +1913,7 @@ def ReleaseMAF_benef(*args):
     else:
         for index in xrange(len(clients)):
             mafs = MAF.objects.filter(maf_client=clients[index]).last()
-            if mafs is None or mafs == 0.00:
+            if mafs is None or mafs.maf_total == 0.00 or mafs.maf_total < 25.00:
                 continue
             elif args[0].cust_number == mafs.maf_client.cust_number:
                 # print 'curr_client: {}'.format(arg)
@@ -1981,25 +1968,32 @@ class PayODFsearch(TemplateView):
 class PayODFform(View):
     def post(self, request, *args, ** kwargs):
         form = ODFform()
-        client_id = int(request.POST['odf_client'])
+        client_id = int(self.kwargs.get('id'))
+        user_input = request.POST['odf_credit']
+        print self.kwargs.get('id')
         # forms = ODFform(request.POST) #get form data
 
         try:   #go here if model already has data
             #fetch last data from total field
             ref = ODF.objects.filter(odf_client=client_id).last()   #returns last odf_total
-            cred = float(request.POST.get('odf_credit'))   #convert user input(unicode) to float
-            ref = float(ref.odf_total)   #convert queryset item to float
-            tot = ref + cred   #we use float to accomodate centavos
-            print tot
-            data = {
-                'odf_client': request.POST.get('odf_client'),
-                'odf_contrib_date':request.POST.get('odf_contrib_date'),
-                'odf_ref':'deposit',
-                'odf_debit':'',
-                'odf_credit':cred,
-                'odf_total': tot
-                }
-            forms = ODFform(data)
+            if user_input:
+                cred = float(request.POST.get('odf_credit'))   #convert user input(unicode) to float
+                ref = float(ref.odf_total)   #convert queryset item to float
+                tot = ref + cred   #we use float to accomodate centavos
+                print 'tot: {}'.format(tot)
+                data = {
+                    'odf_client': request.POST.get('odf_client'),
+                    'odf_contrib_date':request.POST.get('odf_contrib_date'),
+                    'odf_ref':'deposit',
+                    'odf_debit':'',
+                    'odf_credit':cred,
+                    'odf_total': tot
+                    }
+                forms = ODFform(data)
+            else:
+                error = 'Please fill the form properly'
+                list2 = ['no input value at Credit']
+                return render(request, 'success.html', {'error':error, 'list':list2})
         except:   #go here if model is empty
             data = {
             'odf_client':request.POST.get('odf_client'),
@@ -2010,20 +2004,14 @@ class PayODFform(View):
             'odf_total': request.POST.get('odf_credit')
             }
             forms = ODFform(data)
-        print ref
-        if request.POST['odf_credit'] != "" or request.POST['odf_credit'] != '-':
-            print "error"
-            if forms.is_valid():
-                forms.save()
-                messages.success(request, 'ODF contribution recorded')
-                return render(request, 'cashier_odfpay.html', {'form':form})
-            else:
-                error = 'Please fill the form properly'
-                return render(request, 'success.html', {'error':error, 'list':forms.errors})
+        print 'ref: {}'.format(ref)
+        if forms.is_valid():
+            forms.save()
+            success = 'ODF contribution recorded'
+            return render(request, 'success.html', {'success':success})
         else:
             error = 'Please fill the form properly'
-            wrong = ['odf_credit']
-            return render(request, 'success.html', {'error':error, 'list':wrong})
+            return render(request, 'success.html', {'error':error, 'list':forms.errors})
 
     def get(self, request, *args, **kwargs):
         client_id = kwargs.get('id')
@@ -2079,7 +2067,7 @@ class ReleaseODFForm(View):
         form = ODFform(initial={'odf_client':client, 'odf_ref':'Withdrawal'})
         form.fields['odf_client'].widget.attrs['readonly'] = True
         form.fields['odf_contrib_date'].widget.attrs['readonly'] = True
-        return render(request, 'cashier_odf_release.html', {'form':form})
+        return render(request, 'cashier_odfrelease_form.html', {'form':form})
 
     def post(self, request, *args, **kwargs):
         client_id = int(self.kwargs.get('id'))
@@ -2089,28 +2077,27 @@ class ReleaseODFForm(View):
 
         try:
             ref = ODF.objects.filter(odf_client=client).last()   #returns last odf_total
-            print 'ref:{}'.format(ref)
-            print forms.errors
-            deb = float(request.POST['odf_debit'])   #convert user input(unicode) to float
-            print 'deb:{}'.format(deb)
-            ref = float(ref.odf_total)   #convert queryset item to float
-            print 'ref:{}'.format(ref)
-            tot = ref - deb   #we use float to accomodate centavos
-            print 'tot:{}'.format(tot)
-            data = {
-                'odf_client': request.POST.get('odf_client'),
-                'odf_contrib_date':request.POST.get('odf_contrib_date'),
-                'odf_ref':'release',
-                'odf_debit':request.POST.get('odf_debit'),
-                'odf_credit':'',
-                'odf_total': tot
-                }
-            forms = ODFform(data)            
+            if float(request.POST.get('odf_debit')) > float(ref.odf_total):
+                error = "Withdrawal amount is greater than remaining ODF balance"
+                list2 = ['ODF balance: {}'.format(ref.odf_total)]
+                return render(request, 'success.html', {'error':error, 'list':list2})
+            else:
+                deb = float(request.POST['odf_debit'])   #convert user input(unicode) to float
+                ref = float(ref.odf_total)   #convert queryset item to float
+                tot = ref - deb   #we use float to accomodate centavos
+                data = {
+                    'odf_client': request.POST.get('odf_client'),
+                    'odf_contrib_date':request.POST.get('odf_contrib_date'),
+                    'odf_ref':'release',
+                    'odf_debit':request.POST.get('odf_debit'),
+                    'odf_credit':'',
+                    'odf_total': tot
+                    }
+                forms = ODFform(data)            
         except:
-            print 'except'
-            # print forms.errors
             error = 'Please fill the form properly'
-            return render(request, 'success.html', {'error':error, 'list':forms})
+            list2 = ['Debit field empty']
+            return render(request, 'success.html', {'error':error, 'list':list2})
 
         if forms.is_valid():
             forms.save()
@@ -2118,6 +2105,7 @@ class ReleaseODFForm(View):
             return render(request, 'success.html', {'success':success})
         else:
             error = 'Please fill the form properly'
+            list2 = ['Debit field empty']
             return render(request, 'success.html', {'error':error, 'list':forms.errors})
 
 
@@ -2145,22 +2133,29 @@ class SavingsAdd(View):
     def post(self, request, *args, **kwargs):
         form = SavingsForm()
         client_id = int(request.POST['savings_client'])
+        user_input = request.POST['savings_credit']
 
         try:
             ref = Savings.objects.filter(savings_client__cust_number=client_id).last()
-            cred = float(request.POST.get('maf_credit'))
-            ref = float(request.savings_total)
-            tot = ref + cred
+            if user_input:
+                cred = float(user_input)
+                print cred
+                ref = float(ref.savings_total)
+                tot = ref + cred
 
-            data = {
-                'savings_client': request.POST.get('savings_client'),
-                'savings_contrib_date': request.POST.get('savings_contrib_date'),
-                'savings_ref': ref,
-                'savings_debit': '',
-                'savings_credit': cred,
-                'savings_total': tot
-            }
-            forms = SavingsForm(data)
+                data = {
+                    'savings_client': request.POST.get('savings_client'),
+                    'savings_contrib_date': request.POST.get('savings_contrib_date'),
+                    'savings_ref': 'deposit',
+                    'savings_debit': '',
+                    'savings_credit': cred,
+                    'savings_total': tot
+                }
+                forms = SavingsForm(data)
+            else:
+                error = 'Please fill form properly'
+                list2 = ['no input amount at Credit']
+                return render(request, 'success.html', {'error':error, 'list':list2})
 
         except:
             data = {
@@ -2175,10 +2170,12 @@ class SavingsAdd(View):
 
         if forms.is_valid():
             forms.save()
-            messages.success(request, 'Savings contribution saved')
-            return render(request, 'cashier_savingsAdd.html', {'form':form})
+            success = 'Savings contribution saved'
+            return render(request, 'success.html', {'success':success})
         else:
-            raise ValidationError(('%s') % forms.is_bound())
+            error = 'Please fill form properly'
+            list2 = ['no input amount at Credit']
+            return render(request, 'success.html', {'error':error, 'list':list2})
 
 
     def get(self, request, *args, **kwargs):
@@ -2244,29 +2241,43 @@ class SavingsReleaseForm(View):
         client_id = int(kwargs.get('id'))
         client = Client.objects.get(cust_number=client_id)
         fund = Savings.objects.filter(savings_client=client_id, savings_client__client_status="Active").last()
+        user_input = request.POST.get('savings_debit')
+        print fund.savings_total
+        if user_input:
+            if float(user_input) > float(fund.savings_total):
+                error = "Withdrawal amount is greater than remaining Savings balance"
+                list2 = ['Savings balance: {}'.format(fund.savings_total)]
+                return render(request, 'success.html', {'error':error, 'list':list2})
+            elif float(request.POST.get('savings_debit') < 0.00):
+                error = "Does not allow Withdrawal of negative values"
+                return render(request, 'success.html', {'error':error})
+            elif float(request.POST['savings_debit']) <= float(fund.savings_total):
+                deb = float(request.POST['savings_debit'])
+                ref = float(fund.savings_total)
+                tot = ref - deb
 
-        deb = float(request.POST['savings_debit'])
-        ref = float(fund.savings_total)
-        tot = ref - deb
+                data = {
+                    'savings_client': client_id,
+                    'savings_contrib_date': datetime.datetime.today().date(),
+                    'savings_ref': 'Savings Withdrawal',
+                    'savings_debit': request.POST['savings_debit'],
+                    'savings_credit': '',
+                    'savings_total': tot
+                }
 
-        data = {
-            'savings_client': client_id,
-            'savings_contrib_date': datetime.datetime.today().date(),
-            'savings_ref': 'Savings Withdrawal',
-            'savings_debit': request.POST['savings_debit'],
-            'savings_credit': '',
-            'savings_total': tot
-        }
-
-        form = SavingsForm(data)
+                form = SavingsForm(data)
+        else:
+            error = "No amount at debit field."
+            return render(request, 'success.html', {'error':error})
 
         if form.is_valid():
             form.save()
             success = 'Savings release recorded'
             return render(request, 'success.html', {'success':success})
         else:
+            print 'invalid form'
             error = 'Please fill the form properly'
-            return render(request, 'success.html', {'error':error, 'list':forms.errors})
+            return render(request, 'success.html', {'error':error, 'list':form.errors})
 
 
 class PayStructFeeSearch(TemplateView):
