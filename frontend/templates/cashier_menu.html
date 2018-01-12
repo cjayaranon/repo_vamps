@@ -22,6 +22,22 @@
                     </a>
                 </li>
                 <li>
+                    <a href="#" class="accordion-heading" data-toggle="collapse" data-target="#submenu2"><span class="nav-header-primary">Inquiries
+                    <span class="pull-right"><b class="caret"></b></span></span></a>
+
+                    <ul class="nav nav-list collapse" id="submenu2">
+                        <li>
+                            <a href="{% url 'profile_search' %}">View Client Account</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'clients_list' %}">Client List</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'old_loan_search' %}">View Past Loans</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
                     <a href="#" class="accordion-heading" data-toggle="collapse" data-target="#submenu1"><span class="nav-header-primary">Invoice
                     <span class="pull-right"><b class="caret"></b></span></span></a>
 
@@ -46,23 +62,6 @@
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="#" class="accordion-heading" data-toggle="collapse" data-target="#submenu2"><span class="nav-header-primary">Inquiries
-                    <span class="pull-right"><b class="caret"></b></span></span></a>
-
-                    <ul class="nav nav-list collapse" id="submenu2">
-                        <li>
-                            <a href="{% url 'profile_search' %}">View Client Account</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'clients_list' %}">Client List</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'old_loan_search' %}">View Past Loans</a>
-                        </li>
-                    </ul>
-                </li>
-
                 <li>
                     <a href="#" class="accordion-heading" data-toggle="collapse" data-target="#submenu3"><span class="nav-header-primary">Releases
                     <span class="pull-right"><b class="caret"></b></span></span></a>
@@ -118,7 +117,7 @@
                                 </div>
                                 <div style="padding-top: 1vw;">
                                     <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">
-                                        <i class="fa fa-menu fa-lg fa-fw"></i>Show/Hide Menu
+                                        <i class="fa fa-bars fa-lg fa-fw"></i>Show/Hide Menu
                                     </a>
                                 </div>
                             </div>

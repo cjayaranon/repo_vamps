@@ -14,11 +14,11 @@
         <li>
             <a href="{% url 'home' %}">Main Menu</a>
         </li>
-        <li>Releases/li>
+        <li>Releases</li>
         <li>
           <a href="{% url 'release_odf_search' %}">Search Client</a>
         </li>
-        <li>Savings View</li>
+        <li>ODF View</li>
         <li class="active">Release Form</li>
     </ol>
   </div>
@@ -91,7 +91,7 @@
             </div>
           </table>
                     {% if form.odf_total != 0.00 %}
-            <button type="submit" href="release-odf\{{Client.cust_number}}" class="btn btn-info">
+            <button type="submit" href="release-odf\{{Client.cust_number}}" class="btn btn-info click">
                 <i class="fa fa-check-square fa-lg"></i>
                 Release
             </button>
@@ -126,9 +126,21 @@ function checkInput(e) {
 </script>
 
 <script type="text/javascript">
-    function goBack(){
-        window.history.back();
-    }
+// Demo using plain javascript
+var button = document.getElementById("id_odf_client");
+var clickBtn = document.getElementsByClassName('click')[0];
+
+// Disable the button on initial page load
+button.disabled = true;
+
+//add event listener
+clickBtn.addEventListener('click', function(event) {
+    button.disabled = !button.disabled;
+});
+
+button.addEventListener('click', function(event) {
+    alert('Enabled!');
+});
 </script>
 
 <script type="text/javascript">

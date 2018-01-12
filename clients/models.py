@@ -356,7 +356,7 @@ class Loan(models.Model):
     collateral = models.ForeignKey('Collateral', **optional)
     
     def __unicode__(self):
-        return u'%s, %s' % (self.client, self.loan_amount + self.loan_overflow)
+        return u'%s' % (self.client)
 
 class payLoanLedger_in(models.Model):
     cash='Cash'
@@ -374,7 +374,7 @@ class payLoanLedger_in(models.Model):
     reference=models.CharField(
         max_length=20,
         null=True,
-        default="-")
+        )
     debit_loanGranted=models.DecimalField(
         null=True,
         default="-",
@@ -384,7 +384,6 @@ class payLoanLedger_in(models.Model):
         validators=[MinValueValidator(0.01)])
     credit_payment=models.DecimalField(
         null=True,
-        default="-",
         blank=True,
         max_digits=10,
         decimal_places=2,
@@ -437,7 +436,7 @@ class payLoanLedger_over(models.Model):
     reference=models.CharField(
         max_length=20,
         null=True,
-        default="-")
+        )
     debit_loanGranted=models.DecimalField(
         null=True,
         default="-",
@@ -447,7 +446,6 @@ class payLoanLedger_over(models.Model):
         validators=[MinValueValidator(0.01)])
     credit_payment=models.DecimalField(
         null=True,
-        default="-",
         blank=True,
         max_digits=10,
         decimal_places=2,

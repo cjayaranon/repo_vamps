@@ -25,6 +25,7 @@
     <div>
         <table class="table table-hover">
             <div class="input-group col-md-12">
+            {% csrf_token %}
                 <thead>
                     <h3>ODF SUBSIDIARY LEDGER</h3>
                 </thead>
@@ -67,7 +68,7 @@
                         <td>
                             {% if client.client_status != 'Inactive' %}
                             
-                                <a class="btn btn-info" href="\home\cashier\release-savings-search\release_savings\release-savings-form\{{client.cust_number}}">
+                                <a class="btn btn-info" href="{% url 'release_odf_form' id=client.cust_number %}">
                                     <i class="fa fa-check-circle fa-lg fa-fw"></i>
                                     Release ODF
                                 </a>

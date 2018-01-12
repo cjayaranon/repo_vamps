@@ -90,7 +90,7 @@
             </div>
           </table>
                     {% if form.savings_total != 0.00 %}
-            <button type="submit" href="release-savings-form\{{Client.cust_number}}" class="btn btn-info">
+            <button type="submit" href="release-savings-form\{{Client.cust_number}}" class="btn btn-info click">
                 <i class="fa fa-check-square fa-lg"></i>
                 Release
             </button>
@@ -109,8 +109,21 @@
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
 <script>
+// Demo using plain javascript
+var button = document.getElementById("id_savings_client");
+var clickBtn = document.getElementsByClassName('click')[0];
 
-var text = document.getElementById('id_savings_credit');
+// Disable the button on initial page load
+button.disabled = true;
+
+//add event listener
+clickBtn.addEventListener('click', function(event) {
+    button.disabled = !button.disabled;
+});
+
+button.addEventListener('click', function(event) {
+    alert('Enabled!');
+});
 text.onkeypress = text.onpaste = checkInput;
 
 function checkInput(e) {
@@ -125,9 +138,7 @@ function checkInput(e) {
 </script>
 
 <script type="text/javascript">
-    function goBack(){
-        window.history.back();
-    }
+document.getElementById("id_savings_client").disabled=true;
 </script>
 
 <script type="text/javascript">
