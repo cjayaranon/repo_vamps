@@ -30,7 +30,7 @@
           <form action="/home/cashier/release-odf-search/" method="POST">
             {% csrf_token %}
           <div class="input-group col-md-12">
-          <input type="text" class="search-query form-control" placeholder="Search via Last Name" name="search" />
+          <input type="text" class="search-query form-control" placeholder="Search via Last Name" name="search" autofocus />
             <span class="input-group-btn">
               <button class="btn btn-danger" type="submit" value="Search" id="search-button">
                 <span class=" glyphicon glyphicon-search"></span>
@@ -55,7 +55,7 @@
               <td>{{items.odf_total}}</td>
                 {% if items.odf_total != 0.00 %}
               <td>
-                <a href="/home/cashier/release-odf-search/release-odf-view/{{items.odf_client.cust_number}}" class="btn btn-info" name="submit">
+                <a href="{% url 'release_odf_view' id=items.odf_client.cust_number %}" class="btn btn-info" name="submit">
                   <i class="fa fa-check-square fa-lg fa-fw"></i>Release ODF
                 </a>
               </td>

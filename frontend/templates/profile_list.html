@@ -31,7 +31,7 @@
           <form action="/profile-lists/" method="POST">
             {% csrf_token %}
           <div class="input-group col-md-12">
-          <input type="text" class="search-query form-control" placeholder="Search via Last Name" name="search" />
+          <input type="text" class="search-query form-control" placeholder="Search via Last Name" name="search" autofocus />
             <span class="input-group-btn">
               <button class="btn btn-danger" type="submit" value="Search" id="search-button">
                 <span class=" glyphicon glyphicon-search"></span>

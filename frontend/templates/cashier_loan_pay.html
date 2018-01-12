@@ -27,7 +27,7 @@
         {% else %}
           <p style="color:green">{{ success }} </p>
         {% endif %}
-        <form method="POST" onkeypress="return funcs(event)" class="no-spinners">
+        <form method="POST" action="" onkeypress="return checkInput(event)" class="no-spinners">
          {% csrf_token %}
          <!-- {{ form|bootstrap }} -->
           <table class="table table-responsive table-condensed table-hover">
@@ -97,7 +97,7 @@
               </tbody>
             </div>
           </table>
-            <button type="submit" class="btn btn-info">
+            <button type="submit" class="btn btn-info click">
                 <i class="fa fa-check-square fa-lg"></i>
                 Pay Loan
             </button>
@@ -110,12 +110,6 @@
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
 <script>
-
-  function funcs(e){
-    checkInput(e);
-    checkLength();
-  }
-
   var text = document.getElementById('id_loan_pay_amount_credit');
   text.onkeypress = text.onpaste = checkInput;
 
@@ -127,10 +121,25 @@
       return false;
     }
   }
+</script>
+<script type="text/javascript">
+  // Demo using plain javascript
+  var button = document.getElementById("id_client");
+  var clickBtn = document.getElementsByClassName('click')[0];
 
-  function goBack(){
-    window.history.back();
-  }
+  // Disable the button on initial page load
+  button.disabled = true;
+
+  //add event listener
+  clickBtn.addEventListener('click', function(event) {
+      button.disabled = !button.disabled;
+  });
+
+  button.addEventListener('click', function(event) {
+      alert('Enabled!');
+  });
+</script>
+<script type="text/javascript">
 
   // text.onkeypress = text.onpaste = checkLength;
 

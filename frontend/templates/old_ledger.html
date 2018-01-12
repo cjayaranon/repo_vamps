@@ -31,31 +31,35 @@
 			</thead>
 			<tbody>
 				<tr>
+					<th align="left">Application ID</th>
+					<td>{{loan.loan_application.app_id}}</td>
+					<th align="left">Loan ID</th>
+					<td>{{loan.id}}</td>
+				</tr>
+				<tr>
 					<th align="left">Client</th>
 					<td>{{loan.client}}</td>
+					<th align="left">Loan Kind</th>
 					<th>{{loan.type_of_loan}} Loan</th>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td><strong style="color: red;">PAID</strong></td>
+				</tr>
+				<tr>
+					<th align="left">Loan Amount</th>
+					<td>{{loan.loan_amount}}</td>
+					<th align="left">Loan Duration</th>
+					<td>{{loan.loan_duration}}</td>
+				</tr>
+				<tr>
+					<td colspan="4"><strong style="color: red;">PAID</strong></td>
 				</tr>
 			</tbody>
 		</table>
 		{% if loan %}
 		<table class="table table-hover">
 			<tbody>
-				<tr>
-					<th align="left">Application ID</th>
-					<td>{{loan.loan_application.app_id}}</td>
-					<th align="left">Loan ID</th>
-					<td>{{loan.id}}</td>
-					<th align="left">Loan Amount</th>
-					<td>{{loan.loan_amount}}</td>
-					<th align="left">Duration</th>
-					<td>{{loan.loan_duration}} months</td>
-				</tr>
 			{% if ins %}
+				<tr bgcolor="#d3d3d3">
+					<td colspan="7">Loan Within Client Capital</td>
+				</tr>
 				<tr>
 					<th align="left">Date</th>
 					<th align="left">Reference</th>
@@ -63,8 +67,10 @@
 					<th align="left">Credit/Payment</th>
 					<th align="left">Interest (per month)</th>
 					<th align="left">Total Loan Receivable</th>
+					<th align="left">ID</th>
 				</tr>
 				{% for items in ins %}
+					{% if items.client.id == loan.id %}
 				<tr>
 					<td>{{items.trans_date}}</td>
 					<td>{{items.reference}}</td>
@@ -72,7 +78,9 @@
 					<td>{{items.credit_payment}}</td>
 					<td>{{items.int_per_month}}</td>
 					<td>{{items.total_loan_recievable}}</td>
+					<td>{{items.client.id}}</td>
 				</tr>
+					{% endif %}
 				{% endfor %}
 			{% endif %}
 			</tbody>
@@ -81,15 +89,8 @@
 		{% if out %}
 		<table class="table table-hover">
 			<tbody>
-				<tr>
-					<th align="left">Application ID</th>
-					<td>{{loan.loan_application.app_id}}</td>
-					<th align="left">Loan ID</th>
-					<td>{{loan.id}}</td>
-					<th align="left">Loan Amount</th>
-					<td>{{loan.loan_amount}}</td>
-					<th align="left">Duration</th>
-					<td>{{loan.loan_duration}} months</td>
+				<tr bgcolor="#d3d3d3">
+					<td colspan="7">Loan Outside Client Capital</td>
 				</tr>
 				<tr>
 					<th align="left">Date</th>
@@ -98,8 +99,10 @@
 					<th align="left">Credit/Payment</th>
 					<th align="left">Interest (per month)</th>
 					<th align="left">Total Loan Receivable</th>
+					<th align="left">ID</th>
 				</tr>
 				{% for items in out %}
+					{% if items.client.id == loan.id %}
 				<tr>
 					<td>{{items.trans_date}}</td>
 					<td>{{items.reference}}</td>
@@ -107,7 +110,9 @@
 					<td>{{items.credit_payment}}</td>
 					<td>{{items.int_per_month}}</td>
 					<td>{{items.total_loan_recievable}}</td>
+					<td>{{items.client.id}}</td>
 				</tr>
+					{% endif %}
 				{% endfor %}
 			</tbody>
 		</table>

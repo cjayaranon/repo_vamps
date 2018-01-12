@@ -298,7 +298,7 @@
                                                                 <input type="submit" value="Approve" class="no-spinners btn btn-sm btn-info btn-default" onclick="window.location='/approve-loan-application/approve/{{loan_app.app_id}}';" />
                                                             </td>
                                                             <td>
-                                                                <input type="submit" value="RejectS" class="no-spinners btn btn-sm btn-info btn-danger" onclick="window.location='/approve-loan-application/reject/{{loan_app.app_id}}';"/>
+                                                                <input type="submit" value="Reject" class="no-spinners btn btn-sm btn-info btn-danger" onclick="window.location='/approve-loan-application/reject/{{loan_app.app_id}}';"/>
                                                             </td>
                                                         {% endif %}
                                                     {% elif loan_app.app_status == 'Denied' %}
@@ -402,33 +402,32 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <th align="left">Name:</th>
+                                            <th align="left">Client</th>
                                             <td>{{client_id}}</td>
                                         </tr>
-                                        {{loan_id}}
-                                        {% for loan in loan_id %}
-                                            {% if loan.loan_status == 'Outstanding' %}
+                                        {% for w,x,y,z in provi %}
+                                            {% if w.loan_status == 'Outstanding' %}
                                         <tr>
                                             <table class="table table-hover">
-                                                <thead>
-                                                    <h4>{{loan.type_of_loan}}</h4>
-                                                </thead>
                                                 <tbody>
+                                                    <tr bgcolor="#d3d3d3">
+                                                        <th colspan="2">{{w.type_of_loan}}</th>
+                                                    </tr>
                                                     <tr>
                                                         <td>Application ID</td>
-                                                        <td>{{loan.loan_application.app_id}}</td>
+                                                        <td>{{w.loan_application.app_id}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Loan ID</td>
-                                                        <td>{{loan.id}}</td>
+                                                        <td>{{w.id}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Loan Amount</td>
-                                                        <td>Php{{provi_tot|unordered_list|striptags}}</td>
+                                                        <td>Php {{x}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Payment Duration</td>
-                                                        <td>{{loan.loan_application.approval_date}} to <strong style="color:red;">{{provi_xp|unordered_list|striptags}}</strong> ({{loan.loan_duration}} months)</td>
+                                                        <td>{{y}} to <strong style="color:red;">{{z}}</strong> ({{w.loan_duration}} months)</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -439,15 +438,15 @@
                                                 <tbody>
                                                      <tr>
                                                         <td>Application ID</td>
-                                                        <td>{{loan.loan_application.app_id}}</td>
+                                                        <td>{{w.loan_application.app_id}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Loan ID</td>
-                                                        <td>{{loan.id}}</td>
+                                                        <td>{{w.id}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Loan Amount</td>
-                                                        <td>Php{{provi_tot|unordered_list|striptags}}</td>
+                                                        <td>Php {{x}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Loan already paid</td>
@@ -457,29 +456,29 @@
                                         </tr>
                                             {% endif %}
                                         {% endfor %}
-                                        {% for loan2 in loan_id_2 %}
-                                            {% if loan2.loan_status == 'Outstanding' %}
+                                        {% for w,x,y,z in emer %}
+                                            {% if w.loan_status == 'Outstanding' %}
                                         <tr>
                                             <table class="table table-hover">
-                                                <thead>
-                                                    <h4>{{loan2.type_of_loan}}</h4>
-                                                </thead>
                                                 <tbody>
+                                                    <tr bgcolor="#d3d3d3">
+                                                        <th colspan="2">{{w.type_of_loan}}</th>
+                                                    </tr>
                                                     <tr>
                                                         <td>Application ID</td>
-                                                        <td>{{loan2.loan_application.app_id}}</td>
+                                                        <td>{{w.loan_application.app_id}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Loan ID</td>
-                                                        <td>{{loan2.id}}</td>
+                                                        <td>{{w.id}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Loan Amount</td>
-                                                        <td>Php{{emer_tot|unordered_list|striptags}}</td>
+                                                        <td>Php{{x}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Payment Duration</td>
-                                                        <td>{{loan2.loan_application.approval_date}} to <strong style="color:red;">{{emer_xp|unordered_list|striptags}}</strong> ({{loan2.loan_duration}} months)</td>
+                                                        <td>{{y}} to <strong style="color:red;">{{z}}</strong> ({{w.loan_duration}} months)</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -490,15 +489,15 @@
                                                 <tbody>
                                                      <tr>
                                                         <td>Application ID</td>
-                                                        <td>{{loan2.loan_application.app_id}}</td>
+                                                        <td>{{w.loan_application.app_id}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Loan ID</td>
-                                                        <td>{{loan2.id}}</td>
+                                                        <td>{{x.id}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Loan Amount</td>
-                                                        <td>Php{{emer_tot|unordered_list|striptags}}</td>
+                                                        <td>Php{{x}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Loan already paid</td>
@@ -540,8 +539,8 @@
                                             <td>{{client_id}}</td>
                                             <th align="left">Interest:</th>
                                             <td>{{loan2.interest_rate}}</td>
-                                            <th align="left" style="color: red;">Emergency Loan</th>
-                                            <th align="left">Loan ID <b class="pull-right">{{loan2.id}}</b></th>
+                                            <th align="left" colspan="2" style="color: red;">Emergency Loan</th>
+                                            <th align="left">Loan ID <i class="pull-right">{{loan2.id}}</i></th>
                                         </tr>
                                         <tr>
                                             <th align="left">Date</th>
@@ -552,6 +551,7 @@
                                             <th align="left">Total Loan Recievable</th>
                                         </tr>
                                     {% for pay in emer_loan %}
+                                        {% if pay.client.id == loan2.id %}
                                         <tr>
                                             <td>{{pay.trans_date}}</td>
                                             <td>{{pay.reference}}</td>
@@ -559,7 +559,9 @@
                                             <td>{{pay.credit_payment}}</td>
                                             <td>{{pay.int_per_month}}</td>
                                             <td>{{pay.total_loan_recievable}}</td>
+                                            <td>{{pay.client.id}}</td>
                                         </tr>
+                                        {% endif %}
                                     {% endfor %}
                                     </tbody>
                                 {% endif %}
@@ -601,8 +603,8 @@
                                             <td>{{client_id}}</td>
                                             <th align="left">Interest:</th>
                                             <td>{{loan1.interest_rate}}</td>  
-                                            <th align="left" style="color: red;">Providential Loan</th>
-                                            <th align="left">Loan ID <b class="pull-right">{{loan1.id}}</b></th>
+                                            <th align="left" colspan="2" style="color: red;">Providential Loan within Client Capital</th>
+                                            <th align="left">Loan ID <i class="pull-right">{{loan1.id}}</i></th>
                                         </tr>
                                         <tr>
                                             <th align="left">Date</th>
@@ -613,6 +615,7 @@
                                             <th align="left">Total Loan Recievable</th>
                                         </tr>
                                     {% for pay in loan_ledger %}
+                                        {% if pay.client.id == loan1.id %}
                                         <tr>
                                             <td>{{pay.trans_date}}</td>
                                             <td>{{pay.reference}}</td>
@@ -620,7 +623,9 @@
                                             <td>{{pay.credit_payment}}</td>
                                             <td>{{pay.int_per_month}}</td>
                                             <td>{{pay.total_loan_recievable}}</td>
+                                            <td>{{pay.client.id}}</td>
                                         </tr>
+                                        {% endif %}
                                     </tbody>
                                     {% endfor %}
                                 {% endif %}
@@ -636,8 +641,8 @@
                                             <td>{{client_id}}</td>
                                             <th align="left">Interest:</th>
                                             <td>{{loan1.interest_rate_over}}</td>
-                                            <th align="left" style="color: red;">Providential Loan</th>
-                                            <th align="left">Loan ID <b class="pull-right">{{loan1.id}}</b></th>
+                                            <th align="left" colspan="2" style="color: red;">Providential Loan above Client Capital</th>
+                                            <th align="left" colspan="2">Loan ID <i class="pull-right">{{loan1.id}}</i></th>
                                         </tr>
                                         <tr>
                                             <th align="left">Date</th>
@@ -648,6 +653,7 @@
                                             <th align="left">Total Loan Recievable</th>
                                         </tr>
                                     {% for pay in loan_ledger_out %}
+                                        {% if pay.client.id == loan1.id %}
                                         <tr>
                                             <td>{{pay.trans_date}}</td>
                                             <td>{{pay.reference}}</td>
@@ -655,7 +661,9 @@
                                             <td>{{pay.credit_payment}}</td>
                                             <td>{{pay.int_per_month}}</td>
                                             <td>{{pay.total_loan_recievable}}</td>
+                                            <td>{{pay.client.id}}</td>
                                         </tr>
+                                        {% endif %}
                                     </tbody>
                                     {% endfor %}
                                     </tbody>
@@ -669,14 +677,14 @@
                                         <h3>MAF SUBSIDIARY LEDGER</h3>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <tr >
                                             <th align="left">Client</th>
                                             <td>{{client_id}}</td>
                                             <th align="left">Beneficiary</th>
                                             <td>{{client_id.beneficiary}}</td>
                                         </tr>
                                         {% if mafmaf %}
-                                        <tr>
+                                        <tr bgcolor="#d3d3d3">
                                             <th align="left">Date</th>
                                             <th align="left">Reference</th>
                                             <th align="left">Debit</th>
@@ -713,7 +721,7 @@
                                             <td>{{client_id}}</td>
                                         </tr>
                                         {% if odfs %}
-                                        <tr>
+                                        <tr bgcolor="#d3d3d3">
                                             <th align="left">Date</th>
                                             <th align="left">Reference</th>
                                             <th align="left">Debit</th>
@@ -750,7 +758,7 @@
                                             <td>{{client_id}}</td>
                                         </tr>
                                         {% if savings %}
-                                        <tr>
+                                        <tr bgcolor="#d3d3d3">
                                             <th align="left">Date</th>
                                             <th align="left">Reference</th>
                                             <th align="left">Debit</th>

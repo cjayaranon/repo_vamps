@@ -83,7 +83,7 @@
               </tbody>
             </div>
           </table>
-            <button type="submit" href="pay-maf-form\{{Client.cust_number}}" class="btn btn-info">
+            <button type="submit" href="pay-maf-form\{{Client.cust_number}}" class="btn btn-info click">
                 <i class="fa fa-check-square fa-lg"></i>
                 Contribute
             </button>
@@ -112,9 +112,21 @@ function checkInput(e) {
 </script>
 
 <script type="text/javascript">
-    function goBack(){
-        window.history.back();
-    }
+// Demo using plain javascript
+var button = document.getElementById("id_maf_client");
+var clickBtn = document.getElementsByClassName('click')[0];
+
+// Disable the button on initial page load
+button.disabled = true;
+
+//add event listener
+clickBtn.addEventListener('click', function(event) {
+    button.disabled = !button.disabled;
+});
+
+button.addEventListener('click', function(event) {
+    alert('Enabled!');
+});
 </script>
 
 <script type="text/javascript">

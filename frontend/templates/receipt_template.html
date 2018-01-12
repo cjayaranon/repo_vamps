@@ -37,9 +37,9 @@
 								</tr>
 								<tr>
 									<td colspan="2">
-										Received from <strong><u>{{client.lastname}}, {{client.firstname}}</u></strong> with ID <u>{{client.client_id_number}}</u>
+										Received from <strong><u>{{client.client}}</u></strong> with ID <u>{{data.client}}</u>
 										<br>
-										and address at <u>{{client.address}}</u> engaged in the
+										and address at <u>{{client.client.client.address}}</u> engaged in the
 										<br>
 										business style of <u>__________________</u>, the sum of,
 										<br>
@@ -70,18 +70,27 @@
 								</tr>
 								<tr>
 									<td>{{data.reference}}</td>
-									<td>{{data.credit_payment}}</td>
+									<td>Php {{data.credit_payment}}</td>
 								</tr>
 								<tr>
 									<td colspan="2">FORM OF PAYMENT</td>
 								</tr>
 								<tr>
+									{% if data.loan_pay_type == 'Cash' %}
 									<td>
 										<i class="fa fa-check-square fa-lg fa-fw"></i>Cash
 									</td>
 									<td>
+										<i class="fa fa-square fa-lg fa-fw" aria-hidden="true"></i>Check
+									</td>
+									{% else %}
+									<td>
+										<i class="fa fa-square fa-lg fa-fw"></i>Cash
+									</td>
+									<td>
 										<i class="fa fa-check-square fa-lg fa-fw"></i>Check
 									</td>
+									{% endif %}
 								</tr>
 								<tr class="hidden-print">
 									<td>
