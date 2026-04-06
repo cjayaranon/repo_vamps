@@ -9,8 +9,10 @@ cffi==1.10.0
 Django==1.9.5
 django-annoying==0.10.3
 django-bootstrap-form==3.2.1
-django-celery==3.2.1
-django-celery-results==1.0.1
+# django-celery==3.2.1
+django-celery==5.6.2
+# django-celery-results==1.0.1
+django-celery-results==2.6.0
 django-crispy-forms==1.6.1
 django-formtools==1.0
 html5lib==1.0b8
