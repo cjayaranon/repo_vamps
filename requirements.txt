@@ -6,7 +6,7 @@ billiard==4.2.1
 # celery==3.1.14
 # celery==3.1.25
 cffi==1.10.0
-Django==1.9.5
+Django
 django-annoying==0.10.3
 django-bootstrap-form==3.2.1
 # django-celery==3.2.1
