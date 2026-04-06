@@ -4,13 +4,13 @@ bbcode==1.0.24
 # billiard==3.3.0.23
 billiard==4.2.1
 # celery==3.1.14
-celery==3.1.25
+# celery==3.1.25
 cffi==1.10.0
 Django==1.9.5
 django-annoying==0.10.3
 django-bootstrap-form==3.2.1
 # django-celery==3.2.1
-django-celery==3.3.1
+# django-celery==3.3.1
 # django-celery-results==1.0.1
 django-celery-results==2.6.0
 django-crispy-forms==1.6.1
