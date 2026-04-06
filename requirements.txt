@@ -1,4 +1,4 @@
-amqp==1.4.9
+amqp
 # anyjson==0.3.3
 bbcode==1.0.24
 # billiard==3.3.0.23
@@ -17,7 +17,7 @@ django-crispy-forms==1.6.1
 django-formtools==1.0
 html5lib==1.0b8
 # kombu==3.0.37
-kombu==5.6.0
+kombu
 num2words==0.5.5
 olefile==0.44
 pdfkit==0.5.0
