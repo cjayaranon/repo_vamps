@@ -10,7 +10,7 @@ Django==1.9.5
 django-annoying==0.10.3
 django-bootstrap-form==3.2.1
 # django-celery==3.2.1
-django-celery==5.6.2
+django-celery==3.3.1
 # django-celery-results==1.0.1
 django-celery-results==2.6.0
 django-crispy-forms==1.6.1
