@@ -47,12 +47,11 @@ INSTALLED_APPS = [
     'crispy_forms',
     'celery',
     'num2words',
-    'djcelery',
-    'kombu.transport.django',
+    # 'djcelery',
     
 ]
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -144,6 +143,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend', 'static')]
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'
 
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 

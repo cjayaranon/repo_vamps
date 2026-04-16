@@ -1,5 +1,5 @@
 import datetime
-import cStringIO as StringIO
+import io as StringIO
 import types
 
 # Create your views here.
@@ -15,10 +15,10 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.core.management import call_command
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db.models import Sum
 from django.http import HttpResponseRedirect, HttpResponse, Http404
-from django.shortcuts import render_to_response, render, redirect, get_list_or_404
+from django.shortcuts import render, redirect, get_list_or_404
 from django.template import RequestContext, Context
 from django.template.loader import get_template
 from django.utils.decorators import method_decorator
@@ -49,7 +49,7 @@ def register(request):
             success = "User is created!"
             return render(request, 'success.html', {'success':success})
         else:
-            print form.errors
+            # print form.errors
             list2 = {"This value must contain only letters, numbers and underscores"}
             error = "Please fill the form properly"
             return render(request, 'success.html', {'error':error, 'list':form.errors, 'list2':list2})
@@ -59,39 +59,44 @@ def register(request):
     'form': form
     })
  
-    return render_to_response(
-    'registration/register.html',
-    variables,
+    return render(
+        request,
+        'registration/register.html',
+        variables,
     )
 
 
 @login_required 
 def register_success(request):
-    return render_to_response(
-    'registration/success.html',
+    return render(
+        request,
+        'registration/success.html',
     )
 
 def logout_page(request):
     auth_logout(request)
-    return render_to_response(
+    return render(
+        request,
         'logout.html',
-        )
+    )
 
 
 def restricted(request):
     auth_logout(request)
-    return render_to_response(
+    return render(
+        request,
         'restriction.html',
         )
  
  
 @login_required(login_url='/')
 def home(request):
-    return render_to_response(
-    'home.html',
-    { 'user': request.user }
+    return render(
+        request,
+        'home.html',
+        { 'user': request.user }
     )
-    return render_to_response('base.html', {'user': request.user})
+    # return render(request, 'base.html', {'user': request.user})
 
 
 def login_user(request):
@@ -147,7 +152,7 @@ class cashier(View):
             if loan_id[index].update == True:
                 # context={'notifs':loan_id[index].update}
                 upList.append(loan_id[index].client)
-                print loan_id[index].update
+                # print loan_id[index].update
                 # print 'yay'
             else:
                 # print 'nay'
@@ -186,7 +191,7 @@ class bookkeeper(View):
             if loan_id[index].update == True:
                 # context={'notifs':loan_id[index].update}
                 upList.append(loan_id[index].client)
-                print loan_id[index].update
+                # print loan_id[index].update
                 # print 'yay'
             else:
                 # print 'nay'
@@ -225,7 +230,7 @@ class admin_page(View):
             if loan_id[index].update == True:
                 # context={'notifs':loan_id[index].update}
                 upList.append(loan_id[index].client)
-                print loan_id[index].update
+                # print loan_id[index].update
                 # print 'yay'
             else:
                 # print 'nay'
@@ -373,12 +378,12 @@ class add_client(View):
                     return render(request, 'preview_new_client.html', {'forms':forms
                     })
                 else:
-                    print forms.errors
+                    # print forms.errors
                     messages.error(request, forms.errors)
                     forms.fields['age'].widget.attrs['readonly'] = True
                     return render(request, 'bookkeeper_new_client.html', {'form': forms})
             else:
-                print "something was wrong"
+                print("something was wrong")
 
         elif 'submit' in request.POST:
             if forms.is_valid():
@@ -535,7 +540,7 @@ class CreateLoan(View):
             cust_number=application.client.cust_number)
 
         try:
-            print "here"
+            # print "here"
             struct = Restruct.objects.filter(loan_root=application.app_id)
             if struct is None:
                 pass
@@ -854,7 +859,7 @@ class CreateLoan(View):
                     create_ledger_over(over, am, ref, kind, Loan.objects.filter(client=application.client, loan_status = "Outstanding", type_of_loan="Providential").last())
                     coll_form.save()
                     # enable
-                    print 'success1'
+                    # print 'success1'
                 elif com_form:
                     application.app_comaker = Client.objects.get(cust_number=int(request.POST['app_comaker']))
                     application.save()
@@ -862,10 +867,10 @@ class CreateLoan(View):
                     create_ledger(over, am, ref, kind, Loan.objects.filter(client=application.client, loan_status="Outstanding", type_of_loan="Providential").last())
                     create_ledger_over(over, am, ref, kind, Loan.objects.filter(client=application.client, loan_status="Outstanding", type_of_loan="Providential").last())
                     # enable
-                    print 'success2'
+                    # print 'success2'
 
                 else:
-                    print 'error3'
+                    # print 'error3'
                     error = 'Please fill out either if the Co-Maker or Collateral'
                     return render(request, 'success.html', {'error':error})
 
@@ -907,7 +912,7 @@ def create_loan(*args):
 def create_ledger(self, request, *args, **kwargs):
     # for creation of loan ledgers within CBU
 
-    print '{} {} {} {}'.format(self, request, args, kwargs)
+    print('{} {} {} {}'.format(self, request, args, kwargs))
     ledger_in = payLoanLedger_in(
         client = args[2],
         trans_date = datetime.datetime.now().date(),
@@ -1049,8 +1054,8 @@ class ClientProfile(View):
                             'struct':stru
                         })
             else:
-                print "else"
-                print loan_ledger_out
+                # print "else"
+                # print loan_ledger_out
                 provi_tot = []
                 emer_tot = []
                 provi_datestart = []
@@ -1388,7 +1393,7 @@ class PayLoan(View):
                                             loan_id.loan_status = 'Paid'
                                             loan_id.save()
                                     else:
-                                        print 'here'
+                                        # print 'here'
                                         temp = float(ref_in.total_loan_recievable) - float(request.POST.get('credit_payment'))
                                         data = {
                                             'client': request.POST.get('client'),
@@ -1418,7 +1423,7 @@ class PayLoan(View):
                     list2 = ['no input amount at Credit']
                     return render(request, 'success.html', {'error':error, 'list':list2})
                         
-            except Exception, e:
+            except Exception as e:
                 # raise e
                 # raise Http404
                 # pass
@@ -1474,7 +1479,7 @@ class PayLoan(View):
                 form.save()
                 # enable
                 success = 'Loan payment successful and recorded'
-                print 11
+                # print 11
                 return render(request, 'receipt_template.html',{
                     'data':data, 
                     'client': ref_out,
@@ -1489,7 +1494,7 @@ class PayLoan(View):
                     form2.save()
                     # enable
                     # success = 'Loan payment successful and recorded'
-                    print request.user
+                    # print request.user
                     return render(request, 'receipt_template.html', {
                         'data':data2, 
                         'client': ref_out,
@@ -1503,8 +1508,8 @@ class PayLoan(View):
                     form.save()
                     # enable
                     # success = 'Loan payment successful and recorded'
-                    print request.user
-                    print ref_in.client.loan_status
+                    # print request.user
+                    # print ref_in.client.loan_status
                     return render(request, 'receipt_template.html', 
                         {'data':data, 
                         'client': ref_in,
@@ -1515,8 +1520,8 @@ class PayLoan(View):
                         })
                 else:
                     error = 'Please fill the form properly'
-                    print form.errors
-                    print form2.errors
+                    # print form.errors
+                    # print form2.errors
                     return render(request, 'success.html', {'error':error, 'list': form.errors, 'list2': form2.errors})
 
         elif request.POST['credit_payment'] == "":
@@ -1541,7 +1546,7 @@ class PayLoan(View):
         
         if loan.loan_status == 'Outstanding':
             # loan is not yet fully paid
-            print loan.client
+            # print loan.client
             form = PayLoanForm(initial={'client':loan, 'loan_pay_received_by':request.user.position})
             form.fields['client'].widget.attrs['readonly'] = True
             return render(request, 'cashier_loan_pay.html', {'form': form})  
@@ -1684,7 +1689,7 @@ class PayMAFform(View):
                 'maf_total': request.POST.get('maf_credit')                
             }
             forms = MAFform(data)
-            print "except"
+            # print "except"
 
         if forms.is_valid():
             forms.save()
@@ -1805,7 +1810,7 @@ def ReleaseMAFall(arg):
     client = Client.objects.get(cust_number=arg)
     fund = MAF.objects.filter(maf_client=client).last()
     if fund is None:
-        print "no MAF"
+        print("no MAF")
     elif fund.maf_total == 0.00:
         data = {
             'maf_client':client,
@@ -1820,7 +1825,7 @@ def ReleaseMAFall(arg):
             forms.save()
             # enable
         else:
-            print forms.errors
+            print(forms.errors)
     else:
         temp = fund.maf_total
         data = {
@@ -1836,7 +1841,7 @@ def ReleaseMAFall(arg):
             forms.save()
             # enable
         else:
-            print forms.errors
+            print(forms.errors)
     return temp
 
 
@@ -1866,10 +1871,10 @@ def ReleaseMAF_cl(arg):
             forms.save()
             # enable
             total_release.append(100)
-            print "success"
+            # print "success"
         else:
-            print "error"
-            print forms.errors
+            # print "error"
+            print(forms.errors)
     return sum(total_release)
 
 def ReleaseMAF_benef(*args):
@@ -1904,11 +1909,11 @@ def ReleaseMAF_benef(*args):
                 forms.save()
                 # enable
                 total_release.append(50)
-                print "success"
+                # print "success"
             else:
-                print "error"
-                print forms.errors
-        print total_release
+                # print "error"
+                print(forms.errors)
+        # print total_release
         return sum(total_release)
     else:
         for index in xrange(len(clients)):
@@ -1933,11 +1938,11 @@ def ReleaseMAF_benef(*args):
                 forms.save()
                 # enable
                 total_release.append(25)
-                print "success"
+                # print "success"
             else:
-                print "error"
-                print forms.errors
-        print total_release
+                # print "error"
+                print(forms.errors)
+        # print total_release
         return sum(total_release)
     
 
@@ -1970,7 +1975,7 @@ class PayODFform(View):
         form = ODFform()
         client_id = int(self.kwargs.get('id'))
         user_input = request.POST['odf_credit']
-        print self.kwargs.get('id')
+        # print self.kwargs.get('id')
         # forms = ODFform(request.POST) #get form data
 
         try:   #go here if model already has data
@@ -1980,7 +1985,7 @@ class PayODFform(View):
                 cred = float(request.POST.get('odf_credit'))   #convert user input(unicode) to float
                 ref = float(ref.odf_total)   #convert queryset item to float
                 tot = ref + cred   #we use float to accomodate centavos
-                print 'tot: {}'.format(tot)
+                # print 'tot: {}'.format(tot)
                 data = {
                     'odf_client': request.POST.get('odf_client'),
                     'odf_contrib_date':request.POST.get('odf_contrib_date'),
@@ -2004,7 +2009,7 @@ class PayODFform(View):
             'odf_total': request.POST.get('odf_credit')
             }
             forms = ODFform(data)
-        print 'ref: {}'.format(ref)
+        # print 'ref: {}'.format(ref)
         if forms.is_valid():
             forms.save()
             success = 'ODF contribution recorded'
@@ -2039,7 +2044,7 @@ class ReleaseODFSearch(TemplateView):
         if client:
             for index in xrange(len(client)):
                 odfs = ODF.objects.filter(odf_client=client[index]).last()
-                print odfs
+                # print odfs
                 if odfs != None:
                     products.append(odfs)
                 else:
@@ -2139,7 +2144,7 @@ class SavingsAdd(View):
             ref = Savings.objects.filter(savings_client__cust_number=client_id).last()
             if user_input:
                 cred = float(user_input)
-                print cred
+                # print cred
                 ref = float(ref.savings_total)
                 tot = ref + cred
 
@@ -2242,7 +2247,7 @@ class SavingsReleaseForm(View):
         client = Client.objects.get(cust_number=client_id)
         fund = Savings.objects.filter(savings_client=client_id, savings_client__client_status="Active").last()
         user_input = request.POST.get('savings_debit')
-        print fund.savings_total
+        # print fund.savings_total
         if user_input:
             if float(user_input) > float(fund.savings_total):
                 error = "Withdrawal amount is greater than remaining Savings balance"
@@ -2275,7 +2280,7 @@ class SavingsReleaseForm(View):
             success = 'Savings release recorded'
             return render(request, 'success.html', {'success':success})
         else:
-            print 'invalid form'
+            # print 'invalid form'
             error = 'Please fill the form properly'
             return render(request, 'success.html', {'error':error, 'list':form.errors})
 
@@ -2305,9 +2310,9 @@ class PayStructFee(View):
     def get(self, request, *args, **kwargs):
         client_id = kwargs.get('id')
         struct = Restruct.objects.get(loan_root__client__cust_number=client_id, approval_status=True, restruct_status='Pending')
-        print "struct_id: {}".format(struct.id)
-        print "loan_app_id from struct: {}".format(struct.loan_root.app_id)
-        print "cust_number from struct: {}".format(struct.loan_root.client.cust_number)
+        # print "struct_id: {}".format(struct.id)
+        # print "loan_app_id from struct: {}".format(struct.loan_root.app_id)
+        # print "cust_number from struct: {}".format(struct.loan_root.client.cust_number)
         # we get only one because User already selected from the search menu
         return render(request, "cashier_paystructfee.html", {'objects':struct})
 
@@ -2316,23 +2321,23 @@ class PayStructFee(View):
         client_id = kwargs.get('id')
         struct = Restruct.objects.get(loan_root__client__cust_number=client_id, approval_status=True, restruct_status='Pending')
         loan_app = loanApplication.objects.get(app_id=struct.loan_root.app_id)
-        print "struct_id: {}".format(struct.id)
-        print "loan_app_id: {}".format(loan_app.app_id)
+        # print "struct_id: {}".format(struct.id)
+        # print "loan_app_id: {}".format(loan_app.app_id)
 
         if request.POST.get('submit') == 'pay':
-            print "if"
+            # print "if"
             struct.restruct_fee = request.POST['fee']
             struct.restruct_status = 'Outstanding'
             struct.save()
             success = "Payment Successful"
             return render(request, 'success.html', {'success':success})
         elif request.POST.get('submit') == 'reject':
-            print "elif"
+            # print "elif"
             struct.approval_status = False
-            print struct.loan_root.app_id
+            # print struct.loan_root.app_id
             # loan_app = loanApplication.objects.get(app_id=struct.loan_root.app_id)
             # struct2 = Restruct.entry_set
-            print loan_app.app_id
+            # print loan_app.app_id
             
             loan_app.app_status = 'Denied'
             struct.save()
@@ -2391,20 +2396,20 @@ def update(request, id):
             
             ref = payLoanLedger_over.objects.filter(client=loan_id).last()
             ref2 = payLoanLedger_in.objects.filter(client=loan_id).last()
-            print client_cap.capital
+            # print client_cap.capital
 
             if client_cap.capital >= 20000.00:
                 intrs = int(ref.total_loan_recievable) * 0.03
                 tot = int(ref.total_loan_recievable) + intrs
                 intrs2 = int(ref2.total_loan_recievable) * 0.015
                 tot2 = int(ref2.total_loan_recievable) + intrs2
-                print 'one'
+                # print 'one'
             else:
                 intrs = int(ref.total_loan_recievable) * 0.03
                 tot = int(ref.total_loan_recievable) + intrs
                 intrs2 = int(ref2.total_loan_recievable) * 0.03
                 tot2 = int(ref2.total_loan_recievable) + intrs
-                print 'not one'
+                # print 'not one'
 
             data1 = payLoanLedger_over(
                 client = ref.client,
@@ -2554,7 +2559,7 @@ def restruct(request,id):
 
             else:
                 # does not exist
-                print 'no update'
+                # print 'no update'
                 pass
         
         else:
@@ -2631,12 +2636,12 @@ def restruct(request,id):
                     loan_id.overdue = False
                     loan_id.loan_status = 'Restructured'
                     loan_id.save()
-                    print "saved2"
+                    # print "saved2"
                 else:
                     pass
             else:
                 # does not exist
-                print 'no update'
+                # print 'no update'
                 pass
 
     except:

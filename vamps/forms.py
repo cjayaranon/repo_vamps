@@ -3,7 +3,7 @@ import re
 from Users.models import MyUser
 from django import forms
 from django.core.files.images import get_image_dimensions
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -41,7 +41,7 @@ class RegistrationForm(forms.Form):
         if 'password1' in self.cleaned_data and 'password2' in self.cleaned_data:
             if self.cleaned_data['password1'] != self.cleaned_data['password2']:
                 raise forms.ValidationError(_("The two password fields did not match."))
-        print self.cleaned_data['position']
+        print(self.cleaned_data['position'])
         return self.cleaned_data
 
     # class Meta:

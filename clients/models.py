@@ -173,7 +173,9 @@ class Client(models.Model):
 
 
 class client_capital(models.Model):
-    cap_client=models.ForeignKey(Client)
+    cap_client=models.ForeignKey(
+        Client,
+        on_delete=models.PROTECT)
     cap_id=models.AutoField(primary_key=True)
     cap_contrib_date=models.DateField(
         'Date of Contribution: ',
@@ -215,7 +217,10 @@ class loanApplication(models.Model):
     (providentialLoan,'Providential Loan'),
     (emergencyLoan,'Emergency Loan'),
     )
-    client=models.ForeignKey(Client)
+    client=models.ForeignKey(
+        Client,
+        on_delete=models.PROTECT
+        )
     app_id=models.AutoField(primary_key=True)
     app_date=models.DateField(
         'Date of application', 
@@ -236,7 +241,8 @@ class loanApplication(models.Model):
         validators=[MinValueValidator(0.01)]
         )
     app_comaker=models.ForeignKey(
-        Client, 
+        Client,
+        on_delete=models.PROTECT,
         related_name='Comaker', 
         **optional
         )
@@ -249,7 +255,11 @@ class loanApplication(models.Model):
 
 
 class Restruct(models.Model):
-    loan_root = models.ForeignKey(loanApplication, related_name='app_root')
+    loan_root = models.ForeignKey(
+        loanApplication,
+        on_delete=models.PROTECT,
+        related_name='app_root'
+        )
     loan_in_interest = models.DecimalField(
         max_digits=8, 
         decimal_places=1, 
@@ -295,7 +305,11 @@ class Restruct(models.Model):
 
 class Collateral(models.Model):
     name = models.CharField(max_length=100)
-    owner = models.ForeignKey(Client, **optional)
+    owner = models.ForeignKey(
+        Client,
+        on_delete=models.PROTECT,
+        **optional
+        )
     description = models.TextField(**optional)
     val = models.DecimalField(
         max_digits=8, 
@@ -311,8 +325,14 @@ class Loan(models.Model):
         ('Providential', "Providential"),
         ('Emergency', "Emergency")
         ))
-    client = models.ForeignKey('Client')
-    loan_application = models.OneToOneField('loanApplication')
+    client = models.ForeignKey(
+        Client,
+        on_delete=models.PROTECT
+        )
+    loan_application = models.OneToOneField(
+        'loanApplication',
+        on_delete=models.PROTECT
+        )
     # loan_information = models.ManyToManyField('LoanInformation')
     loan_amount = models.DecimalField(
         max_digits=8, 
@@ -353,7 +373,11 @@ class Loan(models.Model):
     check_number = models.CharField(
         max_length=50,
          **optional)
-    collateral = models.ForeignKey('Collateral', **optional)
+    collateral = models.ForeignKey(
+        Collateral,
+        on_delete=models.PROTECT,
+        **optional
+        )
     
     def __unicode__(self):
         return u'%s' % (self.client)
@@ -368,7 +392,10 @@ class payLoanLedger_in(models.Model):
         )
 
     #ledger fields (may contain fields also associated with the receipt)
-    client=models.ForeignKey(Loan)
+    client=models.ForeignKey(
+        Loan,
+        on_delete=models.PROTECT
+        )
     trans_date=models.DateField(
         default=datetime.now)
     reference=models.CharField(
@@ -430,7 +457,10 @@ class payLoanLedger_over(models.Model):
         )
 
     #ledger fields (may contain fields also associated with the receipt)
-    client=models.ForeignKey(Loan)
+    client=models.ForeignKey(
+        Loan,
+        on_delete=models.PROTECT
+        )
     trans_date=models.DateField(
         default=datetime.now)
     reference=models.CharField(
@@ -478,7 +508,10 @@ class payLoanLedger_over(models.Model):
         null=False)
 
 class MAF(models.Model):
-    maf_client=models.ForeignKey(Client)
+    maf_client=models.ForeignKey(
+        Client,
+        on_delete=models.PROTECT
+        )
     maf_id=models.AutoField(primary_key=True)
     # maf_beneficiary=models.ForeignKey(Client.beneficiary)
     maf_contrib_date=models.DateField(
@@ -516,7 +549,10 @@ class MAF(models.Model):
 
 
 class ODF(models.Model):
-    odf_client=models.ForeignKey(Client)
+    odf_client=models.ForeignKey(
+        Client,
+        on_delete=models.PROTECT
+        )
     # maf_beneficiary=models.ForeignKey(Client.beneficiary)
     odf_id=models.AutoField(primary_key=True)
     odf_contrib_date=models.DateField(
@@ -552,7 +588,10 @@ class ODF(models.Model):
 
 
 class Savings(models.Model):
-    savings_client=models.ForeignKey(Client)
+    savings_client=models.ForeignKey(
+        Client,
+        on_delete=models.PROTECT
+        )
     savings_id=models.AutoField(primary_key=True)
     savings_contrib_date=models.DateField(
         'Date of Contribution: ',

@@ -1,41 +1,32 @@
 amqp
-# anyjson==0.3.3
-bbcode==1.0.24
-# billiard==3.3.0.23
-billiard==4.2.1
-# celery==3.1.14
-# celery==3.1.25
-# cffi==1.10
+anyjson
+bbcode
+billiard
+celery
 cffi
 Django
-django-annoying==0.10.3
-django-bootstrap-form==3.2.1
-# django-celery==3.2.1
+django-annoying
+django-bootstrap-form
 django-celery
-# django-celery-results==1.0.1
 django-celery-results
-django-crispy-forms==1.6.1
-django-formtools==1.0
-html5lib==1.0b8
-# kombu==3.0.37
+django-crispy-forms
+django-formtools
+html5lib
 kombu
-num2words==0.5.5
-olefile==0.44
-pdfkit==0.5.0
-Pillow==4.1.1
-pybbm==0.18.4
-pycparser==2.18
-PyPDF2==1.26.0
-# python-dateutil==1.5
-python-dateutil==2.8.2
-pytz==2017.2
-redis==2.10.5
-# reportlab==3.3.0
+num2words
+olefile
+pdfkit
+Pillow
+pybbm
+pycparser
+PyPDF2
+python-dateutil
+pytz
+redis
 reportlab
 six
-Unidecode==0.4.19
-# vine==1.1.3
-vine==5.1.0
-webencodings==0.5.1
-wkhtmltopdf==0.2
-xhtml2pdf==0.0.6
+Unidecode
+vine
+webencodings
+wkhtmltopdf
+xhtml2pdf
