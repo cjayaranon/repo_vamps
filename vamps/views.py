@@ -103,7 +103,7 @@ def login_user(request):
 
     if request.method == "GET":
         
-        if not request.user.is_authenticated():
+        if not request.user.is_authenticated:
             
             return render(request, 'login.html', {})
 
@@ -148,7 +148,7 @@ class cashier(View):
         upList = []
         overList = []
         structList = []
-        for index in xrange(len(loan_id)):
+        for index in range(len(loan_id)):
             if loan_id[index].update == True:
                 # context={'notifs':loan_id[index].update}
                 upList.append(loan_id[index].client)
@@ -165,7 +165,7 @@ class cashier(View):
                 pass
 
         prod = Restruct.objects.filter(restruct_status='Outstanding')
-        for index in xrange(len(prod)):
+        for index in range(len(prod)):
             if prod[index].approval_status == False:
                 structList.append(prod[index].loan_root)
             else:
@@ -187,7 +187,7 @@ class bookkeeper(View):
         upList = []
         overList = []
         structList = []
-        for index in xrange(len(loan_id)):
+        for index in range(len(loan_id)):
             if loan_id[index].update == True:
                 # context={'notifs':loan_id[index].update}
                 upList.append(loan_id[index].client)
@@ -204,7 +204,7 @@ class bookkeeper(View):
                 pass
 
         prod = Restruct.objects.filter(restruct_status='Outstanding')
-        for index in xrange(len(prod)):
+        for index in range(len(prod)):
             if prod[index].approval_status == False:
                 structList.append(prod[index].loan_root)
             else:
@@ -226,7 +226,7 @@ class admin_page(View):
         upList = []
         overList = []
         structList = []
-        for index in xrange(len(loan_id)):
+        for index in range(len(loan_id)):
             if loan_id[index].update == True:
                 # context={'notifs':loan_id[index].update}
                 upList.append(loan_id[index].client)
@@ -244,7 +244,7 @@ class admin_page(View):
                 pass
 
         prod = Restruct.objects.filter(restruct_status='Outstanding')
-        for index in xrange(len(prod)):
+        for index in range(len(prod)):
             if prod[index].approval_status == False:
                 structList.append(prod[index].loan_root)
             else:
@@ -978,14 +978,14 @@ class ClientProfile(View):
                 provi_ledger = []
                 if loan_id and loan_id_2:
 
-                    for index in xrange(len(loan_id)):
+                    for index in range(len(loan_id)):
                         provi_tot.append(loan_id[index].loan_amount + loan_id[index].loan_overflow)
                         provi_datestart.append(loan_id[index].loan_application.approval_date)
                         provi_xp.append(compute_dur(loan_id[index].loan_application.approval_date, loan_id[index].loan_duration))
                         provi = zip(loan_id, provi_tot, provi_datestart, provi_xp)
 
                     
-                    for index in xrange(len(loan_id_2)):
+                    for index in range(len(loan_id_2)):
                         emer_tot.append(loan_id_2[index].loan_amount + loan_id_2[index].loan_overflow)
                         emer_datestart.append(loan_id_2[index].loan_application.approval_date)
                         emer_xp.append(compute_dur(loan_id_2[index].loan_application.approval_date, loan_id_2[index].loan_duration))
@@ -1010,7 +1010,7 @@ class ClientProfile(View):
                     })
                 else:
                     if loan_id:
-                        for index in xrange(len(loan_id)):
+                        for index in range(len(loan_id)):
                             provi_tot.append(loan_id[index].loan_amount + loan_id[index].loan_overflow)
                             provi_datestart.append(loan_id[index].loan_application.approval_date)
                             provi_xp.append(compute_dur(loan_id[index].loan_application.approval_date, loan_id[index].loan_duration))
@@ -1032,7 +1032,7 @@ class ClientProfile(View):
                             'struct':stru
                         })
                     else:
-                        for index in xrange(len(loan_id_2)):
+                        for index in range(len(loan_id_2)):
                             emer_tot.append(loan_id_2[index].loan_amount + loan_id_2[index].loan_overflow)
                             emer_datestart.append(loan_id_2[index].loan_application.approval_date)
                             emer_xp.append(compute_dur(loan_id_2[index].loan_application.approval_date, loan_id_2[index].loan_duration))
@@ -1065,14 +1065,14 @@ class ClientProfile(View):
                 bals = []
                 if loan_id and loan_id_2:
 
-                    for index in xrange(len(loan_id)):
+                    for index in range(len(loan_id)):
                         provi_tot.append(loan_id[index].loan_amount + loan_id[index].loan_overflow)
                         provi_datestart.append(loan_id[index].loan_application.approval_date)
                         provi_xp.append(compute_dur(loan_id[index].loan_application.approval_date, loan_id[index].loan_duration))
                         provi = zip(loan_id, provi_tot, provi_datestart, provi_xp)
 
                 
-                    for index in xrange(len(loan_id_2)):
+                    for index in range(len(loan_id_2)):
                         emer_tot.append(loan_id_2[index].loan_amount + loan_id_2[index].loan_overflow)
                         emer_datestart.append(loan_id_2[index].loan_application.approval_date)
                         emer_xp.append(compute_dur(loan_id_2[index].loan_application.approval_date, loan_id_2[index].loan_duration))
@@ -1096,7 +1096,7 @@ class ClientProfile(View):
                     })
                 else:
                     if loan_id:
-                        for index in xrange(len(loan_id)):
+                        for index in range(len(loan_id)):
                             provi_tot.append(loan_id[index].loan_amount + loan_id[index].loan_overflow)
                             provi_datestart.append(loan_id[index].loan_application.approval_date)
                             provi_xp.append(compute_dur(loan_id[index].loan_application.approval_date, loan_id[index].loan_duration))
@@ -1117,7 +1117,7 @@ class ClientProfile(View):
                             'client_id': client_id,
                         })
                     else:
-                        for index in xrange(len(loan_id_2)):
+                        for index in range(len(loan_id_2)):
                             emer_tot.append(loan_id_2[index].loan_amount + loan_id_2[index].loan_overflow)
                             emer_datestart.append(loan_id_2[index].loan_application.approval_date)
                             emer_xp.append(compute_dur(loan_id_2[index].loan_application.approval_date, loan_id_2[index].loan_duration))
@@ -1261,7 +1261,7 @@ class PayLoanSearch(TemplateView):
     def post(self, request, *args, **kwargs):
         bals = []
         products = Loan.objects.filter(client__lastname__contains=request.POST['search'], loan_status='Outstanding')
-        for index in xrange(len(products)):
+        for index in range(len(products)):
             temp_bal_in = payLoanLedger_in.objects.filter(client=products[index]).last()
             temp_bal_out = payLoanLedger_over.objects.filter(client=products[index]).last()
             if temp_bal_out:
@@ -1724,7 +1724,7 @@ class ReleaseMAFsearch(TemplateView):
         client_list = []
         
         if client:
-            for index in xrange(len(client)):
+            for index in range(len(client)):
                 mafs = MAF.objects.filter(maf_client=client[index]).last()
                 if mafs != None:
                     products.append(mafs)
@@ -1767,7 +1767,7 @@ class ReleaseMAF(View):
         date = datetime.datetime.today().date()
         avail_fund = []
         dummy = []
-        # for index in xrange(len(clients)):
+        # for index in range(len(clients)):
         #     mafs = MAF.objects.filter(maf_client=clients[index]).last()
         #     if mafs is None or mafs == 0.00:
         #         pass
@@ -1852,7 +1852,7 @@ def ReleaseMAF_cl(arg):
 
     total_release = []
     
-    for index in xrange(len(clients)):
+    for index in range(len(clients)):
         mafs = MAF.objects.filter(maf_client=clients[index]).last()
         if mafs is None or mafs.maf_total == 0.00 or mafs.maf_total < 100.00:
             continue
@@ -1885,7 +1885,7 @@ def ReleaseMAF_benef(*args):
     total_release = []
 
     if args[1] == 'Spouse':
-        for index in xrange(len(clients)):
+        for index in range(len(clients)):
             mafs = MAF.objects.filter(maf_client=clients[index]).last()
             if mafs is None or mafs.maf_total == 0.00 or mafs.maf_total < 50.00:
                 continue
@@ -1916,7 +1916,7 @@ def ReleaseMAF_benef(*args):
         # print total_release
         return sum(total_release)
     else:
-        for index in xrange(len(clients)):
+        for index in range(len(clients)):
             mafs = MAF.objects.filter(maf_client=clients[index]).last()
             if mafs is None or mafs.maf_total == 0.00 or mafs.maf_total < 25.00:
                 continue
@@ -2042,7 +2042,7 @@ class ReleaseODFSearch(TemplateView):
         # products = ODF.objects.filter(odf_client=client).last()
         products = []
         if client:
-            for index in xrange(len(client)):
+            for index in range(len(client)):
                 odfs = ODF.objects.filter(odf_client=client[index]).last()
                 # print odfs
                 if odfs != None:
@@ -2206,7 +2206,7 @@ class SavingsReleaseSearch(TemplateView):
         )
         products = []
         if client:
-            for index in xrange(len(client)):
+            for index in range(len(client)):
                 sav = Savings.objects.filter(savings_client=client[index]).last()
                 if sav != None:
                     products.append(sav)
@@ -2356,7 +2356,7 @@ def fetch_resources(uri, rel):
 # @method_decorator(login_required)
 # def checkcheck(request):
 #     loan_id = Loan.objects.filter(loan_status="Outstanding") #queryset of all outstanding loans
-#     for index in xrange(len(loan_id)):
+#     for index in range(len(loan_id)):
 #         loanApp_id = loan_id[index].loan_application.approval_date
 #         loanDur = loan_id[index].loan_duration
 #         # print loanApp_id

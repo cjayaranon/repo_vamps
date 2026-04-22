@@ -28,7 +28,7 @@ def prr():
 def dailyUp():
 	"""checks for updates everyday at midnight"""
 	loan_id = Loan.objects.filter(loan_status="Outstanding") #queryset of all outstanding loans
-	for index in xrange(len(loan_id)):
+	for index in range(len(loan_id)):
 		loanApp_id = loan_id[index].loan_application.approval_date
 		loanDur = loan_id[index].loan_duration
 		# print loanApp_id

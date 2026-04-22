@@ -1,0 +1,1000 @@
+  371  gh repo clone cjayaranon/mayarisells
+  372  git repo clone cjayaranon/mayarisells
+  373  git clone cjayaranon/mayarisells
+  374  git clone https://github.com/cjayaranon/mayarisells.git
+  375  git
+  376  git remote -v
+  377  git remote --v
+  378  git remote
+  379  git status
+  380  dir
+  381  cd mayarisells/
+  382  dir
+  383  git status
+  384  git global
+  385  git --help
+  386  git remote -v
+  387  cd ..
+  388  dir
+  389  rmdir mayarisells/
+  390  dir
+  391  cd mayarisells/
+  392  dir
+  393  cd..
+  394  cd ..
+  395  pip freeze
+  396  dir
+  397  mkvirtual env -a mayarisells/ -r requirements.txt shoppingapp
+  398  mkvirtualenv -a mayarisells/ -r requirements.txt shoppingapp
+  399  dir
+  400  pip freeze
+  401  pip install Django
+  402  django-admin startproject biasbox
+  403  dir
+  404  cd biasbox/
+  405  dir
+  406  python manage.py createsuperuser
+  407  deactivate
+  408  exit
+  409  dir
+  410  cd ..
+  411  dir
+  412  cd ..
+  413  dir
+  414  cd bin
+  415  dir
+  416  cd ..
+  417  dir
+  418  cd usr/
+  419  cd bin
+  420  dir
+  421  cd home
+  422  cd ..home
+  423  cd ..
+  424  dir
+  425  cd home/
+  426  dir
+  427  cd cjayaranon/
+  428  dir
+  429  cd ..
+  430  dir
+  431  cd ..
+  432  dir
+  433  cd usr/
+  434  cd bin/
+  435  cd python
+  436  dir
+  437  which python
+  438  cd ..
+  439  dir
+  440  cd ..
+  441  dir
+  442  cd etc/
+  443  dir
+  444  cd bash_completion
+  445  cd bash_completion.d
+  446  cdi
+  447  dir
+  448  cd ..
+  449  dir
+  450  cd usr/
+  451  dir
+  452  cd share/
+  453  dir
+  454  cd virtualenvwrapper/
+  455  dir
+  456  exit
+  457  dir
+  458  cd sidelines/
+  459  dir
+  460  cd merch-platform/
+  461  dir
+  462  cd mayarisells/
+  463  dir
+  464  cd..
+  465  cd ..
+  466  dir
+  467  cd ..
+  468  dir
+  469  cd ..
+  470  dir
+  471  cd dict-projects/
+  472  dir
+  473  source bin/activate
+  474  cd ..
+  475  source bin/activate
+  476  source .virtualenvs/bin activate
+  477  source .virtualenvs/shoppingapp/bin activate
+  478  source .virtualenvs/shoppingapp/bin/activate
+  479  cd sidelines/
+  480  cd merch-platform/
+  481  dir
+  482  cd mayarisells/
+  483  dir
+  484  cdvirtualenv
+  485  cd ..
+  486  cd cjayaranon/
+  487  cd sidelines/
+  488  cdvirtualenv ~/sidelines/merch-platform/mayarisells/
+  489  cdvirtualenv /merch-platform/mayarisells/
+  490  cdvirtualenv merch-platform/mayarisells/
+  491  cd ..
+  492  cdvirtualenv ~/sidelines/merch-platform/mayarisells/
+  493  deactivate
+  494  workon shoppingapp
+  495  pip freeze
+  496  deactivate
+  497  python --v
+  498  python
+  499  python3
+  500  pip3 install virtualenvwrapper
+  501  which python
+  502  sudo apt install python
+  503  sudo apt install python3
+  504  which python
+  505  which python3
+  506  sudo apt update && sudo apt install python3
+  507  sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+  508  sudo update-alternatives --config python
+  509  which python
+  510  workon shoppingapp
+  511  pip freeze
+  512  which python
+  513  deactivate
+  514  sudo pip install virtualenvwrapper
+  515  apt install virtualenvwrapper
+  516  ls -la ~/ | more
+  517  vi ~/.bashrc 
+  518  vim ~/.bashrc 
+  519  source ~/.bash_profile
+  520  source ~/.bashrc
+  521  dir
+  522  workon shoppingapp
+  523  dir
+  524  cd biasbox/
+  525  dir
+  526  python manage.py runserver
+  527  deactivate
+  528  exit
+  529  workon shoppingapp
+  530  dir
+  531  cd ..
+  532  dir
+  533  cd mayarisells/biasbox/
+  534  dir
+  535  deactivate
+  536  exit
+  537  dir
+  538  workon shoppingapp
+  539  dir
+  540  django-admin startapp inventory_section
+  541  dir
+  542  cd biasbox/
+  543  dir
+  544  django-admin startapp inventory_section
+  545  cd ..
+  546  dir
+  547  rmdir inventory_section/
+  548  rmdir inventory_section/ -f
+  549  rmdir inventory_section/ --f
+  550  rmdir --f
+  551  rmdir --help
+  552  rmdir inventory_section/ --ignore-fail-on-non-empty
+  553  dir
+  554  rmdir inventory_section/ --force
+  555  rm inventory_section
+  556  rm -rf inventory_section
+  557  dir
+  558  cd biasbox/
+  559  dir
+  560  pip install django-location-field
+  561  pip freeze
+  562  dir
+  563  pip freeze > requirements.text
+  564  pip freeze > requirements.txt
+  565  rm requirements.text
+  566  dir
+  567  python manage.py makemigrations
+  568  pip install six
+  569  python manage.py makemigrations
+  570  python manage.py migrate
+  571  pip freeze
+  572  python manage.py makemigrations
+  573  python manage.py migrate
+  574  python manage.py runserver
+  575  python manage.py createsuperuser
+  576  python manage.py runserver
+  577  python manage.py makemigrations
+  578  python manage.py migrate
+  579  python manage.py runserver
+  580  dir
+  581  django-admin startapp userprofiles
+  582  pip freeze
+  583  pip install pipreqs
+  584  pipreqs requirements2.txt 
+  585  deactivate
+  586  exit
+  587  workon biasbox
+  588  dir
+  589  cd sidelines/
+  590  dir
+  591  cd merch-platform/
+  592  dir
+  593  cd mayarisells/
+  594  dir
+  595  cd ..
+  596  dir
+  597  cd dict-projects/
+  598  dir
+  599  cd bin/
+  600  dir
+  601  source activate
+  602  deactivate
+  603  cd ..
+  604  dir
+  605  workon
+  606  workon shoppingapp
+  607  dir
+  608  cd biasbox/
+  609  dir
+  610  python manage.py makemigrations
+  611  python manage.py migrate
+  612  python manage.py runserver
+  613  node -v
+  614  npm -v
+  615  deactivate
+  616  git status
+  617  git.name = msi.cjayaranon
+  618  git user.name = msi.cjayaranon
+  619  git user.name == msi.cjayaranon
+  620  git user.name
+  621  git config user.name "msi_cjayaranon"
+  622  git config user.email "cjayaranon@gmail.com"
+  623  dir
+  624  python manage.py makemigrations
+  625  workon shoppingapp
+  626  dir
+  627  cd biasbox/
+  628  dir
+  629  pip freeze
+  630  dir
+  631  django-admin startapp appcart
+  632  dir
+  633  python manage.py makemigrations
+  634  python manage.py migrate
+  635  dir
+  636  python manage.py makemigrations appcart
+  637  python manage.py makemigrations
+  638  python manage.py migrate
+  639  dir
+  640  cd biasbox/
+  641  dir
+  642  cd ..
+  643  cd biasbox/
+  644  cd frontend/custom_static/
+  645  npm install bootstrap
+  646  cd ..
+  647  dir
+  648  django-admin startapp storefront
+  649  python manage.py runserver
+  650  python manage.py collectstatic
+  651  dir
+  652  django-admin startapp cart
+  653  django startapp cart
+  654  workon shoppingapp
+  655  dir
+  656  cd biasbox/
+  657  dir
+  658  python manage.py runserver
+  659  python manage.py collectstatic
+  660  python manage.py runserver
+  661  python manage.py collectstatic
+  662  python manage.py runserver
+  663  python manage.py collectstatic
+  664  python manage.py runserver
+  665  deactivate
+  666  exit
+  667  dir
+  668  cd dict-projects/
+  669  dir
+  670  cd datuk/
+  671  dir
+  672  cd datuk_dapit/
+  673  dir
+  674  git log --graph --oneline --all --decorate
+  675  dir
+  676  cd datuk_dapit/
+  677  dir
+  678  python manage.py  startapp testing-only
+  679  workon
+  680  dir
+  681  cd dict-projects/
+  682  dir
+  683  source bin/activate
+  684  cd datuk/
+  685  dir
+  686  cd datuk_dapit/
+  687  dir
+  688  python manage.py startapp test-only
+  689  python manage.py startapp testOnly
+  690  dir
+  691  workon
+  692  cd dat
+  693  cd dict-projects/
+  694  dir
+  695  source bin/activate
+  696  cd datuk/
+  697  dir
+  698  cd datuk_dapit/
+  699  dir
+  700  git status
+  701  dir
+  702  git checkout
+  703  git branch
+  704  git checkout dev
+  705  git branch
+  706  dir
+  707  python manage.py runserver
+  708  dir
+  709  git status
+  710  cd datuk_dapit/
+  711  git status
+  712  git branch
+  713  git revert 1b744d3dc905dccc4eaaa07dd9c40c7e74d674ae
+  714  git config --global user.email "cyriljohnyaranon@gmail.com"
+  715  git config --global user.name "cyril-MSI"
+  716  git revert 1b744d3dc905dccc4eaaa07dd9c40c7e74d674ae
+  717  git status
+  718  git revert 1b744d3dc905dccc4eaaa07dd9c40c7e74d674ae
+  719  dir
+  720  cd \\wsl.localhost\Ubuntu\home\cjayaranon\dict-projects\datuk\datuk_dapit
+  721  //home
+  722  /home
+  723  cd home
+  724  cd //wsl.localhost
+  725  cd //wsl.localhost/Ubuntu/home
+  726  cd \\wsl.localhost\Ubuntu\home
+  727  cd \\wsl.localhost\Ubuntu\home\cjayaranon
+  728  cd //wsl.localhost/Ubuntu/home/cjayaranon
+  729  cd ..
+  730  dir
+  731  cd ..
+  732  dir
+  733  cd ..
+  734  dir
+  735  cd wsl
+  736  dir
+  737  cd ..
+  738  dir
+  739  cd home/cjayaranon/
+  740  dir
+  741  cd dict-projects/
+  742  cd datuk/
+  743  cd datuk_dapit/
+  744  dir
+  745  git status
+  746  git checkout dev
+  747  git branch
+  748  git switch -c dev-copy dev
+  749  git checkout local-dev 
+  750  git checkout dev-copy
+  751  git merge local-dev
+  752  workon
+  753  dir
+  754  cd dict-projects/
+  755  dir
+  756  source bin/activate
+  757  cd datuk/
+  758  dir
+  759  git status
+  760  cd datuk_dapit/
+  761  git status\
+  762  git checkout -b KlentParaiso-local-dev dev
+  763  git pull https://github.com/KlentParaiso/datuk-dapit-copy-.git local-dev
+  764  git remote -v
+  765  git remote set-url origin https://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@github.com/cjayaranon/datuk-dapit.git
+  766  git checkout -b KlentParaiso-local-dev dev
+  767  git status
+  768  git pull https://github.com/KlentParaiso/datuk-dapit-copy-.git local-dev
+  769  gh pr checkout 31
+  770  (type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) 	&& sudo mkdir -p -m 755 /etc/apt/keyrings 	&& out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg 	&& cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null 	&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg 	&& sudo mkdir -p -m 755 /etc/apt/sources.list.d 	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null 	&& sudo apt update 	&& sudo apt install gh -y
+  771  gh pr checkout 31
+  772  gh auth login
+  773  gh pr checkout 31
+  774  git status
+  775  git add .
+  776  git commit -m
+  777  git commit -m "merged last PR from CJC intern"
+  778  git pull https://github.com/KlentParaiso/datuk-dapit-copy-.git local-dev
+  779  workon dict-projects
+  780  add2virtualenv ~/projects-dir/datuk/datuk-dapit
+  781  mkvirtualenv dict-projects
+  782  nano ~/.bashrc
+  783  mkvirtualenv dict-projects
+  784  source ~/.bashrc
+  785  mkvirtualenv dict-projects
+  786  cd ~/.virtualenvs
+  787  workon dict-projects
+  788  pip freeze
+  789  cd ~/cjayaranon
+  790  cd ~/
+  791  dir
+  792  cd projects-dir/
+  793  dir
+  794  cd datuk/
+  795  dir
+  796  cd datuk_dapit/
+  797  dir
+  798  pip install -r requirements.txt 
+  799  deactivate
+  800  mkvirtualenv dict-projects
+  801  pip install virtualenv virtualenvwrapper
+  802  sudo pip install virtualenv virtualenvwrapper
+  803  which virtualenv
+  804  which virtualengwrapper.sh
+  805  which virtualenvwrapper.sh
+  806  nano ~/.bashrc
+  807  sudo apt update -y
+  808  sudo apt upgrade -y
+  809  sudo apt install python3-pip python3-venv -y
+  810  sudo apt install virtualenv -y
+  811  sudo pip install virtualenvwrapper
+  812  sudo pip3 install virtualenvwrapper
+  813  sudo apt install virtualenvwrapper
+  814  mkvirtualenv dict-projects
+  815  locate virtualenv
+  816  find virtualenv
+  817  sudo apt install --reinstall virtalenv
+  818  sudo apt install --reinstall virtualenv
+  819  sudo apt install --reinstall virtualenvwrapper
+  820  mkvirtualenv dict-projects
+  821  sudo apt install --reinstall virtualenv --upgrade
+  822  sudo apt install --reinstall virtualenvwrapper --upgrade
+  823  mkvirtualenv dict-projects
+  824  sudo apt install virtualenvwrapper --upgrade
+  825  sudo apt install virtualenv --upgrade
+  826  lsvirtualenv
+  827  workon dict-projects
+  828  dir
+  829  pip freeze
+  830  cd projects-dir/datuk/datuk_dapit/datuk_dapit/
+  831  dir
+  832  cd ..
+  833  pip install -r requirements.txt 
+  834  sudo pip install -r requirements.txt 
+  835  mkvirtualenv dict-projects
+  836  cd /usr/share/
+  837  dir
+  838  cd virtualenvwrapper/
+  839  nano ~/.bashrc
+  840  source ~/.bashrc
+  841  mkvirtualenv dict-projects
+  842  nano ~/.bashrc
+  843  source ~/.bashrc
+  844  mkvirtualenv dict-projects
+  845  nano ~/.bashrc
+  846  mkvirtualenv dict-projects
+  847  nano ~/.bashrc
+  848  source ~/.bashrc
+  849  nano ~/.bashrc
+  850  cd ~/.bashrc
+  851  cd ~/
+  852  dir
+  853  ls
+  854  nano ~/.bashrc
+  855  nano ~/.zshrc
+  856  cp ~/.bashrc ~/.bashrc.bak
+  857  dir
+  858  sudo apt-get update
+  859  /bin/bash --rcfile /usr/share/base-files/dot.bashrc
+  860  wsl
+  861  dir
+  862  workon
+  863  echo $VIRTUAL_ENV
+  864  DIR
+  865  dir
+  866  ls $WORKON_HOME
+  867  cd dict-projects/
+  868  dir
+  869  cd bin
+  870  dir
+  871  CD $WORKON_HOME
+  872  cd $WORKON_HOME
+  873  dir
+  874  cd shoppingapp/
+  875  dir
+  876  cd dict-projects/
+  877  cd ~home
+  878  cd //home
+  879  dir
+  880  cd cjayaranon/
+  881  dir
+  882  cd dict-projects/
+  883  dir
+  884  cd bin
+  885  source activate
+  886  deactivate
+  887  cd ..
+  888  cd $WORKON_HOME
+  889  cd //home/cjayaranon/dict-projects/bin/
+  890  dir
+  891  cd ..
+  892  mkdir projects-dir
+  893  dir
+  894  cd dict-projects/
+  895  dir
+  896  mv datuk/ ~/projects-dir/
+  897  dir
+  898  cd ..
+  899  dir
+  900  cd projec
+  901  cd projects-dir/
+  902  dir
+  903  cd ..
+  904  mv dict-projects/ ~/.virtualenvs/
+  905  cd $WORKON_HOME
+  906  DIR
+  907  dir
+  908  workon dict-projects
+  909  cd //home/cjayaranon/projects-dir/
+  910  dir
+  911  git status
+  912  cd datuk/
+  913  git status
+  914  dir
+  915  cd datuk_dapit/
+  916  dir
+  917  setprojectdir ~/projects-dir/datuk/datuk_dapit/
+  918  setvirtualenvproject
+  919  cd $WORKON_HOME
+  920  cd dict-projects/
+  921  dir
+  922  cd bin/
+  923  dir
+  924  cd ..
+  925  cd include/
+  926  dir
+  927  cd ..
+  928  cd lib
+  929  dir
+  930  cd ..
+  931  dir
+  932  cd ..
+  933  dir
+  934  showvirtualenv
+  935  get_env_details
+  936  ls VIRTUALENVWRAPPER_WORKON_CD
+  937  ls $VIRTUALENVWRAPPER_WORKON_CD
+  938  workon
+  939  cd //home
+  940  cdvirtualenv
+  941  cd cjayaranon/
+  942  dir
+  943  cd projects-dir/datuk/datuk_dapit/
+  944  dir
+  945  workon dict-projects
+  946  mkvirtualenv dict-projects
+  947  ls $WORKON_HOME
+  948  echo $WORKON_HOME
+  949  dir
+  950  python manage.py runserver
+  951  dir
+  952  nano ~/.bashrc
+  953  mkvirtualenv dict-projects
+  954  nano ~/.bashrc
+  955  echo $PATH
+  956  pip freeze
+  957  dir
+  958  pip install -r requirements.txt 
+  959  export PATH=$PATH:/home/cjayaranon/.virtualenvs
+  960  mkvirtualenv dict-projects
+  961  deactivate
+  962  mkvirtualenv dict-projects
+  963  nano ~/.bashrc
+  964  source ~/.bashrc
+  965  which virtualenvwrapper.sh
+  966  pip uninstall virtualenvwrapper
+  967  pip freeze
+  968  sudo apt-get update
+  969  pip install virtualenvwrapper
+  970  wsl
+  971  cd $WORKON_HOME
+  972  DIR
+  973  dir
+  974  cd ..
+  975  dir
+  976  cd ~/.virtualenvs
+  977  dir
+  978  cd dict-projects/
+  979  dir
+  980  which virtualenv
+  981  cd /usr/local/bin
+  982  dir
+  983  cd /usr/bin
+  984  dir
+  985  nano ~/.bashrc
+  986  cd /home/cjayaranon/.local/bin/virtualenvs
+  987  cd /home/cjayaranon/.local/bin/
+  988  source ~/.bashrc
+  989  lsvirtualenv
+  990  workon shoppingapp
+  991  dir
+  992  pip freeze
+  993  pip install Django
+  994  deactivate
+  995  mkvirtualenv dict-projects
+  996  nano ~/.bashrc
+  997  source ~/.bashrc
+  998  mkvirtualenv dict-projects
+  999  cd ~/.virtualenvs
+ 1000  nano ~/.bashrc
+ 1001  source ~/.bashrc
+ 1002  mkvirtualenv dict-projects
+ 1003  dir
+ 1004  cd ..
+ 1005  dir
+ 1006  sudo find / -name "virtualenv"
+ 1007  cd /usr/
+ 1008  dir
+ 1009  cd local/bin/
+ 1010  dir
+ 1011  cd ..
+ 1012  dir
+ 1013  sudo find -name "virtualenv"
+ 1014  sudo find / -name "virtualenvwrapper"
+ 1015  sudo find / -name "virtualenvwrapper.sh"
+ 1016  cd ~/.local
+ 1017  dir
+ 1018  cd /usr
+ 1019  dir
+ 1020  cd local/
+ 1021  dir
+ 1022  cd bin
+ 1023  dir
+ 1024  ls -a
+ 1025  nano ~/.bashrc
+ 1026  source ~/.bashrc
+ 1027  mkvirtualenv dict-projects
+ 1028  sudo pip install virtualenvwrapper
+ 1029  pip install virtualenvwrapper
+ 1030  pip install --user virtualenvwrapper
+ 1031  dir
+ 1032  cd ..
+ 1033  dir
+ 1034  cd ~/.local
+ 1035  dir
+ 1036  cd share/
+ 1037  dir
+ 1038  cd .
+ 1039  cd ..
+ 1040  dir
+ 1041  cd ..
+ 1042  dir
+ 1043  nano ~/.bashrc
+ 1044  source ~/.bashrc
+ 1045  nano ~/.bashrc
+ 1046  source ~/.bashrc
+ 1047  nano ~/.bashrc
+ 1048  source ~/.bashrc
+ 1049  nano ~/.bashrc
+ 1050  source ~/.bashrc
+ 1051  mkvirtualenv dict-projects
+ 1052  nano ~/.bashrc
+ 1053  source ~/.bashrc
+ 1054  mkvirtualenv dict-projects
+ 1055  which virtualenv
+ 1056  nano ~/.bashrc
+ 1057  source ~/.bashrc
+ 1058  mkvirtualenv dict-projects
+ 1059  dir
+ 1060  cd ..
+ 1061  dir
+ 1062  cd ..
+ 1063  dir
+ 1064  ls
+ 1065  cd ~/.local
+ 1066  dir
+ 1067  cd share
+ 1068  dir
+ 1069  cd ~/.virtualenvs
+ 1070  dir
+ 1071  cd dict-projects/
+ 1072  ls
+ 1073  cd ~/projects-dir/
+ 1074  dir
+ 1075  cd datuk/
+ 1076  dir
+ 1077  cd datuk_dapit/
+ 1078  ls
+ 1079  add2virtualenv
+ 1080  add2virtualenv ~/projects-dir/datuk/datuk_dapit
+ 1081  pip freeze
+ 1082  pip install -r requirements.txt 
+ 1083  python manage.py runserver
+ 1084  pip install django_extensions
+ 1085  python manage.py runserver
+ 1086  python manage.py makemigrations
+ 1087  python manage.py makemigrations --merge
+ 1088  python manage.py migrate --fake gisModule zero
+ 1089  python manage.py migrate --fake-initial
+ 1090  python manage.py makemigrations
+ 1091  python manage.py runserver
+ 1092  python manage.py makemigrations locator_slip
+ 1093  python manage.py makemigrations gisModule
+ 1094  python manage.py migrate
+ 1095  python manage.py migrate gisModule
+ 1096  python manage.py migrate locator_slip
+ 1097  python manage.py runserver
+ 1098  python manage.py makemigrations locator_slip
+ 1099  python manage.py migrate locator_slip
+ 1100  python manage.py runserver
+ 1101  python manage.py makemigrations locator_slip
+ 1102  python manage.py migrate locator_slip
+ 1103  python manage.py makemigrations locator_slip
+ 1104  python manage.py migrate
+ 1105  python manage.py makemigrations
+ 1106  python manage.py migrate\
+ 1107  python manage.py runserver
+ 1108  python manage.py makemigrations
+ 1109  python manage.py migrate
+ 1110  python manage.py runserver
+ 1111  python manage.py createsuperuser
+ 1112  python manage.py runserver
+ 1113  deactivate
+ 1114  exit
+ 1115  cd ..
+ 1116  dir
+ 1117  cd home
+ 1118  cd cjayaranon/dict-projects/datuk/
+ 1119  dir
+ 1120  cd datuk_dapit/
+ 1121  dir
+ 1122  git status
+ 1123  git add .
+ 1124  git status
+ 1125  gh pr checkout 31
+ 1126  git branch
+ 1127  git merge local-dev
+ 1128  ls
+ 1129  exit
+ 1130  workon dict-projects
+ 1131  dir
+ 1132  cd projects-dir/datuk/datuk_dapit/
+ 1133  dir
+ 1134  python manage.py runserver
+ 1135  deactivate
+ 1136  exit
+ 1137  dir
+ 1138  deactivate
+ 1139  exit
+ 1140  cd ..
+ 1141  dir
+ 1142  cd usr/
+ 1143  dir
+ 1144  dircd ..
+ 1145  cd ..
+ 1146  dir
+ 1147  cd home
+ 1148  dir
+ 1149  cd cjayaranon/projects-dir/datuk/
+ 1150  workon dict-projects
+ 1151  dir
+ 1152  cd datuk_dapit/
+ 1153  dir
+ 1154  git status
+ 1155  git log
+ 1156  pip freeze
+ 1157  git log
+ 1158  git log -p --oneline
+ 1159  git status
+ 1160  git branch
+ 1161  pip freeze
+ 1162  deactivate
+ 1163  exit
+ 1164  dir
+ 1165  workon
+ 1166  workon dict-projects
+ 1167  cd projects-dir/
+ 1168  dir
+ 1169  cd datuk/
+ 1170  DIR
+ 1171  dir
+ 1172  cd datuk_dapit/
+ 1173  dir
+ 1174  python manage.py runserver
+ 1175  deactivate
+ 1176  exit
+ 1177  cd ..
+ 1178  dir
+ 1179  cd home/cjayaranon/projects-dir/datuk/datuk_dapit/
+ 1180  dir
+ 1181  git status
+ 1182  git add .
+ 1183  git commit -m "Removed previously marked conflict that was skipped by VScode, opted for the longer code since it marked improvements"
+ 1184  git branch
+ 1185  git checkout report-uploading
+ 1186  git merge dev-copy
+ 1187  git status
+ 1188  exit
+ 1189  workon dict-projects
+ 1190  cd projects-dir/datuk/datuk_dapit/
+ 1191  dir
+ 1192  python manage.py runserver
+ 1193  python manage.py makemigrations
+ 1194  python manage.py migrate
+ 1195  python manage.py runserver
+ 1196  deactivate
+ 1197  exit
+ 1198  cd ~/projects-dir
+ 1199  cd datuk/
+ 1200  cd datuk_dapit/
+ 1201  dir
+ 1202  git status
+ 1203  dir
+ 1204  cd ..
+ 1205  dir
+ 1206  cd home/cjayaranon/
+ 1207  dir
+ 1208  cd projects-dir/
+ 1209  dir
+ 1210  cd datuk/
+ 1211  dir
+ 1212  cd datuk_dapit/
+ 1213  dir
+ 1214  cd datuk_dapit/
+ 1215  dir
+ 1216  cd ..
+ 1217  dir
+ 1218  python manage.py collectstatic
+ 1219  workon
+ 1220  workon dict-projects
+ 1221  python manage.py collectstatic
+ 1222  python manage.py makemigrations
+ 1223  python manage.py migrate
+ 1224  python manage.py runserver\
+ 1225  deactivate
+ 1226  exit
+ 1227  dir
+ 1228  workon dict-proj
+ 1229  workon
+ 1230  workon dict-projects
+ 1231  cd projects-dir/
+ 1232  dir
+ 1233  cd datuk/
+ 1234  dir
+ 1235  cd datuk_dapit/
+ 1236  dir
+ 1237  python manage.py collectstatic
+ 1238  python manage.py makemigrations
+ 1239  pip install -r requirements.txt
+ 1240  python manage.py migrate
+ 1241  pip install playwright
+ 1242  python manage.py migrate
+ 1243  python manage.py makemigrations
+ 1244  pip install pyhanko
+ 1245  python manage.py makemigrations
+ 1246  python manage.py migrate
+ 1247  python manage.py makemigrations
+ 1248  python manage.py makemigrations locator_slip
+ 1249  python manage.py makemigrations
+ 1250  python manage.py migrate locator_slip
+ 1251  python manage.py migrate locator_slip --fake
+ 1252  python manage.py makemigrations locator_slip
+ 1253  python manage.py migrate locator_slip
+ 1254  python manage.py runserver
+ 1255  python manage.py http.server
+ 1256  python manage.py testserver
+ 1257  python manage.py runserver
+ 1258  python -m http.server
+ 1259  python manage.py runserver
+ 1260  python manage.py collectstatic
+ 1261  python manage.py runserver
+ 1262  deactivate
+ 1263  exit
+ 1264  dir
+ 1265  cd ..
+ 1266  dir
+ 1267  cd home/cjayaranon/projects-dir/datuk/datuk_dapit/
+ 1268  dir
+ 1269  git status
+ 1270  git pull
+ 1271  git status
+ 1272  git push
+ 1273  git pull
+ 1274  exit
+ 1275  dir
+ 1276  cd sidelines/
+ 1277  dir
+ 1278  workon
+ 1279  mkvirtualenv -a ~/sidelines/coop-app/repo-vamps -r ~/sidelines/coop-app/repo-vamps/requirements.txt vamps
+ 1280  mkvirtualenv -a ~/sidelines/coop-app/repo_vamps -r ~/sidelines/coop-app/repo_vamps/requirements.txt vamps
+ 1281  which python
+ 1282  python --v
+ 1283  python --version
+ 1284  pip freeze
+ 1285  pip install -r requirements.txt 
+ 1286  pip freeze
+ 1287  python --version
+ 1288  pip install Django
+ 1289  dir
+ 1290  python manage.py makemigrations
+ 1291  pip install celery
+ 1292  python manage.py makemigrations
+ 1293  pip install django-celery
+ 1294* pip inst
+ 1295  pip install django-celery
+ 1296  pip freeze
+ 1297  pip install "setuptools<58.0.0" wheel
+ 1298  pip install django-celery
+ 1299  pip freeze
+ 1300  pip uninstall setuptools
+ 1301  pip install "setuptools<58.0.0" wheel
+ 1302  pip install django-celery
+ 1303  pip install "setuptools<58.0.0" wheel --no-cache-dir
+ 1304  pip install django-celery
+ 1305  pip install --upgrade pip
+ 1306  pip freeze
+ 1307  pip install django-celery
+ 1308  python manage.py makemigrations
+ 1309  pip install formtools
+ 1310  pip install django-\formtools
+ 1311  python manage.py makemigrations
+ 1312  pip install django-bootstrap-form
+ 1313  python manage.py makemigrations
+ 1314  pip install python-dateutil
+ 1315  pip freeze
+ 1316  sudo apt install python3-disutils
+ 1317  sudo apt install python3-distutils
+ 1318  python --version
+ 1319  sudo apt install python3.12-distutils
+ 1320  sudo apt install python3.11-distutils
+ 1321  pip install setuptools
+ 1322  pip uninstall setuptools
+ 1323  pip install setuptools
+ 1324  python manage.py makemigrations
+ 1325  python manage.py collectstatic
+ 1326  python manage.py makemigrations users
+ 1327  python manage.py createsuperuser
+ 1328  python manage.py makemigrations Users
+ 1329  pip freeze
+ 1330  dir
+ 1331  python manage.py makemigrations Users
+ 1332  python manage.py makemigrations
+ 1333  python manage.py shell
+ 1334  pip install -r requirements.txt 
+ 1335  python manage.py collectstatic
+ 1336  dir
+ 1337  cd vamps
+ 1338  dir
+ 1339  python manage.py collectstatic
+ 1340  cd ..
+ 1341  python manage.py collectstatic
+ 1342  pip install crispy_forms
+ 1343  pip install django_crispy_forms
+ 1344  python manage.py collectstatic
+ 1345  pip install num2words
+ 1346  python manage.py collectstatic
+ 1347  pip install kombu
+ 1348  python manage.py collectstatic
+ 1349  python -m django --version
+ 1350  pip freeze
+ 1351  python manage.py collectstatic
+ 1352  python manage.py makemigrations
+ 1353  pip freeze
+ 1354  python manage.py makemigrations
+ 1355  python manage.py migrate
+ 1356  python manage.py collectstatic
+ 1357  python manage.py createsuperuser
+ 1358  python manage.py makemigrations Users
+ 1359  python manage.py migrate Users
+ 1360  python manage.py makemigrations Users
+ 1361  python manage.py migrate Users
+ 1362  python manage.py createsuperuser
+ 1363  python manage.py makemigrations clients
+ 1364  python manage.py migrate clients
+ 1365  python manage.py makemigrations
+ 1366  python manage.py migrate
+ 1367  python manage.py runserver
+ 1368  sudo apt-get install tmux-resurrect
+ 1369  sudo apt-get install tmux
+ 1370  history > commands.txt
