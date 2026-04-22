@@ -11,12 +11,12 @@ body{
 .form {
   position: relative;
   z-index: 1;
-  background: #EFF1F3;
+  background: var(--color-page-bg);
   max-width: 360px;
   margin: 50px auto auto;
   padding: 45px;
   text-align: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  box-shadow: 0 0 20px 0 var(--color-shadow-medium), 0 5px 5px 0 var(--color-shadow-strong);
 }
 
 .form-control {
@@ -24,14 +24,14 @@ body{
 }
 
 .buttoncolor input{
-  background-color: #49306B;
+  background-color: var(--color-login-primary);
   font-family: 'SegoeUI', 'sans-serif';
   text-transform: uppercase;
   outline: 0;
   width: 100%;
   border: 0;
   padding: 15px;
-  color: #fff;
+  color: var(--color-text-inverse);
   font-size: 14px;
   -webkit-transition: all 0.3 ease;
   transition: all 0.3 ease;
@@ -39,17 +39,18 @@ body{
 }
 
 .buttoncolor input:hover{
-  background-color: #6b479b;
-  color: #ffffff;
+  background-color: var(--color-login-primary-hover);
+  color: var(--color-text-inverse);
 }
 
 .form .message {
   margin: 15px 0 0;
-  color: #666666;
+  color: var(--color-text-subtle);
   font-size: 14px;
 }
 
 .form .message a {
-  color: #ed254e;
+  color: var(--color-link-accent);
   text-decoration: none;
 }
+

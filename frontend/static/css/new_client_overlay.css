@@ -27,23 +27,23 @@ h3{
 .form {
   position: relative;
   z-index: 1;
-  background: #EFF1F3;
+  background: var(--color-page-bg);
   max-width: 80vw;
   margin: 0 auto 0;
   padding: 20px 45px 20px;
   text-align: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  box-shadow: 0 0 20px 0 var(--color-shadow-medium), 0 5px 5px 0 var(--color-shadow-strong);
 }
 
 .small-form{
   position: relative;
   z-index: 1;
-  background: #EFF1F3;
+  background: var(--color-page-bg);
   max-width: 40vw;
   margin: 0 auto 3vw;
   padding: 20px 45px 20px;
   text-align: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  box-shadow: 0 0 20px 0 var(--color-shadow-medium), 0 5px 5px 0 var(--color-shadow-strong);
 }
 
 /*input fields*/
@@ -53,7 +53,7 @@ h3{
 
 /*dropdown button colors*/
 .drp{
-  background-color: #ae0001;
+  background-color: var(--color-brand-danger);
     font-family: 'SegoeUI', 'sans-serif';
     text-transform: uppercase;
     outline: 0;
@@ -61,7 +61,7 @@ h3{
     border: 0;
     border-radius: 0 !important;
     padding: 15px;
-    color: #fff;
+    color: var(--color-text-inverse);
     font-size: 14px;
     margin-top: 1vw;
   -webkit-transition: all 0.3 ease;
@@ -71,24 +71,24 @@ h3{
 
 /*new client button hovers*/
 .drp:hover{
-  background-color: #bc0900;
-  color: #fff;
+  background-color: var(--color-brand-danger-hover);
+  color: var(--color-text-inverse);
 }
 
 .form .message {
   margin: 15px 0 0;
-  color: #666666;
+  color: var(--color-text-subtle);
   font-size: 14px;
 }
 
 .form .message a {
-  color: #ed254e;
+  color: var(--color-link-accent);
   text-decoration: none;
 }
 
 .form-group {
   font-family: 'SegoeUI', 'sans-serif';
-  color: #666666;
+  color: var(--color-text-subtle);
 }
 
 .nav-list {
@@ -98,11 +98,11 @@ h3{
 .drps{
   margin-top: 1vw;
   margin-bottom: 1vw;
-  color: #fff;
+  color: var(--color-text-inverse);
 }
 
 .drp a:hover{
-  color: #fff;
+  color: var(--color-text-inverse);
   text-decoration: none;
 }
 
@@ -113,3 +113,4 @@ h3{
 .alert{
   margin-bottom: 0px;
 }
+

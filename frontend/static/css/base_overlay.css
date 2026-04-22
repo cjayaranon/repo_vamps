@@ -9,7 +9,7 @@ fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td {outline: none !important;
 }
 html{
-    background:#EFF1F3;
+    background: var(--color-page-bg);
 }
 @font-face {
     font-family: SegoeUI;
@@ -21,6 +21,8 @@ body{
 
 .header {
     width: 100%;
+    position: relative;
+    z-index: 1015;
     overflow: hidden;
     height: 100%;
 }
@@ -78,7 +80,7 @@ body{
 }
 
 .body {
-    background-color: #EFF1F3;
+    background-color: var(--color-page-bg);
 }
 
 .footersize {
@@ -102,3 +104,11 @@ body{
 .right{
      padding-left: 0px;   
 }
+
+
+@media (max-width: 1199px) {
+    .user-group {
+        display: none;
+    }
+}
+

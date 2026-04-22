@@ -2,12 +2,12 @@
 	max-width: 800px;
 	margin: auto;
 	padding: 30px;
-	border: 1px solid #eee
-	box-shadow:0 0 10px rgba(0, 0, 0, .15);
+	border: 1px solid var(--color-border-light)
+	box-shadow:0 0 10px var(--color-shadow-soft);
 	font-size: 16px;
 	line-height: 24px;
 	font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-	color: #555;	
+	color: var(--color-text-muted);	
 }
 
 .invoice-box table{
@@ -28,7 +28,7 @@
 .invoice-box table tr.top table td.title{
 	font-size: 45px;
 	line-height: 45px;
-	color: #333;
+	color: var(--color-text-body);
 }
 
 .invoice-box table tr.information table td{
@@ -36,8 +36,8 @@
 }
 
 .invoice-box table tr.heading td{
-	background: #eee;
-	border-bottom: 1px solid #ddd;
+	background: var(--color-border-light);
+	border-bottom: 1px solid var(--color-border-soft);
 	font-weight: bold;
 }
 
@@ -46,7 +46,7 @@
 }
 
 .invoice-box table tr.item td{
-	border-bottom: 1px solid #eee;
+	border-bottom: 1px solid var(--color-border-light);
 }
 
 .invoice-box table tr.item.last td{
@@ -54,7 +54,7 @@
 }
 
 .invoice-box table tr.total td:nth-child(2){
-	border-top: 2px solid #eee;
+	border-top: 2px solid var(--color-border-light);
 	font-weight: bold;
 }
 
@@ -67,7 +67,7 @@
 }
 
 .box{
-	border-bottom: 4px solid red;
+	border-bottom: 4px solid var(--color-logout-text);
 }
 
 .dummy{
@@ -75,5 +75,5 @@
 }
 
 .note{
-	color: red;
+	color: var(--color-logout-text);
 }

@@ -14,6 +14,9 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
+        <button type="button" class="sidebar-menu-toggle hidden-print" id="menu-toggle" aria-label="Toggle sidebar menu">
+            <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
+        </button>
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav nav-list" id="menu">
                 <li class="sidebar-brand">
@@ -121,16 +124,13 @@
                             <div class="tab-pane active" id="home">
                                 <h1>Welcome {{ user.position }}!</h1>
                                 <p>This is your main menu. You can choose what you want to do from the left side panel of the screen</p>
-                                <p>To show/hide the menu, use the button below. For some help, click <code>HELP TOPICS</code></p>
+                                <p>For some help, click <code>HELP TOPICS</code></p>
                                 <div class="help">
                                     <a href="https://drive.google.com/open?id=1F_Y_xkom5ceYfvelP0C9kdJXG0zZ6BWi" class="btn btn-info" target="_blank">
                                         <i class="fa fa-question-circle fa-lg fa-fw"></i>
                                         Help Topics</a>
                                 </div>
-                                <div style="padding-top: 1vw;">
-                                    <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">
-                                        <i class="fa fa-bars fa-lg fa-fw"></i>Show/Hide Menu</a>
-                                </div>
+                                
                             </div>
                             <br>
                             <thead>
