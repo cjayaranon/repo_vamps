@@ -1,20 +1,73 @@
-# Generated and Temporary Files
-*.pyc
-*.pyo
-*.swp
-.DS_Store
-.coverage
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
 
-# IDE-Generated Files
-.project
-.pydevproject
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
 
-# Project Dev-specific Files
-*.db
-*.sqlite3
+# Environment and secret files
+.env
+.env.*
+*.env
+!.env.example
+!.env.sample
+*.secret
+*.secrets
+secret.*
+secrets.*
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.cer
+*.jks
+*.keystore
+
+# Django local settings and runtime data
 local_settings.py
 settings_local.py
+*/local_settings.py
+*/settings_local.py
+instance/
+media/
+frontend/uploads/
+var/
 var/log/
-Users/migrations
-clients/migrations
+logs/
+*.log
+
+# Databases and local state
+*.db
+*.sqlite3
+/db.sqlite3
+
+# Test and coverage artifacts
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Editor and OS files
+*.swp
+*.swo
+.project
+.pydevproject
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Project-generated artifacts
+Users/migrations/
+clients/migrations/
 static/
+
+# Dependency lockfiles generated locally
+pip-wheel-metadata/
