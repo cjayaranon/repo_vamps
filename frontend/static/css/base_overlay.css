@@ -17,6 +17,7 @@ html{
 }
 body{
     font-family: 'SegoeUI', 'sans-serif';
+    color: var(--color-text-body);
 }
 
 .header {
@@ -25,6 +26,9 @@ body{
     z-index: 1015;
     overflow: hidden;
     height: 100%;
+    background: linear-gradient(180deg, var(--color-surface-primary) 0%, var(--color-surface-tint) 100%);
+    border-bottom: 1px solid var(--color-border-light);
+    box-shadow: 0 10px 30px var(--color-shadow-soft);
 }
 
 .logo-group {
@@ -49,16 +53,22 @@ body{
 .abbrev {
     margin-top: 0vw;
     margin-bottom: 0vw;
+    color: var(--color-text-primary);
+    letter-spacing: 0.04em;
 }
 
 .full {
     margin-top: 0vw;
     margin-left: 0.2vw;
+    color: var(--color-text-body);
 }
 
 .ver {
     margin-top: 0vw;
     margin-left: 0.4vw;
+    color: var(--color-header-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
 }
 
 .user-group {
@@ -69,6 +79,7 @@ body{
     padding-top: 20px;
     height: 50%;
     width: 100%;
+    color: var(--color-header-accent);
 }
 
 .user-name {
@@ -112,3 +123,76 @@ body{
     }
 }
 
+
+
+.btn,
+button.btn,
+input.btn,
+.buttoncolor input,
+.drp {
+    border-radius: 999px;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:focus,
+button.btn:focus,
+input.btn:focus,
+.buttoncolor input:focus,
+.drp:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(164, 182, 164, 0.22);
+}
+
+.btn-default,
+.btn-info {
+    background: var(--color-button-neutral-bg);
+    border-color: var(--color-button-outline-border);
+    color: var(--color-button-neutral-text);
+}
+
+.btn-default:hover,
+.btn-default:focus,
+.btn-info:hover,
+.btn-info:focus {
+    background: var(--color-button-neutral-hover);
+    border-color: var(--color-button-outline-border);
+    color: var(--color-button-neutral-text);
+}
+
+.btn-primary,
+.btn-danger,
+.btn-warning,
+.buttoncolor input {
+    background: var(--color-button-primary-bg);
+    border-color: var(--color-button-primary-bg);
+    color: var(--color-text-inverse);
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-warning:hover,
+.btn-warning:focus,
+.buttoncolor input:hover,
+.buttoncolor input:focus {
+    background: var(--color-button-primary-hover);
+    border-color: var(--color-button-primary-hover);
+    color: var(--color-text-inverse);
+}
+
+.btn-success,
+.drp {
+    background: var(--color-button-secondary-bg);
+    border-color: var(--color-button-secondary-bg);
+    color: var(--color-text-inverse);
+}
+
+.btn-success:hover,
+.btn-success:focus,
+.drp:hover,
+.drp:focus {
+    background: var(--color-button-secondary-hover);
+    border-color: var(--color-button-secondary-hover);
+    color: var(--color-text-inverse);
+}

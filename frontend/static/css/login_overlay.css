@@ -54,3 +54,19 @@ body{
   text-decoration: none;
 }
 
+
+.remember-option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+  color: var(--color-text-subtle);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.remember-option input[type="checkbox"] {
+  margin: 0;
+}

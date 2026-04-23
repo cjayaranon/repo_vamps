@@ -55,48 +55,27 @@ def register(request):
             return render(request, 'success.html', {'error':error, 'list':form.errors, 'list2':list2})
     else:
         form = RegistrationForm()
-    variables = RequestContext(request, {
-    'form': form
-    })
  
-    return render(
-        request,
-        'registration/register.html',
-        variables,
-    )
+    return render(request, 'registration/register.html', {'form': form})
 
 
 @login_required 
 def register_success(request):
-    return render(
-        request,
-        'registration/success.html',
-    )
+    return render(request, 'registration/success.html', {})
 
 def logout_page(request):
     auth_logout(request)
-    return render(
-        request,
-        'logout.html',
-    )
+    return render(request, 'logout.html', {})
 
 
 def restricted(request):
     auth_logout(request)
-    return render(
-        request,
-        'restriction.html',
-        )
+    return render(request, 'restriction.html', {})
  
  
 @login_required(login_url='/')
 def home(request):
-    return render(
-        request,
-        'home.html',
-        { 'user': request.user }
-    )
-    # return render(request, 'base.html', {'user': request.user})
+    return render(request, 'home.html', { 'user': request.user })
 
 
 def login_user(request):
@@ -126,6 +105,10 @@ def login_user(request):
             if user.is_active:
                 
                 auth_login(request, user)
+                if request.POST.get('remember_me'):
+                    request.session.set_expiry(settings.SESSION_COOKIE_AGE)
+                else:
+                    request.session.set_expiry(0)
                 if user.position == 'Admin':
                     return HttpResponseRedirect(reverse('admin_page'))
                 elif user.position == 'Cashier':
@@ -264,7 +247,7 @@ class UserViewFilter(TemplateView):
     
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        return render(request, 'user_list.html')
+        return render(request, 'user_list.html', {})
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
@@ -324,7 +307,7 @@ class Modify(View):
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        return render(request, 'editprofile.html', {},)
+        return render(request, 'editprofile.html', {})
 
 
 

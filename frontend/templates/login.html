@@ -17,15 +17,16 @@
             {% if form.errors %}
               <p>Your username and password didn't match. Please try again.</p>
             {% endif %}
-        <form class="login-form" method="POST" action="">{% csrf_token %}
-          <input class="form-control" type="text" placeholder="Enter Username" name="username" autofocus="TRUE" required>  
-          <input class="form-control" type="password" placeholder="Enter Password" name="password" required>
-          <div class="buttoncolor"><input type=submit value="Login" id="login-button"></div>
-          {{ user.first_name }}
-          <input type="checkbox" checked="checked"> Remember me
-          <p class="message">Not registered? <a href="#">Create an account</a></p>
+        <form class="login-form" method="POST" action="" autocomplete="on">{% csrf_token %}
+          <input class="form-control" type="text" placeholder="Enter Username" name="username" id="login-username" autocomplete="username" autocapitalize="none" autocorrect="off" required autofocus>
+          <input class="form-control" type="password" placeholder="Enter Password" name="password" id="login-password" autocomplete="current-password" required>
+          <div class="buttoncolor"><input type="submit" value="Login" id="login-button"></div>
+          <label class="remember-option" for="remember-me">
+            <input type="checkbox" name="remember_me" id="remember-me" value="1">
+            <span>Remember me</span>
+          </label>
+          <p class="message">Not registered? <a href="/register/">Create an account</a></p>
           <input type="hidden" name="next" value="/home" />
-          
         </form>
       </div>
 </div>
