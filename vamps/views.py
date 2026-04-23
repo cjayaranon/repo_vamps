@@ -33,6 +33,20 @@ from vamps.forms import RegistrationForm
 User = get_user_model()
 
 
+def resolve_post_login_destination(user):
+    if user.position == 'Admin':
+        return reverse('admin_page')
+    elif user.position == 'Cashier':
+        return reverse('cashier_menu')
+    elif user.position == 'Bookkeeper':
+        return reverse('book_menu')
+    return reverse('logout')
+
+
+def is_safe_internal_redirect(target):
+    return isinstance(target, str) and target.startswith('/') and not target.startswith('//')
+
+
 @csrf_protect
 def register(request):
     if request.method == 'POST':
@@ -109,18 +123,26 @@ def login_user(request):
                     request.session.set_expiry(settings.SESSION_COOKIE_AGE)
                 else:
                     request.session.set_expiry(0)
-                if user.position == 'Admin':
-                    return HttpResponseRedirect(reverse('admin_page'))
-                elif user.position == 'Cashier':
-                    return HttpResponseRedirect(reverse('cashier_menu'))
-                elif user.position == 'Bookkeeper':
-                    return HttpResponseRedirect(reverse('book_menu'))
+                destination = resolve_post_login_destination(user)
+                return HttpResponseRedirect(reverse('post_login_loading') + '?next=' + destination)
             else:
                 
                 return render(request, 'login.html', {'error': 'Disabled Account'})
         else:
             
             return render(request, 'login.html', {'error': 'Invalid Credentials'})    
+ 
+@login_required
+def post_login_loading(request):
+    destination = request.GET.get('next') or resolve_post_login_destination(request.user)
+    if not is_safe_internal_redirect(destination):
+        destination = resolve_post_login_destination(request.user)
+    context = {
+        'destination': destination,
+        'user_position': request.user.position,
+    }
+    return render(request, 'loading.html', context)
+ 
  
 
 class cashier(View):
@@ -2632,3 +2654,4 @@ def restruct(request,id):
         return render(request, 'success.html', {'error': error})
 
     return HttpResponseRedirect(reverse('profile', kwargs={'id':loan_id.client.cust_number}))
+

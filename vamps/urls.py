@@ -30,6 +30,7 @@ urlpatterns = [
     re_path(r'^home/web-admin/register/$', views.register),
     # re_path(r'^home/web-admin/register/success/$', views.register_success),
     re_path(r'^logout/$', views.logout_page, name="logout"),
+    re_path(r'^post-login-loading/$', views.post_login_loading, name="post_login_loading"),
     re_path(r'^client-profile/(?P<id>\w+)', views.ClientProfile.as_view(), name="profile"),
     re_path(r'^home/cashier/$', views.cashier.as_view(), name="cashier_menu"),
     re_path(r'^home/cashier/pay-loan-search/$', views.PayLoanSearch.as_view(), name="loan_invoice"),
@@ -72,3 +73,4 @@ urlpatterns = [
     re_path(r'^home/cashier/pay-structfee-search/$', views.PayStructFeeSearch.as_view(), name="pay_structfee_search"),
     re_path(r'^home/cashier/pay-structfee-search/pay-structfee/(?P<id>\w+)', views.PayStructFee.as_view()),
 ]
+
