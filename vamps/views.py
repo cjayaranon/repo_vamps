@@ -1206,7 +1206,7 @@ class ViewOldLoanSearch(View):
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        return render(request, 'old_loan_ledger_search.html')
+        return render(request, 'old_loan_ledger_search.html', {})
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
@@ -1215,7 +1215,7 @@ class ViewOldLoanSearch(View):
             return render(request, 'old_loan_ledger_search.html', {'object_list':products})
         else:
             messages.error(request, 'Search returned nothing. Client and/or Loan may not exist.')
-            return render(request, 'old_loan_ledger_search.html')
+            return render(request, 'old_loan_ledger_search.html', {})
         
 
 
@@ -1238,7 +1238,7 @@ class PayLoanSearch(TemplateView):
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        return render(request, 'cashier_loanpay_menu.html')
+        return render(request, 'cashier_loanpay_menu.html', {})
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
