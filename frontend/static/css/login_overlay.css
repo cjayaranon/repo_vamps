@@ -1,5 +1,5 @@
 body{
-    font-family: 'SegoeUI', 'sans-serif';
+    font-family: 'Figtree', sans-serif;
 }
 
 .login-page {
@@ -25,7 +25,7 @@ body{
 
 .buttoncolor input{
   background-color: var(--color-login-primary);
-  font-family: 'SegoeUI', 'sans-serif';
+  font-family: 'Figtree', sans-serif;
   text-transform: uppercase;
   outline: 0;
   width: 100%;
@@ -70,3 +70,4 @@ body{
 .remember-option input[type="checkbox"] {
   margin: 0;
 }
+

@@ -11,12 +11,8 @@ table, caption, tbody, tfoot, thead, tr, th, td {outline: none !important;
 html{
     background: var(--color-page-bg);
 }
-@font-face {
-    font-family: SegoeUI;
-    src: url(../fonts/segoeuil.ttf);
-}
 body{
-    font-family: 'SegoeUI', 'sans-serif';
+    font-family: 'Figtree', sans-serif;
     color: var(--color-text-body);
 }
 
@@ -54,6 +50,7 @@ body{
     margin-top: 0vw;
     margin-bottom: 0vw;
     color: var(--color-text-primary);
+    font-weight: 600;
     letter-spacing: 0.04em;
 }
 
@@ -116,6 +113,155 @@ body{
      padding-left: 0px;   
 }
 
+.authenticated-header .slim-header-shell {
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.authenticated-header .slim-header-row {
+    display: flex;
+    min-height: 68px;
+    align-items: center;
+    gap: 16px;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.authenticated-header .logo-group,
+.authenticated-header .name-group,
+.authenticated-header .user-group {
+    float: none;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0;
+}
+
+.authenticated-header .logo-group {
+    display: flex;
+    width: auto;
+    flex: 0 0 auto;
+    align-items: center;
+    padding-right: 0;
+}
+
+.authenticated-header .logo {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+}
+
+.authenticated-header .logo-group .pull-right {
+    float: none !important;
+}
+
+.authenticated-header .name-group {
+    width: auto;
+    flex: 1 1 auto;
+    min-width: 0;
+    padding-left: 0;
+}
+
+.authenticated-header .abbrev {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+}
+
+.authenticated-header .full {
+    max-width: 620px;
+    margin: 4px 0 0;
+    padding-top: 4px;
+    border-top: 2px solid var(--color-border-soft);
+    font-size: 13px;
+    line-height: 1.15;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.authenticated-header .ver {
+    display: none;
+}
+
+.authenticated-header .slim-user-group {
+    display: flex;
+    width: auto;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-left: 0;
+}
+
+.authenticated-header .slim-user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.authenticated-header .user-image {
+    display: inline-flex;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0;
+    border: 1px solid var(--color-border-soft);
+    border-radius: 50%;
+    color: var(--color-brand-primary);
+    background: var(--color-surface-primary);
+}
+
+.authenticated-header .slim-user-copy {
+    min-width: 0;
+    text-align: right;
+}
+
+.authenticated-header .user-name {
+    max-width: 190px;
+    color: var(--color-text-primary);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.authenticated-header .user-position {
+    display: inline-flex;
+    margin-top: 3px;
+    padding: 3px 10px;
+    border: 1px solid var(--color-border-light);
+    border-radius: 999px;
+    background: var(--color-surface-soft);
+    color: var(--color-brand-primary);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.authenticated-header .slim-user-actions {
+    display: flex;
+    align-items: center;
+}
+
+.authenticated-header .slim-user-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 34px;
+    padding: 6px 14px;
+    margin: 0;
+}
+
 
 @media (max-width: 1199px) {
     .user-group {
@@ -128,6 +274,7 @@ body{
 .btn,
 button.btn,
 input.btn,
+input[type="submit"]:not(.btn),
 .buttoncolor input,
 .drp {
     border-radius: 999px;
@@ -137,10 +284,11 @@ input.btn,
 .btn:focus,
 button.btn:focus,
 input.btn:focus,
+input[type="submit"]:not(.btn):focus,
 .buttoncolor input:focus,
 .drp:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(164, 182, 164, 0.22);
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.22);
 }
 
 .btn-default,
@@ -160,9 +308,10 @@ input.btn:focus,
 }
 
 .btn-primary,
-.btn-danger,
-.btn-warning,
-.buttoncolor input {
+.btn-success,
+.buttoncolor input,
+input[type="submit"]:not(.btn),
+.drp {
     background: var(--color-button-primary-bg);
     border-color: var(--color-button-primary-bg);
     color: var(--color-text-inverse);
@@ -170,29 +319,37 @@ input.btn:focus,
 
 .btn-primary:hover,
 .btn-primary:focus,
-.btn-danger:hover,
-.btn-danger:focus,
-.btn-warning:hover,
-.btn-warning:focus,
+.btn-success:hover,
+.btn-success:focus,
 .buttoncolor input:hover,
-.buttoncolor input:focus {
+.buttoncolor input:focus,
+input[type="submit"]:not(.btn):hover,
+input[type="submit"]:not(.btn):focus,
+.drp:hover,
+.drp:focus {
     background: var(--color-button-primary-hover);
     border-color: var(--color-button-primary-hover);
     color: var(--color-text-inverse);
 }
 
-.btn-success,
-.drp {
-    background: var(--color-button-secondary-bg);
-    border-color: var(--color-button-secondary-bg);
+.btn-danger,
+.btn-warning {
+    background: var(--color-button-danger-bg);
+    border-color: var(--color-button-danger-bg);
     color: var(--color-text-inverse);
 }
 
-.btn-success:hover,
-.btn-success:focus,
-.drp:hover,
-.drp:focus {
-    background: var(--color-button-secondary-hover);
-    border-color: var(--color-button-secondary-hover);
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-warning:hover,
+.btn-warning:focus {
+    background: var(--color-button-danger-hover);
+    border-color: var(--color-button-danger-hover);
     color: var(--color-text-inverse);
 }
+
+
+
+
+
+

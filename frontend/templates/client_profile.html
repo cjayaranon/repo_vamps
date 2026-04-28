@@ -522,7 +522,7 @@
                                     {% if loan2.update == True %}
                                         <tr class="hidden-print">
                                             <td>
-                                                <input type="submit" value="Update" class="btn btn-danger" onclick="window.location='/update/{{loan2.id}}' ">
+                                                <input type="submit" value="Update" class="btn btn-primary" onclick="window.location='/update/{{loan2.id}}' ">
                                             </td>
                                         </tr>
                                     {% else %}
@@ -575,7 +575,7 @@
                                     {% if loan1.update == True %}
                                         <tr class="hidden-print">
                                             <td>
-                                                <input type="submit" value="Update" class="no-spinners btn btn-danger" onclick="window.location='/update/{{loan1.id}}';">
+                                                <input type="submit" value="Update" class="no-spinners btn btn-primary" onclick="window.location='/update/{{loan1.id}}';">
                                             </td>
                                         </tr>
                                     {% else %}
@@ -798,7 +798,7 @@
                                                     <i class="fa fa-check-square fa-lg fa-fw"></i>
                                                         Save
                                                 </button>
-                                                <a href="#basic" class="btn btn-danger" data-toggle="tab" onclick="changeClass()">
+                                                <a href="#basic" class="btn btn-default" data-toggle="tab" onclick="changeClass()">
                                                     <i class="fa fa-arrow fa-lg fa-fw"></i>
                                                     Cancel
                                                 </a>
@@ -1011,3 +1011,4 @@
 
 
 {% endblock %}
+

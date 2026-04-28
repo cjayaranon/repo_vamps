@@ -1,5 +1,5 @@
 body{
-    font-family: 'SegoeUI', 'sans-serif';
+    font-family: 'Figtree', sans-serif;
 }
 
 h3{
@@ -53,8 +53,8 @@ h3{
 
 /*dropdown button colors*/
 .drp{
-  background-color: var(--color-brand-danger);
-    font-family: 'SegoeUI', 'sans-serif';
+  background-color: var(--color-button-secondary-bg);
+    font-family: 'Figtree', sans-serif;
     text-transform: uppercase;
     outline: 0;
     width: 100%;
@@ -71,7 +71,7 @@ h3{
 
 /*new client button hovers*/
 .drp:hover{
-  background-color: var(--color-brand-danger-hover);
+  background-color: var(--color-button-secondary-hover);
   color: var(--color-text-inverse);
 }
 
@@ -87,7 +87,7 @@ h3{
 }
 
 .form-group {
-  font-family: 'SegoeUI', 'sans-serif';
+  font-family: 'Figtree', sans-serif;
   color: var(--color-text-subtle);
 }
 
@@ -113,4 +113,6 @@ h3{
 .alert{
   margin-bottom: 0px;
 }
+
+
 

@@ -5,7 +5,7 @@
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
-    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+    {% include "includes/app_logo.html" with logo_variant="favicon" logo_sizes="18x16" %}
 {% endblock%}
 
 {% block content %}
@@ -30,7 +30,7 @@
           <div class="input-group col-md-12">
           <input type="text" class="search-query form-control" placeholder="Search via last name" name="search" />
             <span class="input-group-btn">
-              <button class="btn btn-danger" type="submit" value="Search" id="search-button">
+              <button class="btn btn-primary" type="submit" value="Search" id="search-button">
                 <span class=" glyphicon glyphicon-search"></span>
               </button>
             </span>

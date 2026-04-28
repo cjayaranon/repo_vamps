@@ -1,0 +1,6 @@
+{% load static %}
+{% if logo_variant == "favicon" %}
+    <link rel="icon" type="image/png" sizes="{{ logo_sizes|default:'18x16' }}" href="{% static 'site_images/logo_bw.png' %}">
+{% else %}
+    <img src="{% static 'site_images/logo_bw.png' %}" class="{{ logo_class|default:'logo' }}" alt="VAMPS logo">
+{% endif %}

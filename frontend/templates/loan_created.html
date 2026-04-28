@@ -4,7 +4,7 @@
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}">
-    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+    {% include "includes/app_logo.html" with logo_variant="favicon" logo_sizes="18x16" %}
 {% endblock%}
 
 {% block content %}
@@ -88,3 +88,4 @@
         }
     </script>
 {% endblock %}
+

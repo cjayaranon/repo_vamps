@@ -148,8 +148,8 @@
 }
 
 .btn-danger:hover {
-    background-color: var(--color-brand-primary);
-    border-color: var(--color-brand-primary);
+    background-color: var(--color-brand-danger-hover);
+    border-color: var(--color-brand-danger-hover);
 }
 
 /*help button*/
@@ -176,8 +176,7 @@
 
     body {
         overflow-x: hidden;
-        font-family: 'SegoeUI', 'sans-serif';
-        /*background: #ae0001;*/
+        font-family: 'Figtree', sans-serif;
     }
 
     p {
@@ -194,7 +193,9 @@
     }
 
     .body {
-        /*background-color: #ae0001;*/
     }
     
 }
+
+
+

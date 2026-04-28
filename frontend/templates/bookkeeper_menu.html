@@ -5,8 +5,11 @@
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/menu_overlay.css' %}">
     <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/new_client_overlay.css' %}"> -->
-    <link rel="icon" type="image/png" href="{% static 'site_images/logo_bw.jpg' %}" sizes="18x16">
+    {% include "includes/app_logo.html" with logo_variant="favicon" logo_sizes="18x16" %}
 {% endblock%}
+
+{% block persistent_sidebar %}{% endblock %}
+{% block persistent_sidebar_end %}{% endblock %}
 
 {% block content %}
 <title>VAMPS|Bookkeeper</title>
@@ -162,4 +165,5 @@
     </script>
    
 {% endblock %}
+
 
